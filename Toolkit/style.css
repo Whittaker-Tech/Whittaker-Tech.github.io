@@ -1,0 +1,268 @@
+/* --- 1. INTRO ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal {
+    0% { opacity: 0; filter: blur(5px); }
+    100% { opacity: 1; filter: blur(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up { animation: fadeInUp 0.8s ease-out forwards; }
+.animate-reveal { opacity: 0; animation: reveal 1s ease-out 0.5s forwards; }
+
+/* --- 2. GLOBAL RESET & THEME --- */
+body { 
+    background-color: #1E1E1E; 
+    color: white; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+}
+
+/* --- 3. HEADER & BRANDING --- */
+.dashboard-header { text-align: center; margin-bottom: 10px; }
+.logo { width: 180px; margin-bottom: 15px; }
+.portal-title { 
+    color: #AB162B; 
+    font-size: 1.4rem; 
+    font-weight: 600; 
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* --- 4. TAB NAVIGATION & REFINED GLOW --- */
+.no-glow.active {
+    box-shadow: none !important;
+}
+.tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: 2px solid #444;
+    color: #888;
+    padding: 10px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tab-btn:hover {
+    border-color: #AB162B;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(171, 22, 43, 0.15); /* Dimmer hover glow */
+}
+
+.tab-btn.active {
+    background: #AB162B;
+    border-color: #AB162B;
+    color: white;
+    /* Reduced glow spread for a cleaner look */
+    box-shadow: 0 0 17px rgba(171, 22, 43, 0.7); 
+}
+
+/* --- 5. WELCOME SCREEN --- */
+#welcome-screen {
+    text-align: center;
+    padding: 10px 50px; 
+    color: #888;
+}
+
+#welcome-screen .wrench-icon {
+    font-size: 4rem; 
+    opacity: 0.2; 
+    margin-bottom: 10px !important;
+}
+
+.tab-content { animation: fadeIn 0.4s ease-in-out; }
+
+/* --- 6. GRID & TOOL CARDS --- */
+.grid-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.container { 
+    flex: 1;
+    min-width: 380px;
+    max-width: 420px; 
+    background: #2D2D2D; 
+    padding: 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+    text-align: center;
+    border-top: 5px solid #AB162B;
+    position: relative;
+}
+
+.tool-title {
+    color: #AB162B;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+.modern-input, select { 
+    width: 100%; 
+    padding: 15px; 
+    background: #1E1E1E; 
+    color: white; 
+    border: 2px solid #444; 
+    border-radius: 6px;
+    font-size: 1.1rem; 
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* --- 7. BUTTONS (FIXED COLORS & HOVERS) --- */
+.btn { 
+    display: block; 
+    width: 100%; 
+    padding: 18px; 
+    margin: 12px 0; 
+    border: none; 
+    border-radius: 6px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* Crimson Theme (Standard) */
+.btn-bldg, .btn-wake, .btn-red { 
+    background-color: #AB162B; 
+}
+
+.btn-bldg:hover, .btn-wake:hover, .btn-red:hover { 
+    background-color: #8a1222; 
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Blue Theme */
+.btn-blue { 
+    background-color: #2980b9; 
+}
+
+.btn-blue:hover { 
+    background-color: #21618c; 
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-back { 
+    background-color: transparent; 
+    color: #888; 
+    font-size: 0.9rem;
+    margin-top: 15px; 
+}
+
+.btn-back:hover { color: #ccc; }
+
+/* --- 8. TOGGLE SWITCH --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #444;
+    transition: .4s;
+    border-radius: 34px;
+    border: 1px solid #555;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px; width: 16px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: #Ab162B; border-color: #Ab162B; }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* --- 9. UTILITIES & FOOTER --- */
+.hidden { display: none !important; }
+
+.loader {
+    margin: 20px auto;
+    border: 4px solid #333;
+    border-top: 4px solid #AB162B;
+    border-radius: 50%;
+    width: 30px; 
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
+
+.global-footer {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 0.75rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    width: 100%;
+}
+/* --- 9. ROOM CHECKER & GHOST HUNTER GRIDS --- */
+#checker-view-bldg, 
+#ghost-view-bldg {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Forces exactly two columns */
+    gap: 8px; /* Balanced spacing between buttons */
+    margin-bottom: 10px;
+}
+
+/* Ensure buttons inside these grids don't have extra vertical margins */
+#checker-view-bldg .btn, 
+#ghost-view-bldg .btn {
+    margin: 0; 
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* TECH TOOLKIT COLOR PALETTE */
+    :root { 
+        --primary: #AB162B;       /* RCBC Red */
+        --bg-body: #121212;       
+        --bg-panel: #1e1e1e;      
+        --text-main: #e0e0e0;     
+        --text-muted: #a0a0a0;    
+        --border: #333;           
+        --code-bg: #101010;       
+        --success: #4caf50;
+        --accent-blue: #2980b9;
+        --warning: #f1c40f;
+    }
+
+    body { font-family: 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text-main); max-width: 950px; margin: 0 auto; padding: 40px; background-color: var(--bg-body); }
+    
+    /* BACK BUTTON */
+    .top-nav { margin-bottom: 20px; }
+    .back-btn { display: inline-flex; align-items: center; gap: 10px; color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+    .back-btn:hover { color: var(--primary); }
+
+    /* HEADER */
+    header { text-align: center; border-bottom: 3px solid var(--primary); padding-bottom: 30px; margin-bottom: 50px; }
+    .logo-box { margin-bottom: 20px; }
+    h1 { font-size: 28pt; margin: 15px 0 10px 0; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+    .subtitle { font-size: 14pt; color: var(--primary); text-transform: uppercase; font-weight: 600; }
+    .meta { color: var(--primary); font-family: 'Consolas', monospace; font-size: 11pt; border-top: 1px solid #333; padding-top: 10px; margin-top: 10px; display: inline-block; }
+
+    /* SECTIONS */
+    h2 { color: var(--primary); font-size: 18pt; border-left: 5px solid var(--primary); background: linear-gradient(90deg, var(--bg-panel) 0%, transparent 100%); padding: 10px 15px; margin-top: 50px; }
+    h3 { color: #fff; font-size: 14pt; margin-top: 35px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+    /* CARDS & TABLES */
+    .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0; }
+    .tool-card { background: var(--bg-panel); padding: 20px; border-radius: 6px; border: 1px solid var(--border); border-top: 4px solid var(--primary); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--bg-panel); border: 1px solid var(--border); }
+    th { background: #252525; color: var(--primary); text-align: left; padding: 15px; border-bottom: 2px solid var(--primary); text-transform: uppercase; font-size: 0.85em; }
+    td { padding: 15px; border-bottom: 1px solid var(--border); vertical-align: top; }
+
+    /* CODE & ALERTS */
+    .code-box { background: var(--code-bg); color: #dcdcdc; padding: 20px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; border: 1px solid #333; margin: 20px 0; white-space: pre-wrap; }
+    .alert { padding: 15px; border-radius: 4px; margin: 20px 0; border-left: 4px solid; }
+    .alert-info { background: rgba(33, 150, 243, 0.1); border-color: #2196F3; color: #64b5f6; }
+    .alert-warning { background: rgba(241, 196, 15, 0.1); border-color: var(--warning); color: var(--warning); }
+
+    footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 9pt; color: var(--text-muted); }
+</style>
+<title>OIT Toolkit Documentation | Dan Whittaker</title>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Toolkit</a>
+</nav>
+
+<header>
+    <div class="logo-box"><i class="fas fa-network-wired" style="font-size: 4rem; color: #fff;"></i></div>
+    <div class="subtitle">Infrastructure Integration & Reporting Documentation</div>
+    <h1>OIT Technician Toolkit: Master Configuration Guide</h1>
+    <div class="meta">UPDATED: January 18, 2026</div>
+</header>
+
+<h2>1. EXECUTIVE SUMMARY</h2>
+<p>
+    The OIT Technician Toolkit is an integrated administrative platform designed to bridge <strong>SCCM, Active Directory, 25Live, Sassafras KeyServer, and HappyFox</strong>. By orchestrating these systems, the toolkit provides field technicians with a unified interface for system diagnostics and reporting, ensuring high-fidelity visualizations of day-to-day problem areas. 
+    The toolkit is optimized for both desktop and mobile environments, enabling field mobility for technicians utilizing tablets during campus-wide lab checks.
+</p>
+
+<h2>2. CORE MODULE FUNCTIONALITIES</h2>
+
+<div class="tool-grid">
+    <div class="tool-card">
+        <strong>1. Lab Wake-Up (SCCM Integrated)</strong>
+        <p>Leverages <strong>SCCM's internal Wake-on-LAN protocols</strong> to broadcast magic packets across subnets, facilitating remote power-on for lab maintenance or class preparation.</p>
+    </div>
+    <div class="tool-card">
+        <strong>2. Ghost Hunter (Sassafras API)</strong>
+        <p>Uses the <strong>Sassafras KeyServer API</strong> to flag workstations failing to check in within <strong>7 days</strong>, providing technicians with a real-time focus list for hardware remediation.</p>
+    </div>
+    <div class="tool-card">
+        <strong>3. Campus Lab Report (Integrated)</strong>
+        <p>Combines <strong>Ghost Hunter</strong> data with <strong>25Live</strong> schedules to identify maintenance windows. Results are documented weekly via the <strong>HappyFox API</strong> to provide a proactive "jump start" for technicians.</p>
+    </div>
+    <div class="tool-card">
+        <strong>4. AD & SCCM Purge</strong>
+        <p>A "Clean Start" tool that wipes computer metadata from both Active Directory OUs and SCCM Site Databases in a single administrative action.</p>
+    </div>
+    <div class="tool-card">
+        <strong>5. Sassafras Manager (Reporting)</strong>
+        <p>Syncs <strong>25Live</strong> academic calendars with <strong>Sassafras Time Sets</strong>. This ensures that usage reports reflect only active class hours, providing accurate visualizations for non-IT staff.</p>
+    </div>
+    <div class="tool-card">
+        <strong>6. Room Checker</strong>
+        <p>Queries 25Live Web Services to provide immediate availability and class schedule gaps for all campus labs.</p>
+    </div>
+</div>
+
+<h2>3. SYSTEM ARCHITECTURE & SECURITY</h2>
+<p>The toolkit serves as a "Single-Pane-of-Glass" by translating institution-wide data into actionable IT intelligence while maintaining a robust security posture.</p>
+
+<h3>3.1 Identity & Access Management (IAM)</h3>
+<p>
+    To protect these powerful administrative tools from unauthorized use or abuse, the toolkit requires <strong>Active Directory (AD) authentication</strong>. Only authorized technicians with valid credentials and specifically assigned AD group permissions can gain access to the application.
+</p>
+
+<div class="alert alert-warning">
+    <strong>SAFEGUARD PROTOCOLS:</strong> All high-impact administrative actions (such as the AD/SCCM Purge) are gated by functional failsafe prompts. Technicians must manually confirm these actions, ensuring that critical infrastructure is protected from accidental harm.
+</div>
+
+<table>
+    <tr>
+        <th>System</th>
+        <th>Integration Method</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td><strong>SCCM</strong></td>
+        <td>PowerShell Bridge</td>
+        <td>Drives Wake-on-LAN and asset decommissioning (Purge Tool).</td>
+    </tr>
+    <tr>
+        <td><strong>Active Directory</strong></td>
+        <td>LDAP / Identity Bridge</td>
+        <td>Authenticates technician credentials and authorizes tool access based on group membership.</td>
+    </tr>
+    <tr>
+        <td><strong>25Live</strong></td>
+        <td>JSON Web Services</td>
+        <td>Synchronizes academic schedules to identify maintenance gaps and drive reporting Time Sets.</td>
+    </tr>
+    <tr>
+        <td><strong>Sassafras</strong></td>
+        <td>KeyServer REST API</td>
+        <td>Reports asset check-in health (Ghost Hunter) and provides data for usage visualizations.</td>
+    </tr>
+    <tr>
+        <td><strong>HappyFox</strong></td>
+        <td>RESTful API</td>
+        <td>Injects automated health logs and weekly summaries into active technician tickets.</td>
+    </tr>
+</table>
+
+<h2>4. AUTOMATED REPORTING & VISUALIZATION</h2>
+
+<h3>4.1 Sassafras Time Set Management</h3>
+<p>To support non-IT staff and institutional stakeholders, the <strong>Sassafras Manager</strong> automates the creation of Time Sets based on <strong>25Live</strong> course data. This ensures that usage reports ignore idle hours (nights/weekends) and provide accurate data specifically for times when classes are scheduled to run.</p>
+
+<div class="alert alert-info">
+    <strong>DATA ACCURACY:</strong> Without Time Sets, reports reflect 24/7 availability. By integrating 25Live class ranges, we deliver visualizations that represent actual academic utilization. This automation allows OIT to instantly sync accurate class schedules (Monday through Friday) for every lab on campus, saving hours of manual labor.
+</div>
+
+<h3>4.2 Proactive Weekly Ticketing</h3>
+<p>The <strong>Campus Lab Report</strong> executes on a weekly basis, utilizing the <strong>HappyFox API</strong> to document health logs in the <strong>Weekly Lab Checks</strong> ticket. This allows technicians to address persistent offline workstations (identified via the 7-day Sassafras check-in window) during identified 25Live maintenance gaps.</p>
+
+<footer>
+    Documentation by Dan Whittaker<br>
+    Portfolio Purpose Only &bull; RCBC OIT Technical Reference
+</footer>
+
+</body>
+</html>

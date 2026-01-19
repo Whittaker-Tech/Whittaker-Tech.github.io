@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCBC OIT - Tech Toolkit</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ADD THIS TO YOUR CSS OR HEAD TO RESTORE HOVER ON RED/BLUE BUTTONS */
+        .btn-red { background-color: #AB162B !important; color: white; }
+        .btn-red:hover { background-color: #8a1222 !important; }
+        
+        .btn-blue { background-color: #2980b9 !important; color: white; }
+        .btn-blue:hover { background-color: #21618c !important; }
+
+        /* BACK BUTTON STYLES (Matches Esports Guide) */
+        .top-nav {
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 10px 20px 0 20px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #a0a0a0; /* Muted Text to match dark theme */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .back-btn:hover {
+            color: #AB162B; /* RCBC Red on Hover */
+        }
+        .back-btn i {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+</nav>
+
+<div class="main-wrapper">
+    <header class="dashboard-header animate-fade-up" style="text-align: center; padding: 20px;">
+        <div class="portal-title" style="margin-bottom: 5px;">OIT TECHNICIAN TOOLKIT</div>
+        <div id="welcome-badge" style="min-height: 20px; margin-top: 5px;"></div>
+    </header>
+    <div class="tabs-nav">
+    <button class="tab-btn" onclick="openDashboardTab('lab-checks', this)">Lab Utilities</button>
+    <button class="tab-btn active" onclick="openDashboardTab('lab-health', this)">Lab Health</button> 
+    <button class="tab-btn" onclick="openDashboardTab('admin-tools', this)">Admin Utilities</button>
+</div>
+    <div id="welcome-screen" class="animate-reveal hidden">
+        <div class="wrench-icon">🛠</div>
+        <p>Select a tab above to access OIT tools.</p>
+        
+    </div>
+    <div id="lab-checks" class="grid-container tab-content hidden">
+        <div class="container">
+            <div class="tool-title">LAB WAKE-UP TOOL</div>
+            <div id="view-buildings">
+                <button class="btn btn-bldg" onclick="showRooms('Laurel Hall')">Laurel Hall</button>
+                <button class="btn btn-bldg" onclick="showRooms('TEC Building')">TEC Building</button>
+                <button class="btn btn-bldg" onclick="showRooms('HSC / Science Building')">Health Science / Science Building</button>
+            </div>
+            <div id="view-rooms" class="hidden">
+                <h2 id="bldg-label">BUILDING</h2>
+                <select id="room-dropdown" class="modern-input"></select>
+                <button id="wake-btn" class="btn btn-wake" onclick="triggerWake()">Wake Room Now</button>
+                <div id="loader-wake" class="loader hidden"></div>
+                <button class="btn btn-back" onclick="showBuildings()">← Back</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="tool-title">ROOM CHECKER</div>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Check 25Live Schedule Availability</p>
+            <div id="checker-view-bldg">
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Evans Hall (EVNS)')">Evans Hall</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Laurel Hall (LAUR)')">Laurel Hall</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('TEC (TEC)')">TEC Building</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Science Building (SB)')">Science Building</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Health Science (HSC)')">Health Sciences</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Mount Holly (HLY & MHCA)')">Mount Holly</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Votta Hall (VTHL)')">Votta Hall</button>
+                <button class="btn btn-bldg" onclick="showCheckerRooms('Student Success (SSC)')">Student Success</button>
+            </div>
+            <div id="checker-view-rooms" class="hidden">
+                <h2 id="checker-bldg-label">BUILDING</h2>
+                <select id="checker-room" class="modern-input"><option value="" selected>Select Room...</option></select>
+                <button id="check-btn" class="btn btn-wake" onclick="checkSchedule()">Show Status</button>
+                <div id="loader-check" class="loader hidden"></div>
+                <div id="status-result" class="hidden" style="margin-top:20px;"></div>
+                <button class="btn btn-back" onclick="showCheckerBuildings()">← Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lab-health" class="grid-container tab-content">
+        <div class="container" style="border-top: 5px solid #AB162B;">
+            <div class="tool-title" style="color: #AB162B;">CAMPUS LAB REPORT</div>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Full Ghost & Schedule Analysis</p>
+            <button id="report-btn" class="btn btn-wake btn-red" onclick="runLabReport()">Run Full Report</button>
+            <div id="loader-report" class="loader hidden" style="border-top: 4px solid #AB162B;"></div>
+            <div id="report-results" class="hidden" style="text-align: left; margin-top: 15px; max-height: 400px; overflow-y: auto;"></div>
+        </div>
+
+        <div class="container" style="border-top: 5px solid #AB162B;">
+            <div class="tool-title" style="color: #AB162B;">GHOST HUNTER</div>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Targeted Single-Room Scan</p>
+            <div id="ghost-view-bldg" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                <button class="btn btn-bldg" onclick="showGhostRooms('Laurel Hall')">Laurel Hall</button>
+                <button class="btn btn-bldg" onclick="showGhostRooms('TEC Building')">TEC Building</button>
+                <button class="btn btn-bldg" onclick="showGhostRooms('Science Building')">Science Building</button>
+                <button class="btn btn-bldg" onclick="showGhostRooms('Health Science')">Health Sciences</button>
+            </div>
+            <div id="ghost-view-rooms" class="hidden">
+                <h2 id="ghost-bldg-label">BUILDING</h2>
+                <select id="ghost-room" class="modern-input"><option value="" selected>Select Room...</option></select>
+                <button id="ghost-btn" class="btn btn-wake" onclick="scanGhosts()">Scan Room</button>
+                <button class="btn btn-back" onclick="showGhostBuildings()">← BACK</button>            
+                <div id="loader-ghost" class="loader hidden" style="border-top: 4px solid #e67e22;"></div>
+                <div id="ghost-result" class="hidden" style="margin-top:20px; text-align: left;">
+                    <ul id="ghost-list" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-tools" class="grid-container tab-content hidden">
+        <div class="container" style="border-top: 5px solid #AB162B;">
+            <div class="tool-title" style="color: #AB162B;">IMAGE CLEAN START</div>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Purge device from SCCM & AD</p>
+            <input type="text" id="pc-name-input" placeholder="Computer Name" class="modern-input">
+            <button id="purge-btn" class="btn btn-wake btn-red" onclick="triggerPurge()">Purge Now</button>
+            <div id="loader-purge" class="loader hidden"></div>
+        </div>
+        
+        <div class="container" style="border-top: 5px solid #AB162B;">
+            <div class="tool-title" style="color: #AB162B;">SASSAFRAS MANAGER</div>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Sassafras Schedule Manager</p>
+            <button class="btn btn-wake btn-red" onclick="openSassafrasDemo()">OPEN LAB SCHEDULER</button>
+        </div>
+    </div>
+
+    <footer class="global-footer">FUNCTIONALITY DEMONSTRATION ONLY • ALL DATA IS MIMICED</footer>
+</div>
+
+<script src="js/app.js"></script>
+<div style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+    <a href="ToolkitDoc.html" class="btn-red" style="text-decoration: none; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; padding: 14px 28px; font-family: 'Segoe UI', sans-serif; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-book-shield"></i> Technical Documentation for the Toolkit
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* TECH TOOLKIT COLOR PALETTE (DARK MODE) */
+    :root { 
+        --primary: #AB162B;       /* RCBC Red */
+        --bg-body: #121212;       /* Deep Black/Grey */
+        --bg-panel: #1e1e1e;      /* Panel Grey */
+        --text-main: #e0e0e0;     /* Off-white */
+        --text-muted: #a0a0a0;    /* Muted text */
+        --border: #333;           /* Subtle borders */
+        --code-bg: #101010;       /* Darker for code blocks */
+        --success: #4caf50;
+        --phase-header: #2c2c2c;
+    }
+
+    body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        line-height: 1.6; 
+        color: var(--text-main); 
+        max-width: 950px; 
+        margin: 0 auto; 
+        padding: 40px;
+        background-color: var(--bg-body);
+    }
+
+    /* BACK BUTTON STYLES */
+    .top-nav {
+        margin-bottom: 20px;
+    }
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+    .back-btn:hover {
+        color: var(--primary);
+    }
+    .back-btn i {
+        font-size: 0.9rem;
+    }
+    
+    /* HEADER STYLES */
+    header { 
+        text-align: center; 
+        border-bottom: 3px solid var(--primary); 
+        padding-bottom: 30px; 
+        margin-bottom: 50px; 
+        background: linear-gradient(180deg, var(--bg-body) 0%, #1a1a1a 100%);
+    }
+    .logo-box { 
+        margin: 0 auto 20px auto; 
+        text-align: center; 
+        background: transparent; 
+        padding: 15px 25px;
+        border-radius: 6px;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    /* Placeholder style for logo if image is missing */
+    .logo-box img { max-height: 90px; width: auto; display: block; }
+
+    h1 { 
+        font-size: 28pt; 
+        margin: 15px 0 10px 0; 
+        color: #fff; 
+        text-transform: uppercase; 
+        letter-spacing: 2px; 
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .subtitle {
+        font-size: 14pt;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    .meta { 
+        color: var(--primary);
+        font-weight: bold;
+        font-size: 11pt; 
+        font-family: 'Consolas', monospace;
+        border-top: 1px solid #333;
+        display: inline-block;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    /* HEADINGS */
+    h2 { 
+        color: var(--primary); 
+        font-size: 18pt; 
+        border-left: 5px solid var(--primary); 
+        background: linear-gradient(90deg, var(--bg-panel) 0%, transparent 100%);
+        padding: 10px 15px; 
+        margin-top: 50px; 
+        border-radius: 0 4px 4px 0;
+    }
+    h3 { color: #fff; font-size: 14pt; margin-top: 35px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    
+    /* TABLES */
+    table { 
+        width: 100%; 
+        border-collapse: separate; 
+        border-spacing: 0; 
+        margin: 20px 0; 
+        font-size: 10pt; 
+        background-color: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    th { 
+        background-color: #252525; 
+        color: var(--primary); 
+        text-transform: uppercase;
+        font-size: 0.85em;
+        letter-spacing: 1px;
+        text-align: left; 
+        padding: 15px; 
+        border-bottom: 2px solid var(--primary);
+    }
+    td { border-bottom: 1px solid var(--border); padding: 15px; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    
+    /* POST-IMAGING PHASE CARDS */
+    .phase-card {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    .phase-header {
+        background: var(--phase-header);
+        padding: 10px 15px;
+        font-weight: bold;
+        color: var(--primary);
+        border-bottom: 1px solid var(--border);
+        text-transform: uppercase;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+    }
+    .phase-content {
+        padding: 15px;
+    }
+    .step-list {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .step-list li {
+        margin-bottom: 8px;
+    }
+    
+    /* ALERTS */
+    .alert { padding: 15px; border-radius: 4px; margin: 20px 0; font-size: 0.95em; border: 1px solid transparent; }
+    .alert-info { 
+        background-color: rgba(33, 150, 243, 0.1); 
+        border-left: 4px solid #2196F3; 
+        color: #64b5f6; 
+    }
+    .alert-danger { 
+        background-color: rgba(171, 22, 43, 0.15); 
+        border-left: 4px solid var(--primary); 
+        color: #ff8a80; 
+    }
+
+    /* FINAL SUCCESS BANNER */
+    .success-banner {
+        background: rgba(76, 175, 80, 0.1);
+        border: 2px solid #4caf50;
+        color: #4caf50;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* CODE BOXES */
+    .code-box { 
+        background: var(--code-bg); 
+        color: #dcdcdc;
+        padding: 20px; 
+        border-radius: 4px; 
+        font-family: 'Consolas', 'Monaco', monospace; 
+        font-size: 0.85em; 
+        white-space: pre-wrap; 
+        border: 1px solid #333;
+        box-shadow: inset 0 0 10px #000;
+        margin-bottom: 20px;
+    }
+    .comment { color: #6a9955; }
+    
+    strong { color: #fff; }
+
+    /* FOOTER */
+    footer { 
+        margin-top: 80px; 
+        font-size: 9pt; 
+        text-align: center; 
+        color: var(--text-muted); 
+        border-top: 1px solid var(--border); 
+        padding-top: 20px; 
+    }
+</style>
+<title>Esports Configuration Guide | Dan Whittaker</title>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+</nav>
+
+<header>
+    <div class="logo-box">
+        <i class="fas fa-gamepad" style="font-size: 4rem; color: #fff;"></i>
+    </div>
+    
+    <div class="subtitle">IT Infrastructure Documentation</div>
+    <h1>Esports Lab: Technical Configuration & Deployment Guide</h1>
+    
+    <div class="meta">
+        FACILITY: ESPORTS LAB &nbsp;//&nbsp; UPDATED: January 16, 2026
+    </div>
+</header>
+
+<h2>1. EXECUTIVE SUMMARY</h2>
+<p>
+    This document details the technical configuration for the Esports Lab. The environment is designed as a high-security "Kiosk" system that prioritizes gaming performance while utilizing a <strong>Zero-Trust</strong> security model. 
+    Defense is achieved through four layers: <strong>Shell Replacement</strong>, <strong>NTFS File Locking</strong>, <strong>Group Policy Hardening</strong>, and <strong>BeyondTrust Privilege Management</strong>.
+</p>
+
+<h2>2. SYSTEM ARCHITECTURE & ROLES</h2>
+<p>The workstations utilize a <strong>"Tri-Persona"</strong> architecture. Access to non-kiosk roles is strictly controlled via the ggLeap Web Admin console.</p>
+
+<table>
+    <tr>
+        <th width="20%">User Account</th>
+        <th width="20%">Role</th>
+        <th width="30%">Interface & Environment</th>
+        <th>Purpose & Access</th>
+    </tr>
+    <tr>
+        <td><strong>Esports</strong></td>
+        <td>Public Kiosk</td>
+        <td>
+            <strong>ggLeap Shell Only</strong><br>
+            <span style="color:#ff8a80; font-size:0.9em;">NO Start Menu, NO Taskbar, NO Desktop.</span>
+        </td>
+        <td><strong>Primary User.</strong> Auto-logons to Windows. Requires Entra ID for game access.</td>
+    </tr>
+    <tr>
+        <td><strong>General</strong></td>
+        <td>Event Overflow</td>
+        <td>
+            <strong>Standard Windows Desktop</strong><br>
+            <span style="color:#64b5f6; font-size:0.9em;">Full Taskbar & Desktop Experience.</span>
+        </td>
+        <td><strong>Student Life Support.</strong> "General Use". Password protected. Requires Staff activation.</td>
+    </tr>
+    <tr>
+        <td><strong>Adm</strong></td>
+        <td>IT Maintenance</td>
+        <td><strong>Standard Windows Desktop</strong></td>
+        <td><strong>Full Admin.</strong> Used for OIT maintenance, game updates, and image management.</td>
+    </tr>
+</table>
+
+<h2>3. ACCESS & DEPLOYMENT OVERVIEW</h2>
+
+<h3>3.1 Access Workflows</h3>
+<p>
+    <strong>Student Access:</strong> The system auto-logons to the <code>Esports</code> Windows profile. Students authenticate via the ggLeap Shell using <strong>Entra ID</strong> credentials.
+    <br><br>
+    <strong>Staff Access:</strong> <code>Adm</code> and <code>General</code> are hidden. Staff must use the ggLeap Web Admin Console to <strong>"Launch Remote App > Switch to General"</strong> (shutdown.exe /l) to reach the standard Windows Login Screen.
+</p>
+
+<h3>3.2 Deployment Strategy</h3>
+<p>
+    The Master Image (CloneZilla) is a "Clean State" containing only the OS, Game Library, and ggLeap Client. All security configurations are applied <strong>Post-Imaging</strong> (See Section 6).
+</p>
+
+
+<h2>4. GROUP POLICY CONFIGURATION</h2>
+
+<h3>4.1 Machine Policy (All Users)</h3>
+<p><em>Applies to the hardware level, affecting Esports, General, and Adm.</em></p>
+<ul>
+    <li><strong>Lock Screen:</strong> Branded Wallpaper enforced (<code>C:\Windows\Web\Wallpaper\Windows\Logo.jpg</code>).</li>
+    <li><strong>OneDrive:</strong> Completely disabled to prevent data syncing.</li>
+</ul>
+
+<h3>4.2 "General Use" Policy (Event Support)</h3>
+<p><em>Designed to function like a standard lab machine for supervised events.</em></p>
+<ul>
+    <li><strong>Browser Privacy:</strong> Chrome/Edge forced to Incognito (History/Cookies clear on exit) for ALL standard users.</li>
+    <li><strong>Desktop Interface:</strong> <span style="color:#4caf50; font-weight:bold;">STANDARD.</span> Full access to Start Menu, Taskbar, and Desktop icons.</li>
+    <li><strong>Downloads:</strong> <span style="color:#4caf50; font-weight:bold;">ALLOWED.</span> (Files can be downloaded for events).</li>
+    <li><strong>USB Storage:</strong> <span style="color:#4caf50; font-weight:bold;">ALLOWED.</span> (Read/Write access granted).</li>
+    <li><strong>Windows Settings:</strong> <span style="color:#4caf50; font-weight:bold;">STANDARD.</span> (Standard access to Display, Personalization, etc.).</li>
+</ul>
+
+<h3>4.3 "Esports" Policy (Kiosk)</h3>
+<p><em>Strictly locked down for public gaming use.</em></p>
+<ul>
+    <li><strong>Desktop Interface:</strong> <span style="color:var(--primary); font-weight:bold;">DISABLED.</span> Start Menu, Taskbar, and Desktop are completely removed via Shell Replacement.</li>
+    <li><strong>Downloads:</strong> <span style="color:var(--primary); font-weight:bold;">BLOCKED.</span></li>
+    <li><strong>USB Storage:</strong> <span style="color:var(--primary); font-weight:bold;">BLOCKED.</span> (Read/Write denied).</li>
+    <li><strong>Windows Settings:</strong> <span style="color:var(--primary); font-weight:bold;">RESTRICTED.</span> (Audio/Mouse controls only).</li>
+    <li><strong>Custom User Interface:</strong> Replaces <code>explorer.exe</code> with <code>C:\ggLeap\ClientInterface.exe</code>.</li>
+    <li><strong>File System:</strong> C: Drive hidden in file browse dialogs.</li>
+</ul>
+
+<h2>5. NUCLEAR LOCKDOWN & MAINTENANCE</h2>
+
+<div class="alert alert-info">
+    <strong>AUTOMATIC UPDATES:</strong> Because <strong>BeyondTrust</strong> is configured to Elevate approved games (Fortnite, Valorant, etc.), the game clients will automatically download and install updates as students play them. Manual intervention is rarely needed for game patches.
+</div>
+
+<p>
+    To prevent "breakout" attempts where users utilize Game Launchers to browse the file system, critical Windows tools are blocked via <strong>NTFS Permissions</strong>.
+    This is done using a custom script that modifies Ownership and ACLs.
+</p>
+
+<div class="code-box">
+BLOCKED TARGETS (Esports User Only):
+ - CMD.exe (Command Prompt)
+ - Explorer.exe (Desktop)
+ - Regedit.exe (Registry Editor)
+ - MMC.exe (Microsoft Management Console)
+ - Notepad.exe (Prevents "File > Open" exploits)
+ - PowerShell.exe / WScript.exe (Scripting Engines)
+ - TaskMgr.exe (Blocked via GPO + File Level)
+</div>
+
+<p>
+    <strong>Manual Maintenance:</strong> If an OS update or a failed game patch requires intervention, log in as <strong>Adm</strong>. 
+    You do NOT need to unlock the machine. The locks only apply to the <code>Esports</code> user.
+</p>
+
+<div class="alert alert-danger">
+    <strong>EMERGENCY UNLOCK:</strong> In rare cases where troubleshooting inside the Esports profile is required (e.g. Audio/Driver issues), run <code>Unlockdown.bat</code> (See Appendix A). 
+    <br><br>
+    <strong>CRITICAL WARNING:</strong> You MUST run <code>Lockdown.bat</code> immediately after troubleshooting is complete to re-secure the station.
+</div>
+
+<h2>6. POST-IMAGING WORKFLOW</h2>
+<p>Perform these steps immediately after the CloneZilla restoration is complete. Use the files from the <strong>OIT Shared Drive (T:)</strong> or Flash Drive.</p>
+
+<div class="phase-card">
+    <div class="phase-header">Phase 1: Network & Hostname Configuration</div>
+    <div class="phase-content">
+        <ol class="step-list">
+            <li>Log into <strong>Adm</strong>.</li>
+            <li>Set Static IP Address for the Station you are configuring (Cloning defaults to Esports-01's IP). <em>(See Appendix B for IP Map)</em>.</li>
+            <li>Rename Computer to match location (<code>ESPORTS-XX</code>).</li>
+            <li><strong>RESTART.</strong></li>
+        </ol>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-header">Phase 2: Create "General" User</div>
+    <div class="phase-content">
+        <ol class="step-list">
+            <li>Log into <strong>Adm</strong>.</li>
+            <li>Go to <strong>Computer Management > Users > New User</strong>.</li>
+            <li><strong>Name:</strong> <code>General</code> | <strong>Desc:</strong> <code>RCBC General Use</code></li>
+            <li><strong>Password:</strong> <code>[REDACTED]</code></li>
+            <li><strong>Check:</strong> <em>Password never expires</em> and <em>User cannot change password</em>.</li>
+        </ol>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-header">Phase 3: Install Security & Policy Files</div>
+    <div class="phase-content">
+        <ol class="step-list">
+            <li>Connect USB Drive containing the <strong>EsportsPolicy</strong> folder.</li>
+            <li>Run <code>Install_PAM.bat</code> (Installs BeyondTrust & Links to Cloud Tenant).</li>
+            <li>Drag <strong>.jpg wallpaper</strong> to the "Drag Wallpaper Here" shortcut.</li>
+            <li>Drag <strong>GroupPolicy</strong> folders to the "Drag Group Policy Here" shortcut (Select "Overwrite All").</li>
+        </ol>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-header">Phase 4: Apply Lockdown & Auto-Logon</div>
+    <div class="phase-content">
+        <ol class="step-list">
+            <li>Run <code>Lockdown.bat</code> to apply NTFS security blocks to the Esports user.</li>
+            <li>Move <code>AutoLogon.reg</code> to the Desktop and Run it.</li>
+            <li><strong>RESTART.</strong></li>
+        </ol>
+    </div>
+</div>
+
+<div class="phase-card">
+    <div class="phase-header">Phase 5: Link ggLeap & Verify</div>
+    <div class="phase-content">
+        <ol class="step-list">
+            <li>System will auto-login to Esports.</li>
+            <li>At the ggLeap Employee Login screen, enter your credentials to link the node.</li>
+            <li><strong>ggLeap will configure itself and auto-load the Student Login Screen.</strong></li>
+            <li>From the <strong>ggLeap Web Console</strong> (on another PC), push the <strong>"Switch To General"</strong> command.</li>
+            <li>Log into the <code>General</code> user on the machine to populate the profile.</li>
+            <li>Verify standard desktop loads. <strong>RESTART</strong> one final time.</li>
+        </ol>
+    </div>
+</div>
+
+<div class="success-banner">
+    MISSION COMPLETE: WORKSTATION IS READY FOR ESPORTS
+</div>
+
+<h2>APPENDIX A: MASTER SCRIPTS</h2>
+<p>
+    All scripts and registry files are stored on the <strong>OIT Shared Drive (T:)</strong>. 
+</p>
+
+<h3>1. Install_PAM.bat (BeyondTrust Installer)</h3>
+<div class="code-box">
+msiexec.exe /i "PrivilegeManagementConsolePackageManagerForWindows_x64.msi" ^
+TENANTID="[REDACTED_TENANT_ID]" ^
+INSTALLATIONID="[REDACTED_INSTALL_ID]" ^
+INSTALLATIONKEY="[REDACTED_KEY]" ^
+SERVICEURI="https://[REDACTED]-services.pm.beyondtrustcloud.com" ^
+GROUPID="[REDACTED_GROUP_ID]"
+</div>
+
+<h3>2. AutoLogon.reg</h3>
+<div class="code-box">
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]
+"AutoAdminLogon"="1"
+"DefaultUserName"="Esports"
+"DefaultPassword"=""
+"DefaultDomainName"=""
+"ForceAutoLogon"="1"
+</div>
+
+<h3>3. Lockdown.bat (The "Nuclear" Option)</h3>
+<div class="code-box">
+@echo off
+<span class="comment">:: 1. BLOCK EXPLORER</span>
+takeown /f C:\Windows\explorer.exe
+icacls C:\Windows\explorer.exe /grant Administrators:F
+icacls C:\Windows\explorer.exe /deny Esports:(RX)
+icacls C:\Windows\explorer.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 2. BLOCK REGEDIT</span>
+takeown /f C:\Windows\regedit.exe
+icacls C:\Windows\regedit.exe /grant Administrators:F
+icacls C:\Windows\regedit.exe /deny Esports:(RX)
+icacls C:\Windows\regedit.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 3. BLOCK MMC</span>
+takeown /f C:\Windows\System32\mmc.exe
+icacls C:\Windows\System32\mmc.exe /grant Administrators:F
+icacls C:\Windows\System32\mmc.exe /deny Esports:(RX)
+icacls C:\Windows\System32\mmc.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 4. BLOCK NOTEPAD</span>
+takeown /f C:\Windows\notepad.exe
+icacls C:\Windows\notepad.exe /grant Administrators:F
+icacls C:\Windows\notepad.exe /deny Esports:(RX)
+icacls C:\Windows\notepad.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 5. BLOCK POWERSHELL</span>
+takeown /f C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+icacls C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /grant Administrators:F
+icacls C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /deny Esports:(RX)
+icacls C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /setowner "NT SERVICE\TrustedInstaller"
+
+echo SYSTEM LOCKED.
+</div>
+
+<h3>4. Unlockdown.bat (Emergency Restore)</h3>
+<div class="code-box">
+@echo off
+<span class="comment">:: 1. UNBLOCK EXPLORER</span>
+takeown /f C:\Windows\explorer.exe
+icacls C:\Windows\explorer.exe /remove:d Esports
+icacls C:\Windows\explorer.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 2. UNBLOCK REGEDIT</span>
+takeown /f C:\Windows\regedit.exe
+icacls C:\Windows\regedit.exe /remove:d Esports
+icacls C:\Windows\regedit.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 3. UNBLOCK MMC</span>
+takeown /f C:\Windows\System32\mmc.exe
+icacls C:\Windows\System32\mmc.exe /remove:d Esports
+icacls C:\Windows\System32\mmc.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 4. UNBLOCK NOTEPAD</span>
+takeown /f C:\Windows\notepad.exe
+icacls C:\Windows\notepad.exe /remove:d Esports
+icacls C:\Windows\notepad.exe /setowner "NT SERVICE\TrustedInstaller"
+
+<span class="comment">:: 5. UNBLOCK POWERSHELL</span>
+takeown /f C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+icacls C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /remove:d Esports
+icacls C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /setowner "NT SERVICE\TrustedInstaller"
+
+echo SYSTEM UNLOCKED.
+</div>
+
+<h2>APPENDIX B: STATION IP MAP</h2>
+<p>Reference table for static IP assignment in <strong>Phase 1</strong>.</p>
+<table>
+    <tr>
+        <th width="30%">Hostname</th>
+        <th>Assigned Static IP</th>
+    </tr>
+    <tr><td><strong>ESPORTS-01</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-02</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-03</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-04</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-05</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-06</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-07</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-08</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-09</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-10</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-11</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-12</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-13</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-14</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-15</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-16</strong></td><td>172.22.xxx.xx</td></tr>
+</table>
+
+<footer>
+    Documentation by Dan Whittaker<br>
+    Portfolio Use Only &bull; Internal Data Redacted
+</footer>
+
+</body>
+</html>

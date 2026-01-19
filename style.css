@@ -1,0 +1,492 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    /* BACKGROUNDS */
+    --bg-body: #111111;       /* Very Dark Background */
+    --bg-card: #1e1e1f;       /* Main Content Card Color */
+    --bg-inner: #2b2b2c;      /* Inner Cards (Projects/Timeline) */
+    --bg-border: #383838;     /* Border Lines */
+    
+    /* TEXT */
+    --text-white: #ffffff;
+    --text-gray: #d6d6d6;
+    --text-muted: #aaaaaa;
+    
+    /* ACCENT (Electric Blue) */
+    --accent: #38bdf8;        
+    --accent-glow: rgba(56, 189, 248, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-body);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px 20px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   2. MAIN LAYOUT WRAPPER
+   ========================================= */
+.page-wrapper {
+    display: flex;
+    gap: 25px;
+    width: 1200px;
+    max-width: 100%;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* =========================================
+   3. SIDEBAR (LEFT PANEL)
+   ========================================= */
+.sidebar {
+    background-color: var(--bg-card);
+    border: 1px solid var(--bg-border);
+    border-radius: 20px;
+    width: 300px;
+    padding: 30px;
+    flex-shrink: 0;
+    text-align: center;
+    position: sticky;
+    top: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 10;
+}
+
+.sidebar-header .avatar-box {
+    width: 150px;
+    height: 150px;
+    background-color: #333;
+    border-radius: 40%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border: 2px solid var(--bg-border);
+}
+
+.avatar-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name {
+    color: var(--text-white);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.role-badge {
+    background-color: var(--bg-inner);
+    color: var(--text-white);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.separator {
+    height: 1px;
+    background-color: var(--bg-border);
+    margin: 25px 0;
+}
+
+/* Contact List */
+.contact-list {
+    list-style: none;
+    text-align: left;
+}
+
+.contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-inner);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--accent);
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+}
+
+.details .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+}
+
+.details .value {
+    font-size: 0.85rem;
+    color: var(--text-white);
+    white-space: nowrap;
+}
+
+/* Social & Resume Buttons */
+.social-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-row a {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.social-row a:hover {
+    color: var(--accent);
+}
+
+.resume-container {
+    margin-top: 30px;
+}
+
+.btn-download {
+    display: block;
+    background-color: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 0;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-download:hover {
+    background-color: var(--accent);
+    color: #000;
+}
+
+/* =========================================
+   4. MAIN CONTENT AREA (RIGHT PANEL)
+   ========================================= */
+.main-content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--bg-border);
+    border-radius: 20px;
+    flex-grow: 1; /* Takes remaining width */
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    position: relative;
+    min-height: 600px;
+}
+
+/* --- NAVBAR (TABS) --- */
+.navbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--bg-inner);
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 0 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 5;
+}
+
+.navbar-list {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.navbar-link {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s;
+}
+
+.navbar-link:hover, 
+.navbar-link.active {
+    color: var(--accent);
+}
+
+/* --- PAGE SWITCHING LOGIC --- */
+.content-page {
+    display: none; /* Hide all pages by default */
+    padding-top: 50px; /* Space for the navbar */
+    animation: fadeEffect 0.5s ease;
+}
+
+.content-page.active {
+    display: block; /* Only show the active one */
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.article-title {
+    font-size: 2rem;
+    color: var(--text-white);
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.article-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+/* =========================================
+   5. SECTIONS: SERVICES, RESUME, PROJECTS
+   ========================================= */
+
+/* --- SERVICES GRID (About Page) --- */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.service-card {
+    background-color: var(--bg-inner);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.service-icon-box {
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-top: 5px;
+}
+
+.service-item-title {
+    color: var(--text-white);
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.service-item-text {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+}
+
+/* --- TIMELINE (Resume Page) --- */
+.timeline {
+    margin-bottom: 30px;
+}
+
+.title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.title-wrapper .icon-box {
+    box-shadow: none; /* Remove shadow for flat header icon */
+}
+
+.timeline-list {
+    border-left: 1px solid var(--bg-border);
+    margin-left: 20px;
+    padding-left: 30px;
+    list-style: none;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.timeline-item::before {
+    content: ''; 
+    position: absolute; 
+    left: -35px; /* Adjust to sit exactly on the line */
+    top: 5px; 
+    width: 9px; 
+    height: 9px; 
+    background: var(--accent); 
+    border-radius: 50%; 
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.timeline-item-title {
+    font-size: 1rem;
+    color: var(--text-white);
+    margin-bottom: 5px;
+}
+
+.timeline-item span {
+    color: var(--accent);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.timeline-text {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+/* --- PORTFOLIO GRID (Projects Page) --- */
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    list-style: none;
+}
+
+.project-item a {
+    text-decoration: none;
+    display: block;
+}
+
+.project-img {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+/* The placeholder box for where images will go */
+.img-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-inner);
+    transition: 0.3s;
+}
+
+.project-item-icon-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.6);
+    padding: 15px;
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 1.5rem;
+    z-index: 2;
+}
+
+/* Hover Effects */
+.project-item:hover .img-placeholder {
+    transform: scale(1.1); /* Slight Zoom effect */
+}
+
+.project-title {
+    color: var(--text-white);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.project-category {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- CONTACT PAGE --- */
+.contact-form .text-block {
+    background-color: var(--bg-inner);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* =========================================
+   6. RESPONSIVE DESIGN (MOBILE)
+   ========================================= */
+@media (max-width: 900px) {
+    .page-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static; /* Stop sticky behavior on mobile */
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .navbar {
+        position: static;
+        width: 100%;
+        border-radius: 0;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        margin-bottom: 20px;
+        background: var(--bg-inner);
+    }
+    
+    .navbar-list {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .service-grid, .project-list {
+        grid-template-columns: 1fr; /* Stack vertically on small screens */
+    }
+}
+.project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.project-item:hover .project-img img {
+    transform: scale(1.1);
+}
