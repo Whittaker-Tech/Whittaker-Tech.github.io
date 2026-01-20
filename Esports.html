@@ -4,220 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    /* TECH TOOLKIT COLOR PALETTE (DARK MODE) */
-    :root { 
-        --primary: #AB162B;       /* RCBC Red */
-        --bg-body: #121212;       /* Deep Black/Grey */
-        --bg-panel: #1e1e1e;      /* Panel Grey */
-        --text-main: #e0e0e0;     /* Off-white */
-        --text-muted: #a0a0a0;    /* Muted text */
-        --border: #333;           /* Subtle borders */
-        --code-bg: #101010;       /* Darker for code blocks */
-        --success: #4caf50;
-        --phase-header: #2c2c2c;
-    }
-
-    body { 
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        line-height: 1.6; 
-        color: var(--text-main); 
-        max-width: 950px; 
-        margin: 0 auto; 
-        padding: 40px;
-        background-color: var(--bg-body);
-    }
-
-    /* BACK BUTTON STYLES */
-    .top-nav {
-        margin-bottom: 20px;
-    }
-    .back-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: color 0.3s ease;
-    }
-    .back-btn:hover {
-        color: var(--primary);
-    }
-    .back-btn i {
-        font-size: 0.9rem;
-    }
-    
-    /* HEADER STYLES */
-    header { 
-        text-align: center; 
-        border-bottom: 3px solid var(--primary); 
-        padding-bottom: 30px; 
-        margin-bottom: 50px; 
-        background: linear-gradient(180deg, var(--bg-body) 0%, #1a1a1a 100%);
-    }
-    .logo-box { 
-        margin: 0 auto 20px auto; 
-        text-align: center; 
-        background: transparent; 
-        padding: 15px 25px;
-        border-radius: 6px;
-        display: inline-block;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-    /* Placeholder style for logo if image is missing */
-    .logo-box img { max-height: 90px; width: auto; display: block; }
-
-    h1 { 
-        font-size: 28pt; 
-        margin: 15px 0 10px 0; 
-        color: #fff; 
-        text-transform: uppercase; 
-        letter-spacing: 2px; 
-        font-weight: 700;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-    .subtitle {
-        font-size: 14pt;
-        color: var(--primary);
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-    .meta { 
-        color: var(--primary);
-        font-weight: bold;
-        font-size: 11pt; 
-        font-family: 'Consolas', monospace;
-        border-top: 1px solid #333;
-        display: inline-block;
-        padding-top: 10px;
-        margin-top: 10px;
-    }
-
-    /* HEADINGS */
-    h2 { 
-        color: var(--primary); 
-        font-size: 18pt; 
-        border-left: 5px solid var(--primary); 
-        background: linear-gradient(90deg, var(--bg-panel) 0%, transparent 100%);
-        padding: 10px 15px; 
-        margin-top: 50px; 
-        border-radius: 0 4px 4px 0;
-    }
-    h3 { color: #fff; font-size: 14pt; margin-top: 35px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-    
-    /* TABLES */
-    table { 
-        width: 100%; 
-        border-collapse: separate; 
-        border-spacing: 0; 
-        margin: 20px 0; 
-        font-size: 10pt; 
-        background-color: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        overflow: hidden;
-    }
-    th { 
-        background-color: #252525; 
-        color: var(--primary); 
-        text-transform: uppercase;
-        font-size: 0.85em;
-        letter-spacing: 1px;
-        text-align: left; 
-        padding: 15px; 
-        border-bottom: 2px solid var(--primary);
-    }
-    td { border-bottom: 1px solid var(--border); padding: 15px; vertical-align: top; }
-    tr:last-child td { border-bottom: none; }
-    
-    /* POST-IMAGING PHASE CARDS */
-    .phase-card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        margin-bottom: 20px;
-        overflow: hidden;
-    }
-    .phase-header {
-        background: var(--phase-header);
-        padding: 10px 15px;
-        font-weight: bold;
-        color: var(--primary);
-        border-bottom: 1px solid var(--border);
-        text-transform: uppercase;
-        font-size: 0.9em;
-        letter-spacing: 1px;
-    }
-    .phase-content {
-        padding: 15px;
-    }
-    .step-list {
-        margin: 0;
-        padding-left: 20px;
-    }
-    .step-list li {
-        margin-bottom: 8px;
-    }
-    
-    /* ALERTS */
-    .alert { padding: 15px; border-radius: 4px; margin: 20px 0; font-size: 0.95em; border: 1px solid transparent; }
-    .alert-info { 
-        background-color: rgba(33, 150, 243, 0.1); 
-        border-left: 4px solid #2196F3; 
-        color: #64b5f6; 
-    }
-    .alert-danger { 
-        background-color: rgba(171, 22, 43, 0.15); 
-        border-left: 4px solid var(--primary); 
-        color: #ff8a80; 
-    }
-
-    /* FINAL SUCCESS BANNER */
-    .success-banner {
-        background: rgba(76, 175, 80, 0.1);
-        border: 2px solid #4caf50;
-        color: #4caf50;
-        text-align: center;
-        padding: 20px;
-        margin-top: 40px;
-        border-radius: 8px;
-        font-size: 1.2em;
-        font-weight: bold;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-
-    /* CODE BOXES */
-    .code-box { 
-        background: var(--code-bg); 
-        color: #dcdcdc;
-        padding: 20px; 
-        border-radius: 4px; 
-        font-family: 'Consolas', 'Monaco', monospace; 
-        font-size: 0.85em; 
-        white-space: pre-wrap; 
-        border: 1px solid #333;
-        box-shadow: inset 0 0 10px #000;
-        margin-bottom: 20px;
-    }
-    .comment { color: #6a9955; }
-    
-    strong { color: #fff; }
-
-    /* FOOTER */
-    footer { 
-        margin-top: 80px; 
-        font-size: 9pt; 
-        text-align: center; 
-        color: var(--text-muted); 
-        border-top: 1px solid var(--border); 
-        padding-top: 20px; 
-    }
-</style>
+<link rel="stylesheet" href="assets/css/esports.css">
 <title>Esports Configuration Guide | Dan Whittaker</title>
 </head>
 <body>
@@ -228,6 +15,7 @@
     </a>
 </nav>
 
+<main>
 <header>
     <div class="logo-box">
         <i class="fas fa-gamepad" style="font-size: 4rem; color: #fff;"></i>
@@ -252,10 +40,10 @@
 
 <table>
     <tr>
-        <th width="20%">User Account</th>
-        <th width="20%">Role</th>
-        <th width="30%">Interface & Environment</th>
-        <th>Purpose & Access</th>
+        <th scope="col" width="20%">User Account</th>
+        <th scope="col" width="20%">Role</th>
+        <th scope="col" width="30%">Interface & Environment</th>
+        <th scope="col">Purpose & Access</th>
     </tr>
     <tr>
         <td><strong>Esports</strong></td>
@@ -528,11 +316,13 @@ echo SYSTEM UNLOCKED.
 <p>Reference table for static IP assignment in <strong>Phase 1</strong>.</p>
 <table>
     <tr>
-        <th width="30%">Hostname</th>
-        <th>Assigned Static IP</th>
+        <th scope="col" width="30%">Hostname</th>
+        <th scope="col">Assigned Static IP</th>
     </tr>
     <tr><td><strong>ESPORTS-01</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-02</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-03</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-04</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-05</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-06</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-07</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-08</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-09</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-10</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-11</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-12</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-13</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-14</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-15</strong></td><td>172.22.xxx.xx</td></tr><tr><td><strong>ESPORTS-16</strong></td><td>172.22.xxx.xx</td></tr>
 </table>
+
+</main>
 
 <footer>
     Documentation by Dan Whittaker<br>

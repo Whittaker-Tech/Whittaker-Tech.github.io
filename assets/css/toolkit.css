@@ -190,41 +190,7 @@ body {
 
 .btn-back:hover { color: #ccc; }
 
-/* --- 8. TOGGLE SWITCH --- */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 46px;
-    height: 24px;
-    flex-shrink: 0;
-}
-
-.switch input { opacity: 0; width: 0; height: 0; }
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #444;
-    transition: .4s;
-    border-radius: 34px;
-    border: 1px solid #555;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px; width: 16px;
-    left: 3px; bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider { background-color: #Ab162B; border-color: #Ab162B; }
-input:checked + .slider:before { transform: translateX(22px); }
-
-/* --- 9. UTILITIES & FOOTER --- */
+/* --- 8. UTILITIES & FOOTER --- */
 .hidden { display: none !important; }
 
 .loader {
@@ -252,17 +218,41 @@ input:checked + .slider:before { transform: translateX(22px); }
     text-align: center;
     width: 100%;
 }
-/* --- 9. ROOM CHECKER & GHOST HUNTER GRIDS --- */
+
+/* --- 9. NAVIGATION & LAYOUT --- */
 #checker-view-bldg, 
 #ghost-view-bldg {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Forces exactly two columns */
-    gap: 8px; /* Balanced spacing between buttons */
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     margin-bottom: 10px;
 }
 
-/* Ensure buttons inside these grids don't have extra vertical margins */
 #checker-view-bldg .btn, 
 #ghost-view-bldg .btn {
     margin: 0; 
+}
+
+/* Back Button Styles */
+.top-nav {
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 10px 20px 0 20px;
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #a0a0a0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    font-family: 'Segoe UI', sans-serif;
+}
+.back-btn:hover {
+    color: #AB162B;
+}
+.back-btn i {
+    font-size: 0.9rem;
 }

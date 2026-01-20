@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dan Whittaker | IT Systems Administrator</title>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,7 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="avatar-box">
-                    <img src="images/profile-pic.jpg" alt="Daniel Whittaker">
+                    <img src="assets/img/profile-pic.jpg" alt="Daniel Whittaker" width="150" height="150">
                 </div>
                 <h1 class="name">Dan Whittaker</h1>
                 <div class="role-badge">IT Systems Administrator</div>
@@ -44,12 +44,12 @@
             </ul>
 
             <div class="social-row">
-                <a href="https://linkedin.com/in/dwhittaker578" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:Dan@Whittaker-Tech.com"><i class="fas fa-paper-plane"></i></a>
+                <a href="https://linkedin.com/in/dwhittaker578" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:Dan@Whittaker-Tech.com" aria-label="Send Email"><i class="fas fa-paper-plane"></i></a>
             </div>
 
             <div class="resume-container">
-                <a href="assets/DanWhittakerResume.pdf" target="_blank" class="btn-download">
+                <a href="assets/DanWhittakerResume.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
                     Download Resume <i class="fas fa-download"></i>
                 </a>
             </div>
@@ -235,7 +235,7 @@
                                         <i class="fas fa-gamepad"></i>
                                     </div>
                                     
-                                    <img src="images/esports.jpg" alt="Esports Lab">
+                                    <img src="assets/img/esports.jpg" alt="Esports Lab">
                                 </figure>
                                 
                                 <h3 class="project-title">Esports Lab</h3>
@@ -244,11 +244,11 @@
                         </li>
 
                         <li class="project-item">
-                            <a href="Toolkit/index.html">
+                            <a href="toolkit.html">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box"><i class="fas fa-tools"></i></div>
                                     
-                                    <img src="images/toolkit.jpg" alt="IT Technician Toolkit">
+                                    <img src="assets/img/toolkit.jpg" alt="IT Technician Toolkit">
                                 </figure>
                                 <h3 class="project-title">OIT Technician Toolkit</h3>
                                 <p class="project-category">Web, JavaScript, PowerShell, C# Handler, & API Integration specifically designed to assist and automate day to day tasks of the RCBC OIT Team.</p>
@@ -281,7 +281,7 @@
                                     <a href="mailto:Dan@Whittaker-Tech.com" style="color: white; text-decoration: none; transition: 0.3s;">Dan@Whittaker-Tech.com</a>
                                 </p>
                                 <div style="display: inline-flex; gap: 15px; flex-wrap: wrap;">
-                                    <a href="https://www.linkedin.com/in/dwhittaker578" target="_blank" class="btn-download" style="padding: 10px 25px; flex: 1; text-align: center; min-width: 140px;">
+                                    <a href="https://www.linkedin.com/in/dwhittaker578" target="_blank" rel="noopener noreferrer" class="btn-download" style="padding: 10px 25px; flex: 1; text-align: center; min-width: 140px;">
                                         <i class="fab fa-linkedin" style="margin-right: 8px;"></i> LinkedIn
                                     </a>
                                 </div>
@@ -295,29 +295,7 @@
         </main>
     </div>
 
-    <script>
-        const navLinks = document.querySelectorAll("[data-nav-link]");
-        const pages = document.querySelectorAll("[data-page]");
-
-        navLinks.forEach((link) => {
-            link.addEventListener("click", function () {
-                const targetPage = this.getAttribute("data-nav-link");
-
-                // 1. Update Active Link
-                navLinks.forEach((nav) => nav.classList.remove("active"));
-                this.classList.add("active");
-
-                // 2. Update Active Page
-                pages.forEach((page) => {
-                    if (page.getAttribute("data-page") === targetPage) {
-                        page.classList.add("active");
-                    } else {
-                        page.classList.remove("active");
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
 <script data-goatcounter="https://danwhittaker.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>
