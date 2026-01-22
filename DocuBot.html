@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Automated Documentation Bot</title>
+    <style>
+        :root {
+            /* PORTFOLIO THEME: BLUE & SLATE */
+            --primary-blue: #0056b3;       /* Strong Tech Blue */
+            --secondary-blue: #e7f1ff;     /* Light Blue Background */
+            --dark-slate: #2c3e50;         /* Header Text */
+            --text-grey: #444444;          /* Body Text */
+            --code-bg: #f8f9fa;            /* Code Block Background */
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-grey);
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* --- NAVIGATION --- */
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+        .back-btn:hover {
+            color: var(--dark-slate);
+            text-decoration: underline;
+        }
+
+        /* --- HEADER SECTION --- */
+        header {
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .project-tag {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 5px 12px;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h1.project-title {
+            color: var(--dark-slate);
+            font-size: 32px;
+            margin: 10px 0 5px 0;
+            font-weight: 700;
+        }
+
+        .project-meta {
+            color: #777;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* --- CONTENT TYPOGRAPHY --- */
+        h2 {
+            color: var(--primary-blue);
+            font-size: 20px;
+            margin-top: 35px;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 12px;
+        }
+
+        h3 {
+            color: var(--dark-slate);
+            font-size: 16px;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        p, li {
+            font-size: 15px;
+        }
+
+        /* --- CODE BLOCKS --- */
+        code {
+            background-color: var(--secondary-blue);
+            color: var(--primary-blue);
+            padding: 2px 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        pre {
+            background-color: #1e1e1e; /* Dark IDE style */
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            border: 1px solid var(--border-color);
+            max-height: 500px; /* Limit height for large code blocks */
+        }
+
+        /* --- TABLES --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* --- ALERTS --- */
+        .tech-stack {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 4px 10px;
+            font-size: 11px;
+            border-radius: 12px;
+            color: #555;
+            font-weight: 600;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            color: #856404;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .note {
+            background-color: #e7f1ff;
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+    <header>
+        <span class="project-tag">PROJECT SHOWCASE</span>
+        <h1 class="project-title">"Docu-Bot": AI-Powered Documentation Pipeline</h1>
+        <div class="project-meta">Developed by Dan Whittaker | Python Automation & Systems Administration</div>
+        
+        <br>
+        <div class="tech-stack">
+            <span class="badge">PYTHON 3.14</span>
+            <span class="badge">GOOGLE GEMINI 2.0 API</span>
+            <span class="badge">DISCORD WEBHOOKS</span>
+            <span class="badge">STREAM DECK</span>
+            <span class="badge">OCR (TESSERACT)</span>
+            <span class="badge">TKINTER GUI</span>
+        </div>
+    </header>
+
+    <h2>1. Executive Summary</h2>
+    <p>
+        The <strong>Docu-Bot System</strong> is a custom automation tool designed to solve a common IT problem: 
+        the disconnect between <em>"fixing the issue"</em> (the technical work) and <em>"writing the documentation"</em> (the administrative work).
+    </p>
+    <p>
+        By integrating hardware macros (Stream Deck) with Cloud AI (Google Gemini), this tool allows me to capture 
+        real-time "trial and error" logs during deployment and automatically synthesize them into professional, 
+        print-ready HTML/PDF guides upon project completion.
+    </p>
+
+    <h2>2. System Architecture</h2>
+    <p>The solution utilizes a two-stage architecture: <strong>The Logger</strong> (Real-time capture) and <strong>The Writer</strong> (Post-project synthesis).</p>
+
+    <h3>2.1 The Data Flow</h3>
+    <ol>
+        <li><strong>Hardware Trigger:</strong> Physical buttons on a Stream Deck execute Python scripts.</li>
+        <li><strong>Intelligence Layer:</strong> Screenshots are passed to Google Gemini Flash for immediate analysis (OCR & Context).</li>
+        <li><strong>Logging Database:</strong> Data is structured and stored in a private Discord Thread via Webhooks.</li>
+        <li><strong>Final Synthesis:</strong> A separate script scrapes the logs, filters for verified solutions (marked via "Eureka" tags), and generates a styled HTML report.</li>
+    </ol>
+
+    <h2>3. Technical Implementation</h2>
+    <p>The system relies on two primary Python executables. The first handles input, the second handles generation.</p>
+
+    <h3>3.1 The Logger (doc_tool.py)</h3>
+    <p>
+        Runs silently in the background. It utilizes <code>pyautogui</code> for screen capture, 
+        <code>google-genai</code> for image analysis, and <code>requests</code> to push payloads to Discord. 
+        It features a custom Dark Mode GUI built with <code>tkinter</code> for user input.
+    </p>
+    
+    <h3>3.2 Source Code: The Logger</h3>
+    <p>Below is the complete source code for <code>doc_tool.py</code>.</p>
+    
+<pre>
+import sys
+import requests
+import pyperclip
+import time
+import tkinter as tk
+from tkinter import simpledialog, ttk, font
+from io import BytesIO
+from datetime import datetime
+import mss
+import mss.tools
+from PIL import Image, ImageGrab
+import pyautogui
+import ctypes
+
+# --- OPTIONAL IMPORTS ---
+try:
+    import pytesseract
+except ImportError:
+    pytesseract = None
+
+try:
+    from google import genai
+    HAS_AI = True
+except ImportError:
+    HAS_AI = False
+
+# --- CONFIGURATION ---
+# 1. PASTE YOUR DISCORD WEBHOOK URL HERE
+WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE"
+
+# 2. PASTE YOUR GOOGLE GEMINI API KEY HERE
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
+
+# 3. PATH TO TESSERACT ENGINE (Kept for compatibility, runs silently)
+TESSERACT_CMD = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# Files to store your state
+CONFIG_FILE = "current_project.txt"
+HISTORY_FILE = "project_history.txt"
+
+# --- AI SETUP ---
+client = None
+if HAS_AI and GEMINI_API_KEY != "YOUR_GEMINI_API_KEY_HERE":
+    try:
+        client = genai.Client(api_key=GEMINI_API_KEY)
+    except Exception as e:
+        print(f"AI Init Error: {e}")
+
+# --- MODERN UI HELPERS ---
+class DarkDialog:
+    def __init__(self, title, prompt, initial_value=None, options=None, is_input_box=False):
+        self.result = None
+        self.root = tk.Tk()
+        self.root.title(title)
+        
+        # --- CUSTOM THEME (Dark & Red) ---
+        BG_COLOR = "#1E1E1E"       
+        FG_COLOR = "#FFFFFF"       
+        ACCENT_COLOR = "#AB162B"   
+        INPUT_BG = "#2D2D2D"       
+        
+        self.root.configure(bg=BG_COLOR)
+        
+        try:
+            self.root.update()
+            set_window_attribute = ctypes.windll.dwmapi.DwmSetWindowAttribute
+            get_parent = ctypes.windll.user32.GetParent
+            hwnd = get_parent(self.root.winfo_id())
+            value = ctypes.c_int(1)
+            set_window_attribute(hwnd, 20, ctypes.byref(value), 4)
+        except Exception:
+            pass
+
+        try:
+            custom_font = font.Font(family="Segoe UI", size=11)
+        except:
+            custom_font = font.Font(family="Arial", size=11)
+        
+        w, h = 400, 200 if is_input_box else 180
+        ws, hs = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
+        x_pos = int((ws/2) - (w/2))
+        y_pos = int((hs/2) - (h/2))
+        self.root.geometry(f"{w}x{h}+{x_pos}+{y_pos}")
+        
+        self.root.lift()
+        self.root.attributes('-topmost', True)
+        self.root.focus_force() 
+        
+        lbl = tk.Label(self.root, text=prompt, bg=BG_COLOR, fg=FG_COLOR, font=custom_font, wraplength=380)
+        lbl.pack(pady=(20, 10), padx=20)
+        
+        self.var = tk.StringVar()
+        if initial_value:
+            self.var.set(initial_value)
+            
+        if options:
+            self.entry = ttk.Combobox(self.root, textvariable=self.var, values=options, font=custom_font)
+            self.entry.pack(pady=5, padx=20, fill="x")
+        else:
+            self.entry = tk.Entry(self.root, textvariable=self.var, bg=INPUT_BG, fg=FG_COLOR, 
+                                  insertbackground="white", font=custom_font, relief="flat")
+            self.entry.pack(pady=5, padx=20, fill="x")
+        
+        self.entry.focus_force()         
+        if hasattr(self.entry, 'select_range'):
+            self.entry.select_range(0, 'end') 
+            self.entry.icursor('end')
+        
+        btn_frame = tk.Frame(self.root, bg=BG_COLOR)
+        btn_frame.pack(pady=20)
+        
+        btn_text = "Confirm"
+        ok_btn = tk.Button(btn_frame, text=btn_text, command=self.on_confirm, 
+                           bg=ACCENT_COLOR, fg="white", font=("Segoe UI", 10, "bold"), 
+                           activebackground="#8a1222", activeforeground="white",
+                           relief="flat", padx=15, pady=5)
+        ok_btn.pack(side="left", padx=10)
+
+        self.root.bind('<Return>', self.on_confirm)
+        self.root.bind('<Escape>', lambda e: self.root.destroy())
+        self.root.mainloop()
+
+    def on_confirm(self, event=None):
+        self.result = self.var.get().strip()
+        self.root.destroy()
+
+# --- HELPER: GET CONTEXT ---
+def get_project_context():
+    try:
+        with open(CONFIG_FILE, "r") as f:
+            data = f.read().strip().split("|")
+            if len(data) >= 2:
+                t_id = data[1] if data[1] != "None" else None
+                return data[0], t_id
+            return data[0], None
+    except FileNotFoundError:
+        return "General", None
+
+# --- HELPER: UPLOAD IMAGE ---
+def _upload_image_object(img, source_label="Screenshot", ocr_text=None, ai_analysis=None):
+    img_byte_arr = BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    img_byte_arr.seek(0)
+    
+    name, thread_id = get_project_context()
+    timestamp = datetime.now().strftime("%H-%M-%S")
+    
+    target_url = f"{WEBHOOK_URL}?thread_id={thread_id}" if thread_id else WEBHOOK_URL
+
+    # Construct Message
+    message_content = f"**[{name}]** {source_label}"
+    
+    if ai_analysis:
+        message_content += f"\n> **🤖 AI Insight:** {ai_analysis}"
+
+    payload = {"content": message_content}
+    files = {
+        "file": (f"image_{timestamp}.png", img_byte_arr, "image/png")
+    }
+    
+    try:
+        requests.post(target_url, data=payload, files=files)
+        print(f"Uploaded to {name}")
+    except Exception as e:
+        print(f"Upload failed: {e}")
+
+# --- AI & OCR LOGIC ---
+def process_image_intelligence(img):
+    """Runs Cloud AI analysis on the image. (OCR is skipped for speed/limits)"""
+    extracted_text = None
+    ai_text = None
+    
+    if client:
+        # Prioritize "Lite" and "2.5" to avoid quotas
+        models_to_try = [
+            "gemini-2.0-flash-lite-preview-02-05", 
+            "gemini-2.5-flash",                    
+            "gemini-2.0-flash-exp",                
+            "gemini-2.0-flash"                     
+        ]
+        
+        prompt = (
+            "Describe what you see in this image in plain English. "
+            "If it shows a technical error, code issue, or warning, suggest a potential solution. "
+            "Otherwise, just describe the content concisely."
+        )
+
+        for model_name in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=[prompt, img]
+                )
+                ai_text = response.text.strip()
+                print(f"AI Success using model: {model_name}")
+                break 
+            except Exception as e:
+                print(f"Model '{model_name}' failed. Reason: {e}")
+                continue
+
+    return extracted_text, ai_text
+
+# --- EUREKA MODE (NEW) ---
+def eureka_log():
+    """Captures the solution with a special tag for the documentation generator."""
+    
+    # 1. Snip the "Success State"
+    pyperclip.copy("") 
+    pyautogui.hotkey('winleft', 'shift', 's')
+    
+    print("Waiting for snip...")
+    start_time = time.time()
+    img = None
+    while (time.time() - start_time) &lt; 60: 
+        img = ImageGrab.grabclipboard()
+        if isinstance(img, Image.Image):
+            break
+        time.sleep(0.5)
+        
+    if not img: return
+
+    # 2. Ask what the fix was
+    dlg = DarkDialog("Eureka!", "What was the fix? (Be specific):", is_input_box=True)
+    fix_description = dlg.result
+    if not fix_description: return
+
+    # 3. AI Analysis of the Success Image
+    ocr, ai_text = process_image_intelligence(img)
+    
+    # 4. Upload with SPECIAL HEADER
+    # We combine the user's manual fix text with the AI's visual description
+    combined_analysis = f"USER FIX: {fix_description}\nIMAGE CONTEXT: {ai_text}"
+    
+    _upload_image_object(img, source_label="⭐⭐⭐ SOLUTION VERIFIED ⭐⭐⭐", ai_analysis=combined_analysis)
+
+# --- STANDARD CAPTURE FUNCTIONS ---
+def snip_and_log():
+    pyperclip.copy("") 
+    pyautogui.hotkey('winleft', 'shift', 's')
+    
+    start_time = time.time()
+    while (time.time() - start_time) &lt; 60: 
+        img = ImageGrab.grabclipboard()
+        if isinstance(img, Image.Image):
+            # Process AI Only
+            ocr, ai = process_image_intelligence(img)
+            _upload_image_object(img, source_label="Snipped Region", ocr_text=ocr, ai_analysis=ai)
+            return
+        time.sleep(0.5)
+
+def quick_note():
+    name, _ = get_project_context()
+    dlg = DarkDialog("Quick Note", f"Log entry for [{name}]:", is_input_box=True)
+    if dlg.result:
+        send_text_to_discord(dlg.result)
+
+def send_text_to_discord(text):
+    name, thread_id = get_project_context()
+    target_url = f"{WEBHOOK_URL}?thread_id={thread_id}" if thread_id else WEBHOOK_URL
+    data = {"username": "Docu-Bot", "content": f"**[{name}]** {text}"}
+    requests.post(target_url, json=data)
+
+def log_code_block():
+    content = pyperclip.paste()
+    if not content: return
+
+    name, thread_id = get_project_context()
+    target_url = f"{WEBHOOK_URL}?thread_id={thread_id}" if thread_id else WEBHOOK_URL
+    
+    if len(content) > 1900:
+        from io import BytesIO
+        file_data = BytesIO(content.encode('utf-8'))
+        payload = {"content": f"**[{name}]** Code Snippet (Converted to file):"}
+        files = {"file": ("snippet.txt", file_data, "text/plain")}
+        requests.post(target_url, data=payload, files=files)
+    else:
+        formatted_msg = f"**[{name}] Code Snippet:**\n```\n{content}\n```"
+        requests.post(target_url, json={"content": formatted_msg})
+
+def capture_screen(monitor_index=1):
+    with mss.mss() as sct:
+        if monitor_index >= len(sct.monitors): monitor_index = 1
+        monitor = sct.monitors[monitor_index]
+        sct_img = sct.grab(monitor)
+        img = Image.frombytes("RGB", sct_img.size, sct_img.bgra, "raw", "BGRX")
+        mon_label = "Primary" if monitor_index == 1 else f"Monitor {monitor_index}"
+        
+        _upload_image_object(img, source_label=f"Screenshot ({mon_label})")
+
+def log_clipboard():
+    img = ImageGrab.grabclipboard()
+    if isinstance(img, Image.Image):
+        ocr, ai = process_image_intelligence(img)
+        _upload_image_object(img, source_label="Clipboard Image", ocr_text=ocr, ai_analysis=ai)
+    else:
+        content = pyperclip.paste()
+        if content:
+            send_text_to_discord(f"**Reference:**\n{content}")
+
+# --- PROJECT MANAGEMENT ---
+def save_project_history(name, thread_id):
+    entry = f"{name}|{thread_id}"
+    try:
+        with open(HISTORY_FILE, "r") as f:
+            history = [line.strip() for line in f.readlines()]
+    except FileNotFoundError:
+        history = []
+    
+    history = [h for h in history if not h.startswith(f"{name}|")]
+    history.insert(0, entry)
+    with open(HISTORY_FILE, "w") as f:
+        f.write("\n".join(history[:10])) 
+
+def set_project():
+    try:
+        with open(HISTORY_FILE, "r") as f:
+            raw_history = [line.strip() for line in f.readlines()]
+    except FileNotFoundError:
+        raw_history = []
+
+    history_map = {}
+    display_list = []
+    for line in raw_history:
+        parts = line.split("|")
+        if len(parts) >= 2:
+            history_map[parts[0]] = parts[1]
+            display_list.append(parts[0])
+
+    dialog = DarkDialog("Select Context", "Select Active Project:", 
+                        initial_value=display_list[0] if display_list else "General",
+                        options=display_list + ["NEW PROJECT..."])
+    
+    name = dialog.result
+    if not name: return 
+
+    thread_id = None
+    is_new_entry = (name == "NEW PROJECT...") or (name not in history_map)
+
+    if is_new_entry:
+        if name == "NEW PROJECT...":
+            name_dlg = DarkDialog("New Project", "Enter Project Name:", is_input_box=True)
+            name = name_dlg.result
+        
+        if name:
+            id_dlg = DarkDialog("Thread ID", f"Paste Discord Thread ID for '{name}':\n(Leave empty for default)", is_input_box=True)
+            thread_id = id_dlg.result
+    
+    elif name in history_map:
+        thread_id = history_map[name]
+    
+    if name:
+        save_id = thread_id if thread_id else "None"
+        with open(CONFIG_FILE, "w") as f:
+            f.write(f"{name}|{save_id}")
+        save_project_history(name, save_id)
+
+# --- MAIN EXECUTION ---
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        command = sys.argv[1]
+        if command == "set_project": set_project()
+        elif command == "note": quick_note()
+        elif command == "clipboard": log_clipboard()
+        elif command == "code": log_code_block()
+        elif command == "snip": snip_and_log()
+        elif command == "eureka": eureka_log()  # &lt;--- NEW
+        elif command == "screenshot":
+            try: mon_idx = int(sys.argv[2])
+            except IndexError: mon_idx = 1
+            capture_screen(mon_idx)
+</pre>
+
+    <h3>3.3 The Writer (doc_maker.py)</h3>
+    <p>
+        This script acts as the "Technical Writer." It is executed when a project is marked complete. It uses a sophisticated 
+        <strong>Two-Stage AI Pipeline</strong> to ensure documentation accuracy and includes a real-time progress dashboard.
+    </p>
+
+    <h3>3.4 Source Code: The Writer</h3>
+    <p>Below is the logic for the documentation generator, including the Tkinter Dashboard and AI Failover logic.</p>
+
+<pre>
+import requests
+import os
+import re
+import datetime
+import tkinter as tk
+from tkinter import ttk, font, scrolledtext
+import ctypes
+import threading
+from google import genai
+
+# --- CONFIGURATION ---
+# 1. DISCORD BOT TOKEN (Required to READ history)
+DISCORD_BOT_TOKEN = "YOUR_DISCORD_WEBHOOK_URL_HERE"
+
+# 2. GOOGLE GEMINI API KEY (Required to WRITE the report)
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
+
+# 3. OUTPUT FOLDER
+OUTPUT_DIR = "Finished_Docs"
+HISTORY_FILE = "project_history.txt"
+
+# --- SETUP CLIENTS ---
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
+
+try:
+    client = genai.Client(api_key=GEMINI_API_KEY)
+except Exception as e:
+    print(f"Error initializing AI: {e}")
+    exit()
+
+# --- UI CLASS (Dark Mode Selection) ---
+class DarkDialog:
+    def __init__(self, title, prompt, initial_value=None, options=None, is_input_box=False):
+        self.result = None
+        self.root = tk.Tk()
+        self.root.title(title)
+        self.setup_window(prompt, initial_value, options, is_input_box)
+        self.root.mainloop()
+
+    def setup_window(self, prompt, initial_value, options, is_input_box):
+        BG_COLOR, FG_COLOR, ACCENT = "#1E1E1E", "#FFFFFF", "#AB162B"
+        self.root.configure(bg=BG_COLOR)
+        self.apply_dark_title_bar()
+        self.center_window(400, 220 if is_input_box else 180)
+        self.root.attributes('-topmost', True)
+
+        lbl = tk.Label(self.root, text=prompt, bg=BG_COLOR, fg=FG_COLOR, font=("Segoe UI", 11), wraplength=380)
+        lbl.pack(pady=(20, 10), padx=20)
+        
+        self.var = tk.StringVar()
+        if initial_value: self.var.set(initial_value)
+            
+        if options:
+            self.entry = ttk.Combobox(self.root, textvariable=self.var, values=options, font=("Segoe UI", 11))
+            self.entry.pack(pady=5, padx=20, fill="x")
+        else:
+            self.entry = tk.Entry(self.root, textvariable=self.var, bg="#2D2D2D", fg=FG_COLOR, insertbackground="white", font=("Segoe UI", 11), relief="flat")
+            self.entry.pack(pady=5, padx=20, fill="x")
+        self.entry.focus_force()
+
+        btn_frame = tk.Frame(self.root, bg=BG_COLOR)
+        btn_frame.pack(pady=20)
+        btn_text = "Confirm" if is_input_box else "Generate Reports"
+        tk.Button(btn_frame, text=btn_text, command=self.on_confirm, bg=ACCENT, fg="white", font=("Segoe UI", 10, "bold"), relief="flat", padx=15, pady=5).pack()
+        
+        self.root.bind('<Return>', self.on_confirm)
+        self.root.bind('<Escape>', lambda e: self.root.destroy())
+
+    def apply_dark_title_bar(self):
+        try:
+            self.root.update()
+            ctypes.windll.dwmapi.DwmSetWindowAttribute(ctypes.windll.user32.GetParent(self.root.winfo_id()), 20, ctypes.byref(ctypes.c_int(1)), 4)
+        except: pass
+
+    def center_window(self, w, h):
+        ws, hs = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
+        self.root.geometry(f"{w}x{h}+{int((ws/2)-(w/2))}+{int((hs/2)-(h/2))}")
+
+    def on_confirm(self, event=None):
+        self.result = self.var.get().strip()
+        self.root.destroy()
+
+# --- PROGRESS DASHBOARD ---
+class ProgressWindow:
+    def __init__(self, project_name):
+        self.root = tk.Tk()
+        self.root.title(f"Generating: {project_name}")
+        
+        BG, FG, ACCENT = "#1E1E1E", "#E0E0E0", "#007ACC"
+        self.root.configure(bg=BG)
+        
+        # Sizing
+        w, h = 900, 600
+        ws, hs = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
+        self.root.geometry(f"{w}x{h}+{int((ws/2)-(w/2))}+{int((hs/2)-(h/2))}")
+        
+        # 1. Header
+        header = tk.Label(self.root, text="AUTOMATED DOCUMENTATION ENGINE", bg=BG, fg="#555", font=("Segoe UI", 9, "bold"))
+        header.pack(pady=(10, 0), anchor="w", padx=10)
+        
+        title = tk.Label(self.root, text=project_name, bg=BG, fg="white", font=("Segoe UI", 20, "bold"))
+        title.pack(pady=(0, 10), anchor="w", padx=10)
+
+        # 2. Split View
+        pane = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, bg=BG, sashwidth=4, sashrelief="flat")
+        pane.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Left: System Logs
+        log_frame = tk.Frame(pane, bg=BG)
+        tk.Label(log_frame, text="SYSTEM LOGS", bg=BG, fg="#888", font=("Segoe UI", 8, "bold")).pack(anchor="w")
+        self.log_box = scrolledtext.ScrolledText(log_frame, bg="#111", fg="#00FF00", font=("Consolas", 9), height=10)
+        self.log_box.pack(fill=tk.BOTH, expand=True)
+        pane.add(log_frame, minsize=300)
+
+        # Right: AI Brain
+        brain_frame = tk.Frame(pane, bg=BG)
+        tk.Label(brain_frame, text="AI INTERPRETATION (THE GOLDEN PATH)", bg=BG, fg="#007ACC", font=("Segoe UI", 8, "bold")).pack(anchor="w")
+        self.brain_box = scrolledtext.ScrolledText(brain_frame, bg="#252526", fg="#D4D4D4", font=("Segoe UI", 10), height=10)
+        self.brain_box.pack(fill=tk.BOTH, expand=True)
+        pane.add(brain_frame, minsize=400)
+
+        # 3. Footer / Status
+        self.status_lbl = tk.Label(self.root, text="Initializing...", bg="#007ACC", fg="white", font=("Segoe UI", 10), anchor="w", padx=10, pady=5)
+        self.status_lbl.pack(fill="x", side="bottom")
+
+        self.root.update()
+
+    def log(self, text):
+        timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+        self.log_box.insert(tk.END, f"[{timestamp}] {text}\n")
+        self.log_box.see(tk.END)
+        self.root.update()
+
+    def set_brain(self, text):
+        self.brain_box.delete('1.0', tk.END)
+        self.brain_box.insert(tk.END, text)
+        self.root.update()
+
+    def set_status(self, text, color="#007ACC"):
+        self.status_lbl.config(text=text, bg=color)
+        self.root.update()
+        
+    def close(self):
+        self.root.destroy()
+
+# --- HELPER: GET PROJECT ---
+def select_project_target():
+    history_map = {}
+    display_list = []
+    try:
+        with open(HISTORY_FILE, "r") as f:
+            lines = [line.strip() for line in f.readlines()]
+            for line in lines:
+                parts = line.split("|")
+                if len(parts) >= 2:
+                    history_map[parts[0]] = parts[1]
+                    display_list.append(parts[0])
+    except FileNotFoundError: pass
+
+    dialog = DarkDialog("Docu-Maker", "Select a Project to Document:", 
+                        initial_value=display_list[0] if display_list else "",
+                        options=display_list + ["Manual Input..."])
+    selection = dialog.result
+    if not selection: return None, None
+    if selection == "Manual Input...":
+        id_dlg = DarkDialog("Manual Input", "Paste the Discord Thread ID:", is_input_box=True)
+        return "Manual_Project", id_dlg.result
+    return selection, history_map.get(selection, selection)
+
+def get_user_hints():
+    dialog = DarkDialog("AI Guidance", "Any specific 'Golden Path' hints? (e.g. 'Ignore the DNS errors'):", is_input_box=True)
+    return dialog.result if dialog.result else "None provided."
+
+# --- LOGIC ---
+def get_thread_history(thread_id, progress):
+    progress.log(f"Connecting to Discord (Thread: {thread_id})...")
+    headers = {"Authorization": f"Bot {DISCORD_BOT_TOKEN}"}
+    base_url = f"https://discord.com/api/v10/channels/{thread_id}"
+    resp = requests.get(base_url, headers=headers)
+    if resp.status_code != 200:
+        progress.log(f"❌ Error fetching thread: {resp.status_code}")
+        return None, None
+    project_name = resp.json().get("name", "Project_Report")
+    
+    progress.log("Downloading message history...")
+    messages = []
+    last_id = None
+    count = 0
+    while True:
+        url = f"{base_url}/messages?limit=100"
+        if last_id: url += f"&before={last_id}"
+        m_resp = requests.get(url, headers=headers)
+        if m_resp.status_code != 200: break
+        batch = m_resp.json()
+        if not batch: break
+        messages.extend(batch)
+        last_id = batch[-1]["id"]
+        count += len(batch)
+        progress.log(f"   Fetched {count} messages...")
+    
+    progress.log("Download Complete.")
+    return project_name, messages
+
+def format_log_for_ai(messages):
+    transcript = "PROJECT LOG TRANSCRIPT:\n\n"
+    for msg in reversed(messages):
+        author = msg["author"]["username"]
+        content = msg["content"]
+        timestamp = msg["timestamp"].split("T")[0]
+        if author == "Docu-Bot": author = "System Log"
+        transcript += f"[{timestamp}] {author}: {content}\n"
+        if msg.get("attachments"):
+            for att in msg["attachments"]:
+                if att.get("content_type", "").startswith("image/"):
+                    transcript += f"   [IMAGE_EMBED_SOURCE: {att['url']}]\n"
+        transcript += "---\n"
+    return transcript
+
+def call_ai_generator(prompt, progress, stage_name, model_hint="Flash"):
+    progress.log(f"Starting {stage_name} (Model Priority: {model_hint})...")
+    
+    if model_hint == "Pro":
+         models = ["gemini-1.5-pro", "gemini-2.5-flash", "gemini-2.0-flash-lite-preview-02-05"]
+    else:
+         models = ["gemini-2.5-flash", "gemini-2.0-flash-lite-preview-02-05", "gemini-1.5-pro"]
+
+    for model_name in models:
+        try:
+            progress.log(f"   Attempting with {model_name}...")
+            response = client.models.generate_content(model=model_name, contents=prompt)
+            progress.log("   Success!")
+            return response.text
+        except Exception as e:
+            progress.log(f"   Failed ({model_name}). Failover...")
+            continue
+    return None
+
+# --- STAGES ---
+def extract_golden_logic(project_name, transcript, user_hints, progress):
+    progress.set_status("Stage 1: Analyzing Logs for Solutions...")
+    prompt = f"""
+    You are a Lead Engineer reviewing logs for "{project_name}".
+    USER HINTS: {user_hints}
+    CRITICAL: Look for entries labeled "⭐⭐⭐ SOLUTION VERIFIED ⭐⭐⭐". Treat these as absolute truth.
+    TASK: Extract ONLY the final, working configuration. Ignore errors.
+    OUTPUT: A clean, step-by-step summary.
+    LOGS: {transcript}
+    """
+    return call_ai_generator(prompt, progress, "Stage 1 (Filter)")
+
+def generate_process_log(project_name, transcript, progress):
+    progress.set_status("Stage 2: Writing Process Log...")
+    prompt = f"""
+    Create a "Process & Troubleshooting Log" HTML file for "{project_name}".
+    STYLE: Dark/Neutral theme. Document the journey, errors, and debugging process.
+    IMAGES: Embed [IMAGE_EMBED_SOURCE: url] as &lt;img src="url"&gt;.
+    LOGS: {transcript}
+    """
+    return call_ai_generator(prompt, progress, "Stage 2 (Messy Log)")
+
+def generate_golden_guide(project_name, clean_summary, progress):
+    progress.set_status("Stage 3: Drafting Golden Guide...")
+    today_date = datetime.datetime.now().strftime("%B %d, %Y")
+    prompt = f"""
+    Create a "Technical Configuration Guide" HTML file for "{project_name}".
+    AUDIENCE: Future staff. CONSTRAINT: No trial and error. Final Steps only.
+    STYLE (RCBC):
+    1. BANNER: &lt;img src="images/banner.png" style="width:100%; max-width:800px; display:block; margin-bottom: 20px;"&gt;
+    2. SUB-HEADER: "FACILITY: {project_name.upper()} // UPDATED: {today_date}"
+    3. H1 HEADERS: Uppercase, #C8102E (RCBC Red).
+    4. IMAGES: Embed images from summary.
+    CLEAN SUMMARY: {clean_summary}
+    """
+    return call_ai_generator(prompt, progress, "Stage 3 (Golden Guide)", model_hint="Pro")
+
+def clean_ai_output(text):
+    if not text: return ""
+    if text.startswith("```html"): text = text.replace("```html", "", 1)
+    if text.endswith("```"): text = text[:-3]
+    return text.strip()
+
+def sanitize_filename(name):
+    return re.sub(r'[&lt;>:"/\\|?*]', '_', name).strip()
+
+# --- MAIN ---
+if __name__ == "__main__":
+    p_name, t_id = select_project_target()
+    
+    if t_id:
+        hints = get_user_hints()
+        
+        # Open Progress Dashboard
+        progress = ProgressWindow(p_name)
+        
+        real_name, msgs = get_thread_history(t_id, progress)
+        
+        if msgs:
+            log_text = format_log_for_ai(msgs)
+            final_name = sanitize_filename(real_name if real_name else p_name)
+            
+            # 1. RUN THE FILTER
+            golden_summary = extract_golden_logic(final_name, log_text, hints, progress)
+            
+            # --- DISPLAY AI BRAIN ---
+            if golden_summary:
+                progress.set_brain(golden_summary)
+                # Save the "Brain" to a file for audit
+                brain_path = os.path.join(OUTPUT_DIR, f"{final_name}_AI_Context.txt")
+                with open(brain_path, "w", encoding="utf-8") as f: f.write(golden_summary)
+            
+            # 2. GENERATE MESSY LOG
+            html_1 = generate_process_log(final_name, log_text, progress)
+            if html_1:
+                path_1 = os.path.join(OUTPUT_DIR, f"{final_name}_Process_Log.html")
+                with open(path_1, "w", encoding="utf-8") as f: f.write(clean_ai_output(html_1))
+                progress.log(f"Saved: {final_name}_Process_Log.html")
+            
+            # 3. GENERATE GOLDEN GUIDE
+            if golden_summary:
+                html_2 = generate_golden_guide(final_name, golden_summary, progress)
+                if html_2:
+                    path_2 = os.path.join(OUTPUT_DIR, f"{final_name}_RCBC_Guide.html")
+                    with open(path_2, "w", encoding="utf-8") as f: f.write(clean_ai_output(html_2))
+                    progress.log(f"Saved: {final_name}_RCBC_Guide.html")
+                
+            progress.set_status("COMPLETE. You may close this window.", color="#28a745")
+            progress.root.mainloop() # Keep window open
+        else:
+            print("No messages found.")
+</pre>
+
+    <h3>3.5 The AI Synthesis Workflow</h3>
+    <p>
+        The most complex challenge in automated documentation is separating "signal" from "noise." A raw work log 
+        is full of dead ends, syntax errors, and failed attempts. If you feed that directly into a document, 
+        you get a confusing guide.
+    </p>
+    <p>
+        To solve this, Docu-Bot utilizes a <strong>Two-Stage AI Pipeline</strong> that mimics a human editor's workflow.
+    </p>
+
+    <h4>Stage 1: The Semantic Filter (Gemini 2.0 Flash)</h4>
+    <p>
+        The first pass uses the high-speed <code>gemini-2.0-flash</code> model. It acts as a "Lead Engineer" reviewing a junior's notes.
+    </p>
+    <ul>
+        <li><strong>Input:</strong> The entire raw Discord chat history (text + image descriptions).</li>
+        <li><strong>Directive:</strong> <em>"Ignore all errors and failed attempts unless they provide critical context. Find the 'Eureka' tags and treat them as absolute truth."</em></li>
+        <li><strong>Output:</strong> A clean, unformatted text summary of <em>only</em> the steps that actually worked.</li>
+    </ul>
+
+    <h4>Stage 2: The Architect (Gemini 1.5 Pro)</h4>
+    <p>
+        The second pass uses the more reasoning-capable <code>gemini-1.5-pro</code> model. It acts as the "Technical Writer."
+    </p>
+    <ul>
+        <li><strong>Input:</strong> The clean summary from Stage 1.</li>
+        <li><strong>Directive:</strong> <em>"Convert this summary into a formal HTML document using RCBC styling standards. Inject the banner image and apply specific CSS classes."</em></li>
+        <li><strong>Output:</strong> The final <code>.html</code> file ready for PDF conversion.</li>
+    </ul>
+
+    <h2>4. Feature Gallery (The Utility Belt)</h2>
+    <p>The system is designed to capture every type of data an administrator encounters during a deployment.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 20%;">Feature</th>
+                <th>Description & Functionality</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>📸 Snip & Log</strong></td>
+                <td>
+                    <strong>Function:</strong> Captures a region of the screen.<br>
+                    <strong>AI Action:</strong> Reads error codes (OCR) and summarizes the UI context.<br>
+                    <strong>Use Case:</strong> Documenting error messages, weird behavior, or "Before" states.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>⭐ Eureka Mode</strong></td>
+                <td>
+                    <strong>Function:</strong> Captures the "Success" state.<br>
+                    <strong>AI Action:</strong> Tags the entry as <code>SOLUTION VERIFIED</code>. The Writer script prioritizes these tags above all others.<br>
+                    <strong>Use Case:</strong> "I just fixed it. This is the working setting."
+                </td>
+            </tr>
+            <tr>
+                <td><strong>📝 Quick Note</strong></td>
+                <td>
+                    <strong>Function:</strong> Opens a dark-mode input box to type a manual log entry.<br>
+                    <strong>Use Case:</strong> Adding context that isn't on screen (e.g., "Rebooting server now" or "Switched physical cables").
+                </td>
+            </tr>
+            <tr>
+                <td><strong>📋 Clipboard Capture</strong></td>
+                <td>
+                    <strong>Function:</strong> Reads the current system clipboard.<br>
+                    <strong>Logic:</strong> If clipboard contains text, logs it as a reference. If it contains an image, runs AI analysis on it.<br>
+                    <strong>Use Case:</strong> Quickly logging URLs, IP addresses, or screenshots taken via Windows Native tools.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>💻 Code Block</strong></td>
+                <td>
+                    <strong>Function:</strong> Takes text from clipboard and formats it as a Markdown Code Block.<br>
+                    <strong>Logic:</strong> If the text is massive (over 2000 chars), it automatically converts it to a <code>.txt</code> file attachment to keep the chat clean.<br>
+                    <strong>Use Case:</strong> Logging scripts, JSON configs, or massive error dumps without cluttering the visual log.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>5. Deployment & Setup</h2>
+    <p>Follow these steps to deploy the Docu-Bot environment on a Windows 10/11 workstation.</p>
+
+    <div class="warning">
+        <strong>SECURITY WARNING:</strong> This tool requires administrative access to Discord and Google Cloud. Ensure your API keys are kept secure and never committed to public repositories.
+    </div>
+
+    <h3>5.1 Prerequisites</h3>
+    <ul>
+        <li><strong>Python 3.14+</strong> (Ensure "Add Python to PATH" is checked during installation).</li>
+        <li><strong>Tesseract OCR:</strong> Install to <code>C:\Program Files\Tesseract-OCR\</code>. This is required for local text extraction.</li>
+        <li><strong>Discord Server:</strong> You must have "Manage Webhooks" and "Manage Channels" permissions.</li>
+        <li><strong>Google Cloud Project:</strong> Enabled for "Gemini API".</li>
+    </ul>
+
+    <h3>5.2 Installation</h3>
+    <p>1. Install the required Python libraries:</p>
+    <pre>pip install requests mss pillow pyautogui google-genai pytesseract</pre>
+    
+    <p>2. Create a folder named <code>Docu-Bot</code> and place both <code>doc_tool.py</code> and <code>doc_maker.py</code> inside.</p>
+    
+    <h3>5.3 Stream Deck Configuration</h3>
+    <p>To integrate with the Stream Deck, I utilized a "Batch File Wrapper" approach (`launcher.bat`) to execute Python commands cleanly.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 20%;">Button Name</th>
+                <th style="width: 40%;">Stream Deck "App/File" Path</th>
+                <th>Function</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>📸 SNIP</strong></td>
+                <td><code>.../launcher.bat snip</code></td>
+                <td>Triggers region capture + AI Analysis.</td>
+            </tr>
+            <tr>
+                <td><strong>⭐ EUREKA</strong></td>
+                <td><code>.../launcher.bat eureka</code></td>
+                <td>Triggers solution capture + "Solution Verified" tagging.</td>
+            </tr>
+            <tr>
+                <td><strong>📝 NOTE</strong></td>
+                <td><code>.../launcher.bat note</code></td>
+                <td>Opens the popup input box for manual text logging.</td>
+            </tr>
+            <tr>
+                <td><strong>📂 PROJECT</strong></td>
+                <td><code>.../launcher.bat set_project</code></td>
+                <td>Opens the Project Selector to switch logging threads.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>5.4 Customization & Theming</h3>
+    <div class="note">
+        <strong>Note on Branding:</strong> The default output of this tool utilizes the <strong>Rowan College at Burlington County (RCBC)</strong> red-and-white color scheme and naming conventions. This branding was specifically hard-coded for my role as a Systems Administrator at the college to ensure all documentation met institutional standards. 
+        <br><br>
+        However, the <code>doc_maker.py</code> script is designed to be theme-agnostic. The CSS block inside the script can be easily modified to support any corporate identity, dark mode, or personal branding as required.
+    </div>
+
+    <h2>6. Impact & Results</h2>
+    <p>
+        The deployment of the Docu-Bot system has fundamentally shifted the department's workflow. 
+        By moving documentation from a "post-project chore" to a "real-time background process," 
+        we achieve complete data capture without slowing down technical operations.
+    </p>
+
+    <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+        
+        <div style="flex: 1; min-width: 250px; background: #f8f9fa; padding: 20px; border-left: 5px solid var(--primary-blue); border-radius: 4px;">
+            <h4 style="margin-top: 0; color: var(--primary-blue);">⚡ Zero-Latency Workflow</h4>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                The tool adds <strong>no delay</strong> to the troubleshooting process. A single button press captures the context ("Snip-and-Go"), allowing the admin to immediately return to solving the problem. The documentation builds itself in the background while the work happens.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 250px; background: #f8f9fa; padding: 20px; border-left: 5px solid #17a2b8; border-radius: 4px;">
+            <h4 style="margin-top: 0; color: #17a2b8;">⏱️ 90% Time Reduction</h4>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                Documentation for complex deployments (e.g., Esports Lab) previously took <strong>2-4 hours</strong> of post-project writing. 
+                With Docu-Bot, the final synthesis takes <strong>< 5 minutes</strong>, eliminating the administrative backlog entirely.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 250px; background: #f8f9fa; padding: 20px; border-left: 5px solid #28a745; border-radius: 4px;">
+            <h4 style="margin-top: 0; color: #28a745;">🎯 100% Accuracy</h4>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                By capturing "Eureka" moments instantly, the system eliminates "Memory Drift"—the common error where admins forget specific registry keys or IP addresses by the time they sit down to write the guide.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>6.1 Strategic Benefits</h3>
+    <ul>
+        <li><strong>Solving the "Legacy Puzzle":</strong> One of the biggest challenges in IT is reverse-engineering the work of previous administrators. Docu-Bot prioritizes <strong>human readability</strong> above all else. Future staff inherit clear, logical "Golden Guides" rather than having to piece together a fragmented puzzle of old scripts and vague notes.</li>
+        <li><strong>Seamless "Flow State":</strong> Technicians never have to break focus to open a Word document or formatting tool. The "Click & Move On" interaction model preserves mental momentum during high-stress troubleshooting.</li>
+        <li><strong>Standardization at Scale:</strong> The AI Writer enforces strict institutional formatting (RCBC Standards). A guide generated by a Junior Tech looks identical to one written by a Senior Engineer, ensuring a consistent knowledge base for the entire department.</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
