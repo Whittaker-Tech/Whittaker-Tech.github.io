@@ -196,10 +196,10 @@
         <br>
         <div class="tech-stack">
             <span class="badge">PYTHON 3.14</span>
-            <span class="badge">GOOGLE GEMINI 2.0 API</span>
+            <span class="badge">GOOGLE GEMMA 3 (OPEN WEIGHTS)</span>
             <span class="badge">DISCORD WEBHOOKS</span>
             <span class="badge">STREAM DECK</span>
-            <span class="badge">OCR (TESSERACT)</span>
+            <span class="badge">MSS / PYAUTOGUI</span>
             <span class="badge">TKINTER GUI</span>
         </div>
     </header>
@@ -210,7 +210,7 @@
         the disconnect between <em>"fixing the issue"</em> (the technical work) and <em>"writing the documentation"</em> (the administrative work).
     </p>
     <p>
-        By integrating hardware macros (Stream Deck) with Cloud AI (Google Gemini), this tool allows me to capture 
+        By integrating hardware macros (Stream Deck) with Cloud AI (Google Gemma 3), this tool allows me to capture 
         real-time "trial and error" logs during deployment and automatically synthesize them into professional, 
         print-ready HTML/PDF guides upon project completion.
     </p>
@@ -221,7 +221,7 @@
     <h3>2.1 The Data Flow</h3>
     <ol>
         <li><strong>Hardware Trigger:</strong> Physical buttons on a Stream Deck execute Python scripts.</li>
-        <li><strong>Intelligence Layer:</strong> Screenshots are passed to Google Gemini Flash for immediate analysis (OCR & Context).</li>
+        <li><strong>Intelligence Layer:</strong> Screenshots are passed to Google's <strong>Gemma 3 27b-it</strong> model for immediate analysis.</li>
         <li><strong>Logging Database:</strong> Data is structured and stored in a private Discord Thread via Webhooks.</li>
         <li><strong>Final Synthesis:</strong> A separate script scrapes the logs, filters for verified solutions (marked via "Eureka" tags), and generates a styled HTML report.</li>
     </ol>
@@ -231,9 +231,13 @@
 
     <h3>3.1 The Logger (doc_tool.py)</h3>
     <p>
-        Runs silently in the background. It utilizes <code>pyautogui</code> for screen capture, 
-        <code>google-genai</code> for image analysis, and <code>requests</code> to push payloads to Discord. 
-        It features a custom Dark Mode GUI built with <code>tkinter</code> for user input.
+        Runs silently in the background. It utilizes <code>pyautogui</code> for screen capture and 
+        <code>requests</code> to push payloads to Discord.
+        <br><br>
+        <strong>AI Model Strategy:</strong> To avoid the restrictive rate limits of proprietary models, I implemented Google's 
+        <strong>Gemma 3 27b (IT)</strong>. This "Open Weights" multimodal model offers near-GPT-4 level vision capabilities 
+        while allowing for essentially unlimited daily requests (14,000+). This allows <strong>every single screenshot</strong> 
+        to be analyzed by AI without fear of hitting quotas.
     </p>
     
     <h3>3.2 Source Code: The Logger</h3>
@@ -245,7 +249,7 @@ import requests
 import pyperclip
 import time
 import tkinter as tk
-from tkinter import simpledialog, ttk, font
+from tkinter import ttk, font
 from io import BytesIO
 from datetime import datetime
 import mss
@@ -255,11 +259,6 @@ import pyautogui
 import ctypes
 
 # --- OPTIONAL IMPORTS ---
-try:
-    import pytesseract
-except ImportError:
-    pytesseract = None
-
 try:
     from google import genai
     HAS_AI = True
@@ -272,9 +271,6 @@ WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE"
 
 # 2. PASTE YOUR GOOGLE GEMINI API KEY HERE
 GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
-
-# 3. PATH TO TESSERACT ENGINE (Kept for compatibility, runs silently)
-TESSERACT_CMD = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Files to store your state
 CONFIG_FILE = "current_project.txt"
@@ -305,11 +301,10 @@ class DarkDialog:
         
         try:
             self.root.update()
-            set_window_attribute = ctypes.windll.dwmapi.DwmSetWindowAttribute
-            get_parent = ctypes.windll.user32.GetParent
-            hwnd = get_parent(self.root.winfo_id())
-            value = ctypes.c_int(1)
-            set_window_attribute(hwnd, 20, ctypes.byref(value), 4)
+            # Windows Dark Title Bar Hack
+            ctypes.windll.dwmapi.DwmSetWindowAttribute(
+                ctypes.windll.user32.GetParent(self.root.winfo_id()), 20, ctypes.byref(ctypes.c_int(1)), 4
+            )
         except Exception:
             pass
 
@@ -379,7 +374,7 @@ def get_project_context():
         return "General", None
 
 # --- HELPER: UPLOAD IMAGE ---
-def _upload_image_object(img, source_label="Screenshot", ocr_text=None, ai_analysis=None):
+def _upload_image_object(img, source_label="Screenshot", ai_analysis=None):
     img_byte_arr = BytesIO()
     img.save(img_byte_arr, format='PNG')
     img_byte_arr.seek(0)
@@ -406,54 +401,40 @@ def _upload_image_object(img, source_label="Screenshot", ocr_text=None, ai_analy
     except Exception as e:
         print(f"Upload failed: {e}")
 
-# --- AI & OCR LOGIC ---
+# --- AI LOGIC ---
 def process_image_intelligence(img):
-    """Runs Cloud AI analysis on the image. (OCR is skipped for speed/limits)"""
-    extracted_text = None
-    ai_text = None
+    """Runs Cloud AI analysis on the image using Gemma 3."""
+    if not client: return None
     
-    if client:
-        # Prioritize "Lite" and "2.5" to avoid quotas
-        models_to_try = [
-            "gemini-2.0-flash-lite-preview-02-05", 
-            "gemini-2.5-flash",                    
-            "gemini-2.0-flash-exp",                
-            "gemini-2.0-flash"                     
-        ]
-        
-        prompt = (
-            "Describe what you see in this image in plain English. "
-            "If it shows a technical error, code issue, or warning, suggest a potential solution. "
-            "Otherwise, just describe the content concisely."
+    # EXCLUSIVE: Using Gemma 3 27b-it (14,400 daily limit)
+    model_name = "gemma-3-27b-it"
+    prompt = (
+        "Describe what you see in this image in plain English. "
+        "If it shows a technical error, code issue, or warning, suggest a potential solution. "
+        "Otherwise, just describe the content concisely."
+    )
+
+    try:
+        response = client.models.generate_content(
+            model=model_name,
+            contents=[prompt, img]
         )
+        print(f"AI Success using model: {model_name}")
+        return response.text.strip()
+    except Exception as e:
+        print(f"Model '{model_name}' failed. Reason: {e}")
+        return None
 
-        for model_name in models_to_try:
-            try:
-                response = client.models.generate_content(
-                    model=model_name,
-                    contents=[prompt, img]
-                )
-                ai_text = response.text.strip()
-                print(f"AI Success using model: {model_name}")
-                break 
-            except Exception as e:
-                print(f"Model '{model_name}' failed. Reason: {e}")
-                continue
-
-    return extracted_text, ai_text
-
-# --- EUREKA MODE (NEW) ---
+# --- EUREKA MODE ---
 def eureka_log():
     """Captures the solution with a special tag for the documentation generator."""
-    
-    # 1. Snip the "Success State"
     pyperclip.copy("") 
     pyautogui.hotkey('winleft', 'shift', 's')
     
     print("Waiting for snip...")
     start_time = time.time()
     img = None
-    while (time.time() - start_time) &lt; 60: 
+    while (time.time() - start_time) < 60: 
         img = ImageGrab.grabclipboard()
         if isinstance(img, Image.Image):
             break
@@ -461,18 +442,14 @@ def eureka_log():
         
     if not img: return
 
-    # 2. Ask what the fix was
     dlg = DarkDialog("Eureka!", "What was the fix? (Be specific):", is_input_box=True)
     fix_description = dlg.result
     if not fix_description: return
 
-    # 3. AI Analysis of the Success Image
-    ocr, ai_text = process_image_intelligence(img)
+    # Eureka ALWAYS uses AI
+    ai_text = process_image_intelligence(img)
     
-    # 4. Upload with SPECIAL HEADER
-    # We combine the user's manual fix text with the AI's visual description
     combined_analysis = f"USER FIX: {fix_description}\nIMAGE CONTEXT: {ai_text}"
-    
     _upload_image_object(img, source_label="⭐⭐⭐ SOLUTION VERIFIED ⭐⭐⭐", ai_analysis=combined_analysis)
 
 # --- STANDARD CAPTURE FUNCTIONS ---
@@ -481,12 +458,12 @@ def snip_and_log():
     pyautogui.hotkey('winleft', 'shift', 's')
     
     start_time = time.time()
-    while (time.time() - start_time) &lt; 60: 
+    while (time.time() - start_time) < 60: 
         img = ImageGrab.grabclipboard()
         if isinstance(img, Image.Image):
-            # Process AI Only
-            ocr, ai = process_image_intelligence(img)
-            _upload_image_object(img, source_label="Snipped Region", ocr_text=ocr, ai_analysis=ai)
+            # Process AI (Always on now due to Gemma 3 capacity)
+            ai_text = process_image_intelligence(img)
+            _upload_image_object(img, source_label="Snipped Region", ai_analysis=ai_text)
             return
         time.sleep(0.5)
 
@@ -532,8 +509,9 @@ def capture_screen(monitor_index=1):
 def log_clipboard():
     img = ImageGrab.grabclipboard()
     if isinstance(img, Image.Image):
-        ocr, ai = process_image_intelligence(img)
-        _upload_image_object(img, source_label="Clipboard Image", ocr_text=ocr, ai_analysis=ai)
+        # We process AI for clipboard images too now
+        ai_text = process_image_intelligence(img)
+        _upload_image_object(img, source_label="Clipboard Image", ai_analysis=ai_text)
     else:
         content = pyperclip.paste()
         if content:
@@ -605,7 +583,7 @@ if __name__ == "__main__":
         elif command == "clipboard": log_clipboard()
         elif command == "code": log_code_block()
         elif command == "snip": snip_and_log()
-        elif command == "eureka": eureka_log()  # &lt;--- NEW
+        elif command == "eureka": eureka_log()
         elif command == "screenshot":
             try: mon_idx = int(sys.argv[2])
             except IndexError: mon_idx = 1
@@ -619,7 +597,7 @@ if __name__ == "__main__":
     </p>
 
     <h3>3.4 Source Code: The Writer</h3>
-    <p>Below is the logic for the documentation generator, including the Tkinter Dashboard and AI Failover logic.</p>
+    <p>Below is the logic for the documentation generator, including the Tkinter Dashboard and the streamlined Gemma 3 logic.</p>
 
 <pre>
 import requests
@@ -629,15 +607,14 @@ import datetime
 import tkinter as tk
 from tkinter import ttk, font, scrolledtext
 import ctypes
-import threading
 from google import genai
 
 # --- CONFIGURATION ---
 # 1. DISCORD BOT TOKEN (Required to READ history)
-DISCORD_BOT_TOKEN = "YOUR_DISCORD_WEBHOOK_URL_HERE"
+DISCORD_BOT_TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
 
 # 2. GOOGLE GEMINI API KEY (Required to WRITE the report)
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
+GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"
 
 # 3. OUTPUT FOLDER
 OUTPUT_DIR = "Finished_Docs"
@@ -841,24 +818,18 @@ def format_log_for_ai(messages):
         transcript += "---\n"
     return transcript
 
-def call_ai_generator(prompt, progress, stage_name, model_hint="Flash"):
-    progress.log(f"Starting {stage_name} (Model Priority: {model_hint})...")
+def call_ai_generator(prompt, progress, stage_name):
+    # EXCLUSIVE: Using Gemma 3 27b-it
+    model_name = "gemma-3-27b-it"
+    progress.log(f"Starting {stage_name} (Using {model_name})...")
     
-    if model_hint == "Pro":
-         models = ["gemini-1.5-pro", "gemini-2.5-flash", "gemini-2.0-flash-lite-preview-02-05"]
-    else:
-         models = ["gemini-2.5-flash", "gemini-2.0-flash-lite-preview-02-05", "gemini-1.5-pro"]
-
-    for model_name in models:
-        try:
-            progress.log(f"   Attempting with {model_name}...")
-            response = client.models.generate_content(model=model_name, contents=prompt)
-            progress.log("   Success!")
-            return response.text
-        except Exception as e:
-            progress.log(f"   Failed ({model_name}). Failover...")
-            continue
-    return None
+    try:
+        response = client.models.generate_content(model=model_name, contents=prompt)
+        progress.log("   Success!")
+        return response.text
+    except Exception as e:
+        progress.log(f"   ❌ Failed: {e}")
+        return None
 
 # --- STAGES ---
 def extract_golden_logic(project_name, transcript, user_hints, progress):
@@ -878,7 +849,7 @@ def generate_process_log(project_name, transcript, progress):
     prompt = f"""
     Create a "Process & Troubleshooting Log" HTML file for "{project_name}".
     STYLE: Dark/Neutral theme. Document the journey, errors, and debugging process.
-    IMAGES: Embed [IMAGE_EMBED_SOURCE: url] as &lt;img src="url"&gt;.
+    IMAGES: Embed [IMAGE_EMBED_SOURCE: url] as &lt;img src="url">.
     LOGS: {transcript}
     """
     return call_ai_generator(prompt, progress, "Stage 2 (Messy Log)")
@@ -890,13 +861,13 @@ def generate_golden_guide(project_name, clean_summary, progress):
     Create a "Technical Configuration Guide" HTML file for "{project_name}".
     AUDIENCE: Future staff. CONSTRAINT: No trial and error. Final Steps only.
     STYLE (RCBC):
-    1. BANNER: &lt;img src="images/banner.png" style="width:100%; max-width:800px; display:block; margin-bottom: 20px;"&gt;
+    1. BANNER: &lt;img src="images/banner.png" style="width:100%; max-width:800px; display:block; margin-bottom: 20px;">
     2. SUB-HEADER: "FACILITY: {project_name.upper()} // UPDATED: {today_date}"
     3. H1 HEADERS: Uppercase, #C8102E (RCBC Red).
     4. IMAGES: Embed images from summary.
     CLEAN SUMMARY: {clean_summary}
     """
-    return call_ai_generator(prompt, progress, "Stage 3 (Golden Guide)", model_hint="Pro")
+    return call_ai_generator(prompt, progress, "Stage 3 (Golden Guide)")
 
 def clean_ai_output(text):
     if not text: return ""
@@ -905,7 +876,8 @@ def clean_ai_output(text):
     return text.strip()
 
 def sanitize_filename(name):
-    return re.sub(r'[&lt;>:"/\\|?*]', '_', name).strip()
+    # Fixed regex to properly handle windows invalid chars
+    return re.sub(r'[<>:"/\\|?*]', '_', name).strip()
 
 # --- MAIN ---
 if __name__ == "__main__":
@@ -962,27 +934,8 @@ if __name__ == "__main__":
     </p>
     <p>
         To solve this, Docu-Bot utilizes a <strong>Two-Stage AI Pipeline</strong> that mimics a human editor's workflow.
+        By switching to the <strong>Gemma 3</strong> model, I was able to remove complex failover logic and rely on a single, high-capacity model for the entire pipeline.
     </p>
-
-    <h4>Stage 1: The Semantic Filter (Gemini 2.0 Flash)</h4>
-    <p>
-        The first pass uses the high-speed <code>gemini-2.0-flash</code> model. It acts as a "Lead Engineer" reviewing a junior's notes.
-    </p>
-    <ul>
-        <li><strong>Input:</strong> The entire raw Discord chat history (text + image descriptions).</li>
-        <li><strong>Directive:</strong> <em>"Ignore all errors and failed attempts unless they provide critical context. Find the 'Eureka' tags and treat them as absolute truth."</em></li>
-        <li><strong>Output:</strong> A clean, unformatted text summary of <em>only</em> the steps that actually worked.</li>
-    </ul>
-
-    <h4>Stage 2: The Architect (Gemini 1.5 Pro)</h4>
-    <p>
-        The second pass uses the more reasoning-capable <code>gemini-1.5-pro</code> model. It acts as the "Technical Writer."
-    </p>
-    <ul>
-        <li><strong>Input:</strong> The clean summary from Stage 1.</li>
-        <li><strong>Directive:</strong> <em>"Convert this summary into a formal HTML document using RCBC styling standards. Inject the banner image and apply specific CSS classes."</em></li>
-        <li><strong>Output:</strong> The final <code>.html</code> file ready for PDF conversion.</li>
-    </ul>
 
     <h2>4. Feature Gallery (The Utility Belt)</h2>
     <p>The system is designed to capture every type of data an administrator encounters during a deployment.</p>
@@ -999,7 +952,7 @@ if __name__ == "__main__":
                 <td><strong>📸 Snip & Log</strong></td>
                 <td>
                     <strong>Function:</strong> Captures a region of the screen.<br>
-                    <strong>AI Action:</strong> Reads error codes (OCR) and summarizes the UI context.<br>
+                    <strong>AI Action:</strong> <span style="color:#28a745; font-weight:bold;">ALWAYS ON.</span> Every capture is analyzed by Gemma 3 for context, error codes, and UI elements.<br>
                     <strong>Use Case:</strong> Documenting error messages, weird behavior, or "Before" states.
                 </td>
             </tr>
@@ -1022,16 +975,8 @@ if __name__ == "__main__":
                 <td><strong>📋 Clipboard Capture</strong></td>
                 <td>
                     <strong>Function:</strong> Reads the current system clipboard.<br>
-                    <strong>Logic:</strong> If clipboard contains text, logs it as a reference. If it contains an image, runs AI analysis on it.<br>
+                    <strong>Logic:</strong> If clipboard contains text, logs it as a reference.<br>
                     <strong>Use Case:</strong> Quickly logging URLs, IP addresses, or screenshots taken via Windows Native tools.
-                </td>
-            </tr>
-            <tr>
-                <td><strong>💻 Code Block</strong></td>
-                <td>
-                    <strong>Function:</strong> Takes text from clipboard and formats it as a Markdown Code Block.<br>
-                    <strong>Logic:</strong> If the text is massive (over 2000 chars), it automatically converts it to a <code>.txt</code> file attachment to keep the chat clean.<br>
-                    <strong>Use Case:</strong> Logging scripts, JSON configs, or massive error dumps without cluttering the visual log.
                 </td>
             </tr>
         </tbody>
@@ -1047,14 +992,13 @@ if __name__ == "__main__":
     <h3>5.1 Prerequisites</h3>
     <ul>
         <li><strong>Python 3.14+</strong> (Ensure "Add Python to PATH" is checked during installation).</li>
-        <li><strong>Tesseract OCR:</strong> Install to <code>C:\Program Files\Tesseract-OCR\</code>. This is required for local text extraction.</li>
         <li><strong>Discord Server:</strong> You must have "Manage Webhooks" and "Manage Channels" permissions.</li>
         <li><strong>Google Cloud Project:</strong> Enabled for "Gemini API".</li>
     </ul>
 
     <h3>5.2 Installation</h3>
     <p>1. Install the required Python libraries:</p>
-    <pre>pip install requests mss pillow pyautogui google-genai pytesseract</pre>
+    <pre>pip install requests mss pillow pyautogui google-genai</pre>
     
     <p>2. Create a folder named <code>Docu-Bot</code> and place both <code>doc_tool.py</code> and <code>doc_maker.py</code> inside.</p>
     
@@ -1095,9 +1039,9 @@ if __name__ == "__main__":
 
     <h3>5.4 Customization & Theming</h3>
     <div class="note">
-        <strong>Note on Branding:</strong> The default output of this tool utilizes the <strong>Rowan College at Burlington County (RCBC)</strong> red-and-white color scheme and naming conventions. This branding was specifically hard-coded for my role as a Systems Administrator at the college to ensure all documentation met institutional standards. 
+        <strong>Note on Branding:</strong> The default output of this tool utilizes the <strong>Rowan College at Burlington County (RCBC)</strong> red-and-white color scheme. This branding was specifically hard-coded for my role to ensure documentation met institutional standards. 
         <br><br>
-        However, the <code>doc_maker.py</code> script is designed to be theme-agnostic. The CSS block inside the script can be easily modified to support any corporate identity, dark mode, or personal branding as required.
+        However, the <code>doc_maker.py</code> script is designed to be theme-agnostic. The CSS block inside the script can be easily modified to support any corporate identity, dark mode, or personal branding.
     </div>
 
     <h2>6. Impact & Results</h2>
@@ -1112,7 +1056,7 @@ if __name__ == "__main__":
         <div style="flex: 1; min-width: 250px; background: #f8f9fa; padding: 20px; border-left: 5px solid var(--primary-blue); border-radius: 4px;">
             <h4 style="margin-top: 0; color: var(--primary-blue);">⚡ Zero-Latency Workflow</h4>
             <p style="font-size: 14px; margin-bottom: 0;">
-                The tool adds <strong>no delay</strong> to the troubleshooting process. A single button press captures the context ("Snip-and-Go"), allowing the admin to immediately return to solving the problem. The documentation builds itself in the background while the work happens.
+                The tool adds <strong>no delay</strong> to the troubleshooting process. A single button press captures the context ("Snip-and-Go"), allowing the engineer to immediately return to solving the problem. The documentation builds itself in the background while the work happens.
             </p>
         </div>
 
@@ -1137,7 +1081,7 @@ if __name__ == "__main__":
     <ul>
         <li><strong>Solving the "Legacy Puzzle":</strong> One of the biggest challenges in IT is reverse-engineering the work of previous administrators. Docu-Bot prioritizes <strong>human readability</strong> above all else. Future staff inherit clear, logical "Golden Guides" rather than having to piece together a fragmented puzzle of old scripts and vague notes.</li>
         <li><strong>Seamless "Flow State":</strong> Technicians never have to break focus to open a Word document or formatting tool. The "Click & Move On" interaction model preserves mental momentum during high-stress troubleshooting.</li>
-        <li><strong>Standardization at Scale:</strong> The AI Writer enforces strict institutional formatting (RCBC Standards). A guide generated by a Junior Tech looks identical to one written by a Senior Engineer, ensuring a consistent knowledge base for the entire department.</li>
+        <li><strong>Standardization at Scale:</strong> The AI Writer enforces strict institutional formatting. A guide generated by a Junior Tech looks identical to one written by a Senior Engineer, ensuring a consistent knowledge base for the entire department.</li>
     </ul>
 
 </div>
