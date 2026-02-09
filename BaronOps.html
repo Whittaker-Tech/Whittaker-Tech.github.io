@@ -184,6 +184,72 @@
             display: inline-block;
             margin-bottom: 10px;
         }
+        /* --- LIGHTBOX (ZOOM) STYLES --- */
+    /* The Background Overlay */
+    .lightbox-modal {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgba(0,0,0,0.85); /* Dark background */
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Show state */
+    .lightbox-modal.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    /* The Image Itself */
+    .lightbox-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 4px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        animation: zoomIn 0.2s;
+    }
+
+    /* Animation */
+    @keyframes zoomIn {
+        from {transform: scale(0.95); opacity: 0;} 
+        to {transform: scale(1); opacity: 1;}
+    }
+
+    /* Close Button (X) */
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10000;
+    }
+    .close-btn:hover { color: var(--primary-red); }
+
+    /* ONLY apply clickable cursor to screenshots inside placeholders */
+    /* This excludes the header logo */
+    .img-placeholder img {
+        cursor: zoom-in; 
+        transition: transform 0.2s ease;
+    }
+    
+    /* Optional: Slight hover lift for screenshots */
+    .img-placeholder img:hover {
+        transform: scale(1.01);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
         footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 9pt; color: var(--text-muted); }
     </style>
 </head>
@@ -648,5 +714,43 @@
         <span style="opacity: 0.7;">Portfolio Demonstration & Technical Reference</span>
     </footer>
 
+<div id="imageModal" class="lightbox-modal">
+    <span class="close-btn">&times;</span>
+    <img class="lightbox-content" id="lightboxImg">
+</div>
+<script>
+    // Get the modal elements
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("lightboxImg");
+    var span = document.getElementsByClassName("close-btn")[0];
+
+    // SELECTOR: Only select images inside .img-placeholder divs
+    // This ensures the Header Logo is NOT selected
+    var images = document.querySelectorAll('.img-placeholder img');
+
+    images.forEach(img => {
+        img.addEventListener('click', function(){
+            modal.classList.add('show');
+            modalImg.src = this.src;
+        });
+    });
+
+    // Close logic
+    span.onclick = function() { modal.classList.remove('show'); }
+    
+    // Close if clicking outside the image
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            modal.classList.remove('show');
+        }
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            modal.classList.remove('show');
+        }
+    });
+</script>
 </body>
 </html>
