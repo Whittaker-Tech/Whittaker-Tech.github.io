@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: BaronOps - Centralized Lab Management Suite</title>
+    <style>
+        :root {
+            /* THEME: BARON RED & DARK SLATE */
+            --primary-red: #AB162B;         /* BaronOps Red */
+            --secondary-bg: #fdf2f2;        /* Light Red Background */
+            --dark-slate: #1a1a1a;          /* Header Text */
+            --text-grey: #444444;           /* Body Text */
+            --code-bg: #f4f4f4;             /* Code Block Background */
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-grey);
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- NAVIGATION --- */
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary-red);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.7; }
+
+        /* --- HEADER LAYOUT --- */
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .header-logo {
+            width: 80px;        /* Adjust size as needed */
+            height: auto;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            line-height: 1.1;
+        }
+        h1 {
+            color: var(--dark-slate);
+            font-size: 36px;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+        .tagline {
+            font-size: 18px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* --- SECTIONS --- */
+        h2 {
+            color: var(--dark-slate);
+            font-size: 24px;
+            margin-top: 50px;
+            border-left: 5px solid var(--primary-red);
+            padding-left: 15px;
+        }
+        h3 {
+            color: var(--primary-red);
+            font-size: 18px;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+        p, ul, li {
+            font-size: 16px;
+        }
+
+        /* --- FEATURE GRID --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* --- TECH STACK BADGES --- */
+        .tech-stack {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .tech-badge {
+            background: var(--code-bg);
+            color: var(--dark-slate);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #ddd;
+        }
+
+        /* --- IMAGE PLACEHOLDERS --- */
+        .img-placeholder {
+            width: 100%;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .img-caption {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* --- HIGHLIGHT BOX --- */
+        .highlight-box {
+            background-color: var(--secondary-bg);
+            border-left: 4px solid var(--primary-red);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 9pt; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Portfolio</a>
+
+    <header>
+        <div class="header-content">
+            <img src="assets/img/BaronOps/BaronsB.png" alt="BaronOps Logo" class="header-logo">
+            
+            <div class="header-text">
+                <h1>BaronOps</h1>
+                <div class="tagline">Single-Pane-of-Glass IT Administration & Lab Management Suite</div>
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <span class="tech-badge">C# .NET 8</span>
+            <span class="tech-badge">WPF / WebView2</span>
+            <span class="tech-badge">PowerShell SDK 7.4</span>
+            <span class="tech-badge">Sassafras LabSight</span>
+            <span class="tech-badge">25Live API</span>
+            <span class="tech-badge">Deep Freeze CLI</span>
+            <span class="tech-badge">SCCM / AD / WMI</span>
+        </div>
+    </header>
+
+    <div class="img-placeholder">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            <img src="assets/img/BaronOps/Welcome.png" alt="Welcome Screen"><br>
+            <span style="font-size:0.9rem">BaronOps Welcome Screen.</span>
+        </div>
+    </div>
+
+    <h2>1. The Challenge</h2>
+    <p>
+        Managing a collegiate IT environment requires constant vigilance. Technicians previously had to physically travel between buildings, blindly walking into labs to check for issues.
+    </p>
+    <p>
+        Standard maintenance protocols dictate that labs auto-wake weekly for updates. A failure to check in during this window is a definitive indicator of hardware failure or network isolation. Without centralized monitoring, these 'Dark Systems' often go undetected for weeks, as discovery relies entirely on reactive user reporting. This issue is compounded by <strong>'Silent Failures'</strong>, students simply bypassing broken machines without submitting a ticket. This behavior masks critical outages, creating a false sense of infrastructure health that is often only revealed during high-stakes events like scheduled exams.
+    </p>
+    <p>
+        Furthermore, relying on rigid, once-a-week maintenance windows for software deployment proved inherently unreliable. If a system failed to wake or encountered an error during this narrow window, the deployment would fail silently. Administrators were often left in a "Wait & Hope" cycle, discovering missing software only days later. This forced technicians to waste hours manually intervening, turning on systems one by one and logging in to verify installs, with no way to know <em>which</em> specific machines actually needed attention.
+    </p>
+
+    <h2>2. The Solution: BaronOps</h2>
+    <p>
+        <strong>BaronOps</strong> is a unified "Command & Control" application that aggregates disparate systems, SCCM, Active Directory, Deep Freeze, Sassafras LabSight, and 25Live, into a single, modern interface.
+    </p>
+    <p>
+        Designed for portability, the application may also be installed on <strong>Technician Tablets</strong>. This transforms the device into a mobile "Lab Check" tool. A technician can walk into a room, tap "Wake," verify all 30+ computers are connected and properly logging in, test the printer, and move to the next room in seconds.
+    </p>
+
+    <div class="highlight-box">
+        <strong>Impact:</strong> What used to take hours of manual checking is now a rapid, targeted workflow. Technicians move with purpose, addressing only the systems that are flagged as problematic.
+    </div>
+
+    <h2>3. Technical Architecture</h2>
+
+    <h3>3.1 The Hybrid Bridge Engine</h3>
+    <p>
+        BaronOps leverages a hybrid architecture to combine the raw power of .NET with the flexibility of modern web technologies.
+    </p>
+    <ul>
+        <li><strong>Frontend (WebView2):</strong> A "Dark Mode" responsive UI built with HTML5/CSS3 and JavaScript. It handles all user interaction and visual feedback.</li>
+        <li><strong>Backend (.NET 8):</strong> A secure C# host that manages file system access, memory, and the application lifecycle.</li>
+        <li><strong>The OpsBridge:</strong> A bi-directional communication layer. When a user clicks "Wake" on the tablet, JavaScript signals the C# backend to execute the heavy lifting asynchronously, keeping the UI responsive.</li>
+    </ul>
+
+    <h3>3.2 Embedded PowerShell Execution</h3>
+    <p>
+        Instead of shelling out to `cmd.exe` (which is slow and insecure), BaronOps hosts an internal <strong>PowerShell 7.4 runspace</strong>. Scripts are compiled directly into the application DLL as Embedded Resources, ensuring they cannot be tampered with on the client machine.
+    </p>
+
+    <h2>4. Key Capabilities</h2>
+    
+    <div class="feature-grid">
+        <div class="feature-card">
+            <span class="feature-icon">⚡</span>
+            <strong>Power & Access</strong>
+            <p>
+                Combines Wake-on-LAN and Session Management with a smart <strong>Auto-Logon Bypass</strong> script. Includes <strong>Instructor Identification</strong> and an instant <strong>Remote Control Gateway</strong> to streamline support calls.
+            </p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">❄️</span>
+            <strong>Deep Freeze CLI</strong>
+            <p>
+                Wraps the local <strong>Deep Freeze CLI</strong> to bypass the sluggish enterprise console. Allows multiple technicians to Thaw, Freeze, or Lock labs simultaneously without server-side bottlenecks.
+            </p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">👻</span>
+            <strong>The Ghost Hunter</strong>
+            <p>
+                Cross-references Sassafras data to identify "Dark" systems that have not checked in for <strong>over 7 Days</strong>. Pinpoints hardware failures and network disconnects that missed the weekly wake cycle.
+            </p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">📅</span>
+            <strong>Scheduling & Testing</strong>
+            <p>
+                Queries <strong>25Live</strong> to identify safe maintenance windows. Includes a <strong>Testing Ground</strong> finder that locates empty labs with 3+ hour vacancies for hardware repair or image testing.
+            </p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🚀</span>
+            <strong>Deployment & Files</strong>
+            <p>
+                Enables <strong>Real-Time Deployment</strong> (Thaw-Deploy-Freeze) between classes. Includes a <strong>Software Scanner</strong> for auditing and a <strong>Remote File Manager</strong> for bulk file collection or deletion.
+            </p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🛠️</span>
+            <strong>Health & Maintenance</strong>
+            <p>
+                Validates lab readiness via <strong>Printer Health</strong> checks (Canary testing). Includes <strong>System Purge</strong> for one-click AD/SCCM removal and <strong>Time Set Manager</strong> for schedule syncing.
+            </p>
+        </div>
+    </div>
+
+    <h2>5. Feature Deep Dive</h2>
+    <p>
+        BaronOps consolidates disparate administrative workflows into four distinct modules. Each module leverages <strong>Sassafras LabSight</strong> integration to dynamically populate lab lists, ensuring that even if a lab is reimaged or systems are renamed, the tool always targets the correct machines without manual configuration updates.
+    </p>
+
+    <h3>5.1 Real-Time Lab Management</h3>
+    <p>
+        Used primarily during "Lab Checks," this module provides immediate control and visibility. It includes a specialized <strong>Instructor Identification</strong> feature: systems flagged as "Instructor" in Sassafras are visually distinguished with an icon. This allows OIT staff to instantly identify and remote into a podium PC when a professor calls for help, bypassing the need to ask for a computer name.
+    </p>
+    <div class="img-placeholder">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <img src="assets/img/BaronOps/RM1-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
+                
+                <img src="assets/img/BaronOps/RM2-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
+                
+                <img src="assets/img/BaronOps/RM3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
+                
+                <img src="assets/img/BaronOps/RM4.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
+            </div>
+
+            <span style="font-size:0.9rem">Real-Time Lab Management Category</span>
+        </div>
+    </div>
+    <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="feature-card">
+            <strong>Power & Session Automation</strong>
+            <p>
+                Beyond standard power commands to wake, restart, and shutdown mass systems, this feature utilizes a smart <strong>Auto-Logon Bypass</strong>. Instead of relying on fragile UI automation to "click" buttons, BaronOps temporarily modifies the Windows Registry to suppress the legal Terms of Service notice, instantly triggering the native student auto-logon sequence for an entire lab.
+            </p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                <em>Technical Note:</em> The script includes a <strong>Self-Healing Failsafe</strong>. If the operation is interrupted while the system is in a "Thawed" state, the script automatically restores the Terms of Service registry keys. This ensures the legal notice is never permanently lost, maintaining compliance for future startups.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Deep Freeze CLI Wrapper</strong>
+            <p>
+                Bypasses the sluggish Deep Freeze Server process entirely. While the native Enterprise Console is slow and restricts access to a single administrator at a time, BaronOps wraps the local Command Line Interface (CLI) for instantaneous, direct control. This decentralized approach solves the "Single-User Lock" bottleneck, allowing multiple technicians to Thaw, Freeze, or Lock systems simultaneously from anywhere on campus.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Remote Control Gateway</strong>
+            <p>
+                A streamlined UI for the SCCM Remote Control Viewer. It bypasses the bulky SCCM console and its complex context menus, allowing technicians to instantly identify a target (student or instructor) and launch a session, saving significant time during support calls and maintenance.            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Printer Health Check</strong>
+            <p>
+                Verifies lab readiness by querying a random online system in the selected lab. It checks driver status and spooler health on that single unit to validate the configuration for the entire lab, ensuring class readiness without checking every PC manually.  Given the labs are standardized via Deep Freeze, if the test system has the correct printer mappings and no errors, it's a strong indicator that the rest of the lab is similarly configured, allowing technicians to move on with confidence.
+            </p>
+        </div>
+    </div>
+
+    <h3>5.2 Lab System Administration</h3>
+    <p>
+        <em>Restricted to SysAdmin Access.</em> These tools enable mass-manipulation of file systems and software. They allow admins to target entire labs or manually input specific lists of machines.
+    </p>
+    <div class="img-placeholder">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <img src="assets/img/BaronOps/LA1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
+                
+                <img src="assets/img/BaronOps/LA2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
+                
+                <img src="assets/img/BaronOps/LA3-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
+                
+                <img src="assets/img/BaronOps/LA3-2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
+            </div>
+
+            <span style="font-size:0.9rem">Lab System Administration Category</span>
+        </div>
+    </div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <strong>Real-Time Deployment</strong>
+            <p>
+                Eliminates the "Wait & Hope" anxiety of overnight SCCM maintenance windows. Relying on scheduled tasks often leads to silent failures, systems that fail to wake or hang during installation, forcing staff to scramble the next morning to manually patch machines before deadlines. <br><br> BaronOps replaces this with a deterministic <strong>Thaw -> Deploy -> Verify -> Freeze</strong> workflow that executes in minutes, allowing admins to confirm 100% success immediately between classes.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Software Scanner</strong>
+            <p>
+                Audits every computer in a lab to compare installed versions. It identifies "Silent Failures" where a specific machine might have missed a deployment that the rest of the lab received. It also facilitates <strong>Mass Uninstall</strong> commands to retire old software from a room instantly.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Remote File Manager</strong>
+            <p>
+                Uses a "Representative System" model to browse the file structure of a frozen lab. Admins can analyze one system to detect unwanted files (e.g., unauthorized shortcuts) or verify configuration placement. The tool supports <strong>Bulk Deletion</strong> and <strong>Bulk Collection</strong> (pulling logs/configs), as well as pushing files to the entire lab simultaneously.
+            </p>
+        </div>
+    </div>
+
+    <h3>5.3 Lab Reporting</h3>
+    <p>
+        Tools designed to visualize usage data and identifying hardware issues without, or prior to, physical walkthroughs.
+    </p>
+    <div class="img-placeholder">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <img src="assets/img/BaronOps/LR1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
+                
+                <img src="assets/img/BaronOps/LR1-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
+                
+                <img src="assets/img/BaronOps/LR2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
+                
+                <img src="assets/img/BaronOps/LR3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
+            </div>
+            <span style="font-size:0.9rem">Lab Reporting Category</span>
+        </div>
+    </div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <strong>Room Checker (25Live)</strong>
+            <p>
+                Scans room schedules to identify maintenance windows of 1+ hours. Includes a <strong>Show Schedule</strong> detailed view for granular planning, allowing technicians to view all active classes to make their own decisions on planning maintenance tasks. Features a "Summer Mode" toggle to exclude Fridays during summer hours if applicable.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Ghost Hunter</strong>
+            <p>
+                Scans specific rooms for systems that have not reported online in <strong>over 7 Days</strong>. Since labs auto-wake weekly, a system flagging on this report confirms a hardware or network failure, giving technicians a targeted repair list.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Full Lab Report</strong>
+            <p>
+                Aggregates Ghost Hunter data across the entire campus, providing a high-level health map of all labs and identifying safe maintenance windows for the day.  Helping technicians prioritize their day and plan proactive repairs before students or faculty report issues.
+            </p>
+        </div>
+    </div>
+
+    <h3>5.4 Maintenance Utilities</h3>
+    <p>
+        Backend tools for lifecycle management and environment testing.
+    </p>
+    <div class="img-placeholder">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <img src="assets/img/BaronOps/M1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
+                
+                <img src="assets/img/BaronOps/M2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
+                
+                <img src="assets/img/BaronOps/M3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
+                
+                <img src="assets/img/BaronOps/M3-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
+            </div>
+            <span style="font-size:0.9rem">Maintenance Utilities Category</span>
+        </div>
+    </div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <strong>System Purge</strong>
+            <p>
+                A unification tool that removes a decommissioned system from both <strong>Active Directory</strong> and <strong>SCCM</strong> in a single action, ensuring clean records before reimaging.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Testing Ground</strong>
+            <p>
+                Scans the campus for labs with <strong>3+ Hour</strong> vacancies (Today or Tomorrow). This allows SysAdmins to identify a safe "Sandbox" environment for testing new configurations without risk of interrupting a class.</li>
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <strong>Time Set Manager</strong>
+            <p>
+                Syncs Sassafras usage reporting with 25Live term schedules. This ensures analytics only track usage during actual class hours, providing accurate data for decision-making. It also includes a dedicated <strong>Holiday Manager</strong> tab, allowing admins to define campus closures so reports automatically disregard "closed" stretches during breaks.
+            </p>
+        </div>
+    </div>
+    <h3>5.5 Lifecycle & Feedback</h3>
+        <p>
+            To ensure stability and rapid iteration, BaronOps includes built-in mechanisms for self-maintenance and user feedback.
+        </p>
+        <div class="img-placeholder">
+        <div style="padding: 40px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            <img src="assets/img/BaronOps/BugReport.png" alt="Bug Report Screen"><br>
+            <span style="font-size:0.9rem">BaronOps Bug Reporting Interface</span>
+        </div>
+    </div>    
+        <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="feature-card">
+                <strong>Self-Updating Engine</strong>
+                <p>
+                    BaronOps eliminates "Version Drift." On every launch, it silently queries the central deployment share (`\\mtladfs2019\...`) for updates. If a newer version is detected, the user is prompted with the changelog, and a toggle to initiate a seamless self-update process, ensuring all technicians are always on the same stable build.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <strong>Integrated Bug Reporting</strong>
+                <p>
+                    Technicians can submit bug reports or feature requests directly from the console. This establishes a direct feedback loop between IT staff and myself as the developer, allowing for rapid identification and patching of edge-case errors found in unique lab environments.
+                </p>
+            </div>
+        </div>
+
+    <h2>6. Security & Compliance</h2>
+    <p>
+        Security is not a feature; it is the foundation of the BaronOps architecture. The application is built upon a "Defense in Depth" strategy, utilizing four distinct layers of protection to ensure that even if a device is lost or stolen, administrative integrity remains ucompromised.
+    </p>
+
+    <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
+        
+        <div class="feature-card">
+            <strong>1. Role-Based Access Control (RBAC)</strong>
+            <p>
+                BaronOps does not rely on local passwords. Upon launch, it queries the <strong>Active Directory</strong> domain controller to validate the user's live group membership.
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
+                <li><strong>Technicians:</strong> Granted "Least Privilege" access. They can perform routine Lab Checks (Wake, Restart, Deep Freeze, Printer Health, System Purging, and Reporting) but are strictly blocked from destructive actions.</li>
+                <li><strong>SysAdmins:</strong> Detecting the "BaronOpsAdmin" token unlocks the "Red Zone" features: Software Deployment, Uninstalls, File System access, and Sassafras Time Set Management.</li>
+                <li><strong>UI Locking:</strong> Unauthorized features are not just hidden; they are physically disabled in the rendering engine. A technician cannot "accidentally" deploy software.</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <strong>2. Zero-Trust Credential Storage</strong>
+            <p>
+                <strong>Hard-coded passwords are strictly prohibited.</strong> BaronOps utilizes a "Just-in-Time" loading mechanism for sensitive API keys (Sassafras, Deep Freeze, SCCM).
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
+                <li><strong>Air-Gapped Source:</strong> Credentials are never stored in the application binary or source code.</li>
+                <li><strong>Secure Fetch:</strong> Keys are loaded at runtime from a secured, network share (`\\mtladfs2019\...`) restricted via NTFS permissions to IT Staff only.</li>
+                <li><strong>Encryption at Rest:</strong> The configuration file on the server is Base64 encoded and obfuscated, preventing casual reading even by authorized staff.</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <strong>3. Immutable Script Execution</strong>
+            <p>
+                To prevent "Man-in-the-Middle" attacks or script tampering, BaronOps does not execute loose `.ps1` files from the disk.
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
+                <li><strong>Embedded Resources:</strong> All 20+ PowerShell automation scripts are compiled directly into the application DLL as <strong>Embedded Resources</strong>.</li>
+                <li><strong>Tamper-Proof:</strong> A bad actor cannot modify a script (e.g., changing a "Wake" command to a "Format C:" command) because the code is baked into the signed executable. The app only runs what was compiled by the developer.</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <strong>4. Transport Layer Security (WinRM)</strong>
+            <p>
+                BaronOps respects and enforces the institution's existing security policies regarding remote management.
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
+                <li><strong>Policy Enforcement:</strong> The application relies on Windows Remote Management (WinRM). Access to this protocol is strictly controlled via <strong>Group Policy Objects (GPO)</strong>.</li>
+                <li><strong>Deny by Default:</strong> Even if a non-IT user obtained the BaronOps executable, the underlying network infrastructure would reject their connection attempts. The application cannot bypass the operating system's native firewall or user access control lists (ACLs).</li>
+            </ul>
+        </div>
+    </div>
+    <div class="feature-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+    
+    <div class="img-placeholder" style="margin: 0;">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            <img src="assets/img/BaronOps/Unauthorized.png" style="width: 100%; height: auto; border-radius: 4px;" alt="Unauthorized Access Screen"><br>
+            <span style="font-size:0.9rem">Unauthorized Access Notice</span>
+        </div>
+        <span class="img-caption">This is the notice that non-IT users see when they attempt to run BaronOps without proper authorization.</span>
+    </div>
+
+    <div class="img-placeholder" style="margin: 0;">
+        <div style="padding: 20px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            <img src="assets/img/BaronOps/Tech.png" style="width: 100%; height: auto; border-radius: 4px;" alt="Technician Unauthorized Screen"><br>
+            <span style="font-size:0.9rem">Technician Unauthorized Notice</span>
+        </div>
+        <span class="img-caption">SysAdmin tools are restricted. Technicians attempting to access them will see this notice.</span>
+    </div>
+</div>
+
+<h2>7. Future Roadmap: v2.0 & Beyond</h2>
+    <p>
+        The success of <strong>BaronOps v1.0.0</strong> lies in its origin: it was not built in a vacuum, but developed in direct collaboration with the technicians who use it daily. By shadowing field staff and iterating on their specific pain points, the tool evolved into a solution that fits their actual workflow, rather than forcing them to adapt to the software.
+    </p>
+    <p>
+        <strong>BaronOps v2.0.0</strong> will strictly adhere to this same "User-Centric" philosophy. As development shifts toward <strong>Staff & Faculty</strong> endpoint management, the feature set will be defined not by theoretical needs, but by the OIT team's real-world requirements.
+    </p>
+
+    <div class="highlight-box">
+        <strong>The Vision for v2.0:</strong> To extend the "Single-Pane-of-Glass" efficiency to individual endpoints, building tools that the team <em>wants</em> to use.
+    </div>
+
+    <p>
+        Current collaborative planning sessions have identified three key pillars for the next major release:
+    </p>
+    <ul>
+        <li><strong>Safe One-to-One Management:</strong> Targeted tools for troubleshooting individual staff machines without disrupting neighbors.</li>
+        <li><strong>Secure Compliance Auditing:</strong> Automated checks to ensure staff devices meet security and patch-level standards.</li>
+        <li><strong>Efficient Onboarding:</strong> Automating the "New System" setup process, turning a manual provisioning task into a standardized, one-click workflow.</li>
+        <strong>And more...</strong>
+    </ul>
+
+    <h2>8. Conclusion & Specifications</h2>
+    <p>
+        BaronOps represents the successful convergence of modern web aesthetics and rigorous system administration. By abstracting the complexity of WMI, Active Directory, and proprietary APIs behind a "Single-Pane-of-Glass," the application has fundamentally shifted the department's posture from <strong>Reactive Fire-Fighting</strong> to <strong>Proactive Fleet Management</strong>.
+    </p>
+    <p>
+        What began as a simple tool to check room schedules has evolved into the central nervous system of the campus IT department. It empowers a lean team to manage hundreds of endpoints with the speed and precision of a much larger workforce, ensuring that technology is always ready for instruction.
+    </p>
+
+    <div class="img-placeholder">
+        <div style="padding: 40px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
+            <img src="assets/img/BaronOps/About.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="About Screen"><br>
+            <span style="font-size:0.9rem">BaronOps v1.0.0 Production Build</span>
+        </div>
+        <span class="img-caption">
+            <strong>Technical Specifications:</strong> Built on .NET 8 (C#) & WPF • Frontend via Microsoft WebView2 (Chromium) • Automation via PowerShell 7.4 SDK • Data integration with Sassafras LabSight & 25Live API.
+        </span>
+    </div>
+    <div style="margin-top: 60px; padding: 20px; background-color: #f9f9f9; border-top: 1px solid #eee; font-size: 0.85rem; color: #666;">
+        <h4 style="margin-top: 0; color: #333; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem;">Compliance & Data Privacy Notice</h4>
+        <p style="margin-bottom: 10px;">
+            <strong>Institutional Context:</strong> This application was developed and deployed during my tenure as a Systems Administrator at Rowan College at Burlington County (RCBC). It is currently in active production use by the Office of Information Technology.
+        </p>
+        <p style="margin-bottom: 10px;">
+            <strong>Data Privacy (FERPA):</strong> All screenshots contained within this documentation have been sanitized. Any visible sensitive data has been replaced with mock data or blurred to strictly adhere to FERPA regulations and institutional data security policies.
+        </p>
+        <p style="margin-bottom: 0;">
+            <strong>Intellectual Property:</strong> The "BaronOps" branding and RCBC imagery are displayed here for professional portfolio demonstration purposes to highlight UI/UX design and technical architecture.
+        </p>
+    </div>
+
+</div>
+<footer>
+        &copy; 2026 Dan Whittaker &bull; Systems Administrator<br>
+        Developed for Rowan College at Burlington County (RCBC) OIT<br>
+        <span style="opacity: 0.7;">Portfolio Demonstration & Technical Reference</span>
+    </footer>
+
+</body>
+</html>
