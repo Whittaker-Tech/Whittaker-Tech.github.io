@@ -585,7 +585,35 @@
     </div>
 </div>
 
-<h2>7. Future Roadmap: v2.0 & Beyond</h2>
+<h2>7. Future Roadmap: v1.x (Classroom Systems)</h2>
+    <p>
+        While the v1.0 release establishes a robust foundation for full-scale computer lab management, the immediate roadmap for the v1.x lifecycle focuses on expanding "Single-Pane-of-Glass" visibility to <strong>Standard Classroom Systems</strong>.
+    </p>
+
+    <div class="highlight-box">
+        <strong>The v1.x Objective:</strong> Integrate the dozens of standalone Instructor PCs scattered across non-computer lab classrooms into a unified quick-view dashboard for rapid Help Desk support.
+    </div>
+
+    <p>
+        Currently, when a professor in a standard lecture hall encounters an issue, technicians must manually cross-reference inventory to find the specific PC hostname before launching SCCM and initiating a remote session. The upcoming v1.x update will abstract this process by extending the existing Sassafras, 25LIVE, and SCCM API integrations to all classrooms:
+    </p>
+
+    <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="feature-card">
+            <strong>Classroom Quick-View Dashboard</strong>
+            <p>
+                A dedicated module for non-lab classrooms. Support staff can simply select a building and room number (e.g., "Laurel Hall 314") to instantly view the power state, network connectivity, and currently logged-in user of that room's single instructor station.
+            </p>
+        </div>
+        <div class="feature-card">
+            <strong>One-Click Classroom Support</strong>
+            <p>
+                Extends the existing <strong>Remote Control Gateway</strong> and power / deep freeze automation tools to these individual systems. This allows Help Desk agents to immediately launch a remote session, bypass auto-logons, or trigger background restarts the moment a professor calls in, completely eliminating the friction of hostname discovery.
+            </p>
+        </div>
+    </div>
+
+<h2>8. Future Roadmap: v2.0 & Beyond</h2>
     <p>
         The success of <strong>BaronOps v1.0.1</strong> lies in its origin: it was not built in a vacuum, but developed in direct collaboration with the technicians who use it daily. By shadowing field staff and iterating on their specific pain points, the tool evolved into a solution that fits their actual workflow, rather than forcing them to adapt to the software.
     </p>
@@ -607,7 +635,7 @@
         <strong>And more...</strong>
     </ul>
 
-    <h2>8. Conclusion & Specifications</h2>
+    <h2>9. Conclusion & Specifications</h2>
     <p>
         BaronOps represents the successful convergence of modern web aesthetics and rigorous system administration. By abstracting the complexity of WMI, Active Directory, and proprietary APIs behind a "Single-Pane-of-Glass," the application has fundamentally shifted the department's posture from <strong>Reactive Fire-Fighting</strong> to <strong>Proactive Fleet Management</strong>.
     </p>
