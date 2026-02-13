@@ -184,72 +184,6 @@
             display: inline-block;
             margin-bottom: 10px;
         }
-        /* --- LIGHTBOX (ZOOM) STYLES --- */
-    /* The Background Overlay */
-    .lightbox-modal {
-        display: none; 
-        position: fixed; 
-        z-index: 9999; 
-        left: 0;
-        top: 0;
-        width: 100%; 
-        height: 100%; 
-        overflow: auto; 
-        background-color: rgba(0,0,0,0.85); /* Dark background */
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    /* Show state */
-    .lightbox-modal.show {
-        display: flex;
-        opacity: 1;
-    }
-
-    /* The Image Itself */
-    .lightbox-content {
-        margin: auto;
-        display: block;
-        max-width: 90%;
-        max-height: 90%;
-        border-radius: 4px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        animation: zoomIn 0.2s;
-    }
-
-    /* Animation */
-    @keyframes zoomIn {
-        from {transform: scale(0.95); opacity: 0;} 
-        to {transform: scale(1); opacity: 1;}
-    }
-
-    /* Close Button (X) */
-    .close-btn {
-        position: absolute;
-        top: 20px;
-        right: 35px;
-        color: #f1f1f1;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 10000;
-    }
-    .close-btn:hover { color: var(--primary-red); }
-
-    /* ONLY apply clickable cursor to screenshots inside placeholders */
-    /* This excludes the header logo */
-    .img-placeholder img {
-        cursor: zoom-in; 
-        transition: transform 0.2s ease;
-    }
-    
-    /* Optional: Slight hover lift for screenshots */
-    .img-placeholder img:hover {
-        transform: scale(1.01);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
         footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 9pt; color: var(--text-muted); }
     </style>
 </head>
@@ -265,7 +199,7 @@
             <div class="header-text">
                 <h1>BaronOps</h1>
                 <div class="tagline">Single-Pane-of-Glass IT Administration & Lab Management Suite</div>
-                <div class="project-meta">Developed by Dan Whittaker | Updated: February 8, 2026</div>
+                <div class="project-meta">Developed by Dan Whittaker | Updated: February 2026</div>
             </div>
         </div>
         
@@ -324,7 +258,7 @@
 
     <h3>3.2 Embedded PowerShell Execution</h3>
     <p>
-        Instead of shelling out to `cmd.exe` (which is slow and insecure), BaronOps hosts an internal <strong>PowerShell 7.4 runspace</strong>. Scripts are compiled directly into the application DLL as Embedded Resources, ensuring they cannot be tampered with on the client machine.
+        Instead of shelling out to `cmd.exe` (which is slow and insecure), BaronOps hosts an internal <strong>PowerShell 7.4 runspace</strong>. Scripts are compiled directly into the application DLL as Embedded Resources, ensuring they cannot be tampered with on the client machine. As of v1.0.1, the application is deployed utilizing a <strong>Multi-File Architecture</strong> to ensure the embedded PowerShell SDK can reliably resolve native snap-ins and module dependencies, providing rock-solid stability during parallel execution tasks.
     </p>
 
     <h2>4. Key Capabilities</h2>
@@ -332,9 +266,9 @@
     <div class="feature-grid">
         <div class="feature-card">
             <span class="feature-icon">⚡</span>
-            <strong>Power & Access</strong>
+            <strong>Power & Session Automation</strong>
             <p>
-                Combines Wake-on-LAN and Session Management with a smart <strong>Auto-Logon Bypass</strong> script. Includes <strong>Instructor Identification</strong> and an instant <strong>Remote Control Gateway</strong> to streamline support calls.
+                Combines Wake-on-LAN and Session Management with a smart <strong>Logon ToS Bypass</strong> script. Features a background <strong>Auto-Refresh Engine</strong> to continuously poll live states without interrupting the user.  Features a instant <strong>Remote Control Gateway</strong> to streamline support calls.
             </p>
         </div>
         <div class="feature-card">
@@ -369,7 +303,7 @@
             <span class="feature-icon">🛠️</span>
             <strong>Health & Maintenance</strong>
             <p>
-                Validates lab readiness via <strong>Printer Health</strong> checks (Canary testing). Includes <strong>System Purge</strong> for one-click AD/SCCM removal and <strong>Time Set Manager</strong> for schedule syncing.
+                Validates lab readiness via remote <strong>Printer Test Pages</strong>. Includes <strong>System Purge</strong> for one-click AD/SCCM removal and <strong>Time Set Manager</strong> for Sassafras schedule syncing.
             </p>
         </div>
     </div>
@@ -388,11 +322,8 @@
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                 <img src="assets/img/BaronOps/RM1-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
-                
                 <img src="assets/img/BaronOps/RM2-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
-                
                 <img src="assets/img/BaronOps/RM3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
-                
                 <img src="assets/img/BaronOps/RM4.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
             </div>
 
@@ -406,27 +337,34 @@
                 Beyond standard power commands to wake, restart, and shutdown mass systems, this feature utilizes a smart <strong>Auto-Logon Bypass</strong>. Instead of relying on fragile UI automation to "click" buttons, BaronOps temporarily modifies the Windows Registry to suppress the legal Terms of Service notice, instantly triggering the native student auto-logon sequence for an entire lab.
             </p>
             <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                <em>Technical Note:</em> The script includes a <strong>Self-Healing Failsafe</strong>. If the operation is interrupted while the system is in a "Thawed" state, the script automatically restores the Terms of Service registry keys. This ensures the legal notice is never permanently lost, maintaining compliance for future startups.
+                <em>v1.0.1 Update:</em> Introduces a background <strong>15-Second Auto-Refresh Engine</strong>. The UI silently polls the lab for live session states ("Quiet Mode") without throwing loading screens, giving technicians a near-instant read on lab utilization.
             </p>
         </div>
 
         <div class="feature-card">
             <strong>Deep Freeze CLI Wrapper</strong>
             <p>
-                Bypasses the sluggish Deep Freeze Server process entirely. While the native Enterprise Console is slow and restricts access to a single administrator at a time, BaronOps wraps the local Command Line Interface (CLI) for instantaneous, direct control. This decentralized approach solves the "Single-User Lock" bottleneck, allowing multiple technicians to Thaw, Freeze, or Lock systems simultaneously from anywhere on campus.
+                Bypasses the sluggish Deep Freeze Server process entirely. BaronOps wraps the local Command Line Interface (CLI) for instantaneous, direct control, allowing multiple technicians to Thaw, Freeze, or Lock systems simultaneously from anywhere on campus.
+            </p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                <em>v1.0.1 Update:</em> Implements <strong>State Caching (Memory Snapshots)</strong>. If a machine is rebooting into a Thawed state and temporarily times out from the network, the UI intelligently preserves its last known lock state rather than dropping it from the console, eliminating data flicker during lab resets.
             </p>
         </div>
 
         <div class="feature-card">
             <strong>Remote Control Gateway</strong>
             <p>
-                A streamlined UI for the SCCM Remote Control Viewer. It bypasses the bulky SCCM console and its complex context menus, allowing technicians to instantly identify a target (student or instructor) and launch a session, saving significant time during support calls and maintenance.            </p>
+                A streamlined UI for the SCCM Remote Control Viewer. It bypasses the bulky SCCM console and its complex context menus, allowing technicians to instantly identify a target (student or instructor) and launch a session, saving significant time during support calls and maintenance.
+            </p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                <em>v1.0.1 Update:</em> To streamline the user experience and reduce menu clutter, the standalone <strong>Remote Control</strong> tab has been removed. All <strong>Remote Control</strong> functionality has been integrated into the <strong>Power & Session</strong> tab.
+            </p>
         </div>
 
         <div class="feature-card">
             <strong>Printer Health Check</strong>
             <p>
-                Verifies lab readiness by querying a random online system in the selected lab. It checks driver status and spooler health on that single unit to validate the configuration for the entire lab, ensuring class readiness without checking every PC manually.  Given the labs are standardized via Deep Freeze, if the test system has the correct printer mappings and no errors, it's a strong indicator that the rest of the lab is similarly configured, allowing technicians to move on with confidence.
+                Verifies lab readiness by querying a random online system in the selected lab. It checks driver status and spooler health on that single unit to validate the configuration for the entire lab, ensuring class readiness without checking every PC manually. 
             </p>
         </div>
     </div>
@@ -440,11 +378,8 @@
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                 <img src="assets/img/BaronOps/LA1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
-                
                 <img src="assets/img/BaronOps/LA2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
-                
                 <img src="assets/img/BaronOps/LA3-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
-                
                 <img src="assets/img/BaronOps/LA3-2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
             </div>
 
@@ -483,11 +418,8 @@
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                 <img src="assets/img/BaronOps/LR1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
-                
                 <img src="assets/img/BaronOps/LR1-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
-                
                 <img src="assets/img/BaronOps/LR2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
-                
                 <img src="assets/img/BaronOps/LR3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
             </div>
             <span style="font-size:0.9rem">Lab Reporting Category</span>
@@ -525,11 +457,8 @@
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                 <img src="assets/img/BaronOps/M1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 1">
-                
                 <img src="assets/img/BaronOps/M2.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 2">
-                
                 <img src="assets/img/BaronOps/M3.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 3">
-                
                 <img src="assets/img/BaronOps/M3-1.png" style="width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="Real-Time View 4">
             </div>
             <span style="font-size:0.9rem">Maintenance Utilities Category</span>
@@ -546,7 +475,7 @@
         <div class="feature-card">
             <strong>Testing Ground</strong>
             <p>
-                Scans the campus for labs with <strong>3+ Hour</strong> vacancies (Today or Tomorrow). This allows SysAdmins to identify a safe "Sandbox" environment for testing new configurations without risk of interrupting a class.</li>
+                Scans the campus for labs with <strong>3+ Hour</strong> vacancies (Today or Tomorrow). This allows SysAdmins to identify a safe "Sandbox" environment for testing new configurations without risk of interrupting a class.
             </p>
         </div>
 
@@ -557,35 +486,36 @@
             </p>
         </div>
     </div>
+    
     <h3>5.5 Lifecycle & Feedback</h3>
-        <p>
-            To ensure stability and rapid iteration, BaronOps includes built-in mechanisms for self-maintenance and user feedback.
-        </p>
-        <div class="img-placeholder">
+    <p>
+        To ensure stability and rapid iteration, BaronOps includes built-in mechanisms for self-maintenance and user feedback.
+    </p>
+    <div class="img-placeholder">
         <div style="padding: 40px; background: #eee; color: #aaa; border: 2px dashed #ccc;">
             <img src="assets/img/BaronOps/BugReport.png" alt="Bug Report Screen"><br>
             <span style="font-size:0.9rem">BaronOps Bug Reporting Interface</span>
         </div>
     </div>    
-        <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
-            <div class="feature-card">
-                <strong>Self-Updating Engine</strong>
-                <p>
-                    BaronOps eliminates "Version Drift." On every launch, it silently queries the central deployment share (`\\mtladfs2019\...`) for updates. If a newer version is detected, the user is prompted with the changelog, and a toggle to initiate a seamless self-update process, ensuring all technicians are always on the same stable build.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <strong>Integrated Bug Reporting</strong>
-                <p>
-                    Technicians can submit bug reports or feature requests directly from the console. This establishes a direct feedback loop between IT staff and myself as the developer, allowing for rapid identification and patching of edge-case errors found in unique lab environments.
-                </p>
-            </div>
+    <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="feature-card">
+            <strong>Self-Updating Engine</strong>
+            <p>
+                BaronOps eliminates "Version Drift." On every launch, it silently queries the central deployment share (`\\mtladfs2019\...`) for updates. If a newer version is detected, the UI logic intercepts the terminal event flag to gracefully display an "Update Available" button. Users are presented with the changelog and can initiate a seamless self-update process, ensuring all technicians are always on the same stable build.
+            </p>
         </div>
+
+        <div class="feature-card">
+            <strong>Integrated Bug Reporting</strong>
+            <p>
+                Technicians can submit bug reports or feature requests directly from the console. This establishes a direct feedback loop between IT staff and myself as the developer, allowing for rapid identification and patching of edge-case errors found in unique lab environments.
+            </p>
+        </div>
+    </div>
 
     <h2>6. Security & Compliance</h2>
     <p>
-        Security is not a feature; it is the foundation of the BaronOps architecture. The application is built upon a "Defense in Depth" strategy, utilizing four distinct layers of protection to ensure that even if a device is lost or stolen, administrative integrity remains ucompromised.
+        Security is not a feature; it is the foundation of the BaronOps architecture. The application is built upon a "Defense in Depth" strategy, utilizing four distinct layers of protection to ensure that even if a device is lost or stolen, administrative integrity remains uncompromised.
     </p>
 
     <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">
@@ -657,7 +587,7 @@
 
 <h2>7. Future Roadmap: v2.0 & Beyond</h2>
     <p>
-        The success of <strong>BaronOps v1.0.0</strong> lies in its origin: it was not built in a vacuum, but developed in direct collaboration with the technicians who use it daily. By shadowing field staff and iterating on their specific pain points, the tool evolved into a solution that fits their actual workflow, rather than forcing them to adapt to the software.
+        The success of <strong>BaronOps v1.0.1</strong> lies in its origin: it was not built in a vacuum, but developed in direct collaboration with the technicians who use it daily. By shadowing field staff and iterating on their specific pain points, the tool evolved into a solution that fits their actual workflow, rather than forcing them to adapt to the software.
     </p>
     <p>
         <strong>BaronOps v2.0.0</strong> will strictly adhere to this same "User-Centric" philosophy. As development shifts toward <strong>Staff & Faculty</strong> endpoint management, the feature set will be defined not by theoretical needs, but by the OIT team's real-world requirements.
@@ -714,43 +644,5 @@
         <span style="opacity: 0.7;">Portfolio Demonstration & Technical Reference</span>
     </footer>
 
-<div id="imageModal" class="lightbox-modal">
-    <span class="close-btn">&times;</span>
-    <img class="lightbox-content" id="lightboxImg">
-</div>
-<script>
-    // Get the modal elements
-    var modal = document.getElementById("imageModal");
-    var modalImg = document.getElementById("lightboxImg");
-    var span = document.getElementsByClassName("close-btn")[0];
-
-    // SELECTOR: Only select images inside .img-placeholder divs
-    // This ensures the Header Logo is NOT selected
-    var images = document.querySelectorAll('.img-placeholder img');
-
-    images.forEach(img => {
-        img.addEventListener('click', function(){
-            modal.classList.add('show');
-            modalImg.src = this.src;
-        });
-    });
-
-    // Close logic
-    span.onclick = function() { modal.classList.remove('show'); }
-    
-    // Close if clicking outside the image
-    modal.onclick = function(event) {
-        if (event.target === modal) {
-            modal.classList.remove('show');
-        }
-    }
-
-    // Close on Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            modal.classList.remove('show');
-        }
-    });
-</script>
 </body>
 </html>
