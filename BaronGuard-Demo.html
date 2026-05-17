@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaronGuard — Interactive Demo</title>
+<style>
+:root {
+  --rcbc-red: #AB162B;
+  --rcbc-dark: #1a0a0d;
+  --border: #e5e7eb;
+  --bg-soft: #f8f9fa;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted: #9ca3af;
+  --success-bg: #f0fdf4;
+  --success-border: #86efac;
+  --success-text: #166534;
+  --radius: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0f1117;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* Header */
+.page-header {
+  background: linear-gradient(135deg, var(--rcbc-dark), #2d0a10);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.3px; }
+.header-logo span { color: #f87171; }
+.header-back {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+.header-back:hover { color: #fff; }
+
+/* Intro */
+.intro {
+  text-align: center;
+  padding: 36px 20px 20px;
+}
+.intro h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; }
+.intro p { color: rgba(255,255,255,0.55); font-size: 0.95rem; }
+
+/* Workflow tabs */
+.tabs-wrap { display: flex; justify-content: center; gap: 8px; padding: 16px 20px 8px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.tab-btn.active { background: var(--rcbc-red); border-color: var(--rcbc-red); color: #fff; }
+
+/* Role selector */
+.role-wrap { display: flex; justify-content: center; gap: 8px; padding: 6px 20px 20px; min-height: 52px; align-items: center; }
+.role-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 0.825rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.role-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.role-btn.active { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.4); color: #fff; }
+
+/* Viewport */
+.viewport-wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.mock-viewport {
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+  height: 620px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* Mock nav */
+.mock-nav {
+  background: var(--rcbc-dark);
+  padding: 0 20px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.mock-nav-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+.mock-nav-logo span { color: #f87171; }
+.mock-nav-right { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+.nav-role-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.12);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+}
+.nav-signout { color: rgba(255,255,255,0.45); cursor: pointer; font-size: 0.75rem; }
+
+/* Mock page area */
+.mock-page {
+  flex: 1;
+  background: var(--bg-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Screens */
+.screen {
+  position: absolute;
+  inset: 0;
+  padding: 1.25rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  overflow-y: auto;
+}
+.screen.active { opacity: 1; }
+
+.screen-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+.screen-sub { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+/* Lookup screen */
+.lookup-field label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px; }
+.lookup-row { display: flex; gap: 8px; align-items: center; }
+.mock-input {
+  flex: 1;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background: #fff;
+  outline: none;
+  pointer-events: none;
+}
+.btn-red {
+  background: var(--rcbc-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0 16px;
+  height: 34px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.or-divider { display: flex; align-items: center; gap: 8px; margin: 12px 0; color: var(--text-muted); font-size: 0.75rem; }
+.or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.name-row { display: flex; gap: 8px; }
+.name-row .mock-input { flex: 1; color: var(--text-muted); }
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.3s, border-color 0.3s, background 0.3s;
+  cursor: pointer;
+}
+.result-row.visible { opacity: 1; }
+.result-row.highlighted { border-color: var(--rcbc-red); background: #fff5f5; }
+.result-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.result-info { flex: 1; }
+.result-name { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.result-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+.badge-blue {
+  padding: 2px 8px; border-radius: 4px;
+  background: #eff6ff; color: #1d4ed8;
+  font-size: 0.7rem; font-weight: 600;
+}
+.badge-staff {
+  padding: 2px 8px; border-radius: 4px;
+  background: #f0fdf4; color: #15803d;
+  font-size: 0.7rem; font-weight: 600;
+}
+
+/* Request screen */
+.request-layout { display: flex; gap: 14px; height: calc(100% - 48px); }
+.request-sidebar {
+  width: 190px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sidebar-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+.sidebar-name { font-size: 0.82rem; font-weight: 700; color: var(--text-primary); }
+.sidebar-id { font-size: 0.7rem; color: var(--text-muted); }
+.sidebar-status { margin-top: 4px; }
+.sidebar-status-label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.sidebar-status-row { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 2px; }
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-top: auto;
+}
+.request-main { flex: 1; overflow-y: auto; }
+
+.recent-alert {
+  background: #fff5f5;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: #991b1b;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.section-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+
+.mock-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.mock-checkbox-row.checked { border-color: var(--rcbc-red); background: #fff5f5; }
+.mock-checkbox {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 2px solid #d1d5db;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 11px;
+  color: transparent;
+}
+.mock-checkbox.checked { background: var(--rcbc-red); border-color: var(--rcbc-red); color: #fff; }
+.mock-checkbox.checked::after { content: '✓'; }
+.chk-label { font-size: 0.825rem; font-weight: 500; color: var(--text-primary); }
+
+.radio-group { margin-bottom: 12px; }
+.mock-radio-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 2px;
+}
+.mock-radio-row:hover { background: rgba(0,0,0,0.04); }
+.mock-radio {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+.mock-radio-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s;
+}
+.mock-radio-dot.selected { background: var(--rcbc-red); }
+.mock-radio:has(.mock-radio-dot.selected) { border-color: var(--rcbc-red); }
+.radio-label { font-size: 0.8rem; color: var(--text-primary); }
+
+/* Verify screen */
+.verify-layout { display: flex; gap: 14px; height: calc(100% - 48px); }
+.verify-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+}
+.verify-field { margin-bottom: 10px; }
+.verify-field-label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.verify-field-value { font-size: 0.78rem; color: var(--text-primary); }
+.verify-main { flex: 1; }
+
+.threshold-indicator {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #fbbf24;
+  background: #fffbeb;
+  font-size: 0.75rem;
+  color: #92400e;
+  margin-bottom: 12px;
+  transition: all 0.3s;
+}
+.threshold-indicator.met {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.verify-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.verify-item.checked { border-color: #86efac; background: var(--success-bg); }
+.verify-circle {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: transparent;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.verify-circle.checked { background: #16a34a; border-color: #16a34a; color: #fff; }
+.verify-circle.checked::after { content: '✓'; }
+.verify-item-text { flex: 1; }
+.verify-item-name { font-size: 0.825rem; font-weight: 600; color: var(--text-primary); }
+.verify-item-val { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Confirm screen */
+.confirm-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.confirm-heading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.confirm-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.confirm-row { display: flex; gap: 8px; font-size: 0.8rem; }
+.confirm-key { color: var(--text-muted); width: 90px; flex-shrink: 0; }
+.confirm-val { color: var(--text-primary); font-weight: 500; }
+.warn-box {
+  background: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  color: #92400e;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.confirm-btns { display: flex; gap: 8px; }
+.btn-confirm {
+  flex: 1;
+  background: var(--rcbc-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 14px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+/* Result screens */
+.result-wrap { padding: 8px 0; }
+.result-note {
+  font-size: 0.78rem;
+  color: var(--rcbc-red);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.success-item {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.success-item.revealed { opacity: 1; transform: translateY(0); }
+.success-item-title { font-size: 0.875rem; font-weight: 700; color: var(--success-text); margin-bottom: 4px; }
+.success-item-detail { font-size: 0.78rem; color: #15803d; line-height: 1.5; }
+.audit-line { font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; }
+
+.tap-code-box {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tap-code { font-family: 'Courier New', monospace; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); flex: 1; }
+.tap-copy {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.tap-expiry { font-size: 0.72rem; color: var(--text-muted); }
+
+.btn-next-student {
+  background: var(--rcbc-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* TAP Test Center direct screen */
+.tap-tc-layout { padding: 4px 0; max-width: 520px; }
+.tap-tc-student-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  margin-bottom: 16px;
+}
+.tap-tc-id-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.tap-tc-id-check-row.checked { border-color: #86efac; background: var(--success-bg); }
+.tap-tc-checkbox {
+  width: 18px; height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: transparent;
+}
+.tap-tc-checkbox.checked { background: #16a34a; border-color: #16a34a; color: #fff; }
+.tap-tc-checkbox.checked::after { content: '✓'; }
+.tap-tc-check-label { font-size: 0.83rem; color: var(--text-primary); line-height: 1.5; }
+
+/* Help Desk Verified notice on Verify screen */
+.helpdesk-notice {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  background: #f0fdf4; border: 1px solid #86efac;
+  border-radius: 8px; margin-bottom: 10px;
+}
+.helpdesk-notice-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.helpdesk-notice-text strong { font-size: 0.83rem; color: #15803d; display: block; margin-bottom: 2px; }
+.helpdesk-notice-text span { font-size: 0.75rem; color: #166534; line-height: 1.5; }
+
+/* Account type selector (OIT only — mirrors real app) */
+.account-type-selector { margin-bottom: 14px; }
+.account-type-label {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px;
+}
+.account-type-options { display: flex; gap: 8px; }
+.account-type-option {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  padding: 11px 13px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s; background: #fff;
+  position: relative;
+}
+.account-type-option input[type="radio"] { display: none; }
+.account-type-option.selected { border-color: var(--rcbc-red); background: #fff5f6; }
+.account-type-icon { font-size: 1.3rem; flex-shrink: 0; }
+.account-type-text { display: flex; flex-direction: column; }
+.account-type-text strong { font-size: 0.85rem; color: var(--text-primary); }
+.account-type-text small { font-size: 0.7rem; color: var(--text-muted); margin-top: 1px; }
+.account-type-option--disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
+/* Checklist divider (Physical ID "or" separator) */
+.checklist-divider {
+  display: flex; align-items: center; gap: 8px;
+  margin: 8px 0; color: var(--text-muted); font-size: 0.73rem;
+}
+.checklist-divider::before, .checklist-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* TAP options block on confirm screen */
+.tap-options {
+  background: #fffbf0; border: 1px solid #f6ad55;
+  border-radius: var(--radius); padding: 10px 12px; margin: 10px 0 0;
+}
+.tap-options-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 2px; }
+.tap-options-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #b7791f;
+  min-width: 55px; padding-top: 6px; flex-shrink: 0;
+}
+.tap-opts-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.tap-opt-pill {
+  padding: 4px 11px;
+  border: 1.5px solid var(--border); border-radius: 6px;
+  font-size: 0.78rem; cursor: pointer;
+  background: #fff; color: var(--text-secondary);
+  transition: all 0.15s; user-select: none;
+}
+.tap-opt-pill.selected {
+  border-color: var(--rcbc-red); background: #fff5f6;
+  color: var(--rcbc-red); font-weight: 600;
+}
+
+/* Continue/verify/confirm submit buttons */
+.action-btn {
+  background: var(--rcbc-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: opacity 0.3s;
+}
+
+/* Animated cursor */
+#demo-cursor {
+  position: absolute;
+  z-index: 999;
+  pointer-events: none;
+  left: 50px;
+  top: 50px;
+  transition: left 0.5s cubic-bezier(0.4,0,0.2,1), top 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.click-ripple {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(171, 22, 43, 0.35);
+  pointer-events: none;
+  z-index: 998;
+  transform: translate(-50%, -50%) scale(0.3);
+  animation: ripple-out 0.5s ease-out forwards;
+}
+@keyframes ripple-out {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+}
+
+/* Progress bar */
+.progress-wrap { max-width: 900px; margin: 10px auto 0; padding: 0 20px; }
+.progress-bar-bg { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--rcbc-red); border-radius: 2px; width: 0%; transition: width 0.3s; }
+
+/* Caption */
+.caption-wrap { max-width: 900px; margin: 8px auto 0; padding: 0 20px; text-align: center; }
+.caption-text { font-size: 0.82rem; color: rgba(255,255,255,0.45); font-style: italic; transition: opacity 0.2s; min-height: 20px; }
+
+/* Controls */
+.controls-wrap { max-width: 900px; margin: 12px auto 30px; padding: 0 20px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+.ctrl-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.ctrl-btn.primary { background: var(--rcbc-red); border-color: var(--rcbc-red); color: #fff; }
+.step-counter { font-size: 0.78rem; color: rgba(255,255,255,0.35); min-width: 50px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-logo">Baron<span>Guard</span> — Interactive Demo</div>
+  <a class="header-back" href="BaronGuard-Portfolio.html">← Back to Portfolio</a>
+</header>
+
+<div class="intro">
+  <h1>See How It Works</h1>
+  <p>Select a workflow to watch an automated walkthrough.</p>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" data-workflow="pw">🔑 Password Reset</button>
+  <button class="tab-btn" data-workflow="mfa">📱 MFA Clear</button>
+  <button class="tab-btn" data-workflow="both">🔑📱 Password + MFA</button>
+  <button class="tab-btn" data-workflow="tap">🔐 TAP (Test Center)</button>
+</div>
+
+<div class="role-wrap" id="roleWrap">
+  <button class="role-btn active" data-role="ss" id="roleBtn1">Student Support</button>
+  <button class="role-btn" data-role="oit" id="roleBtn2">OIT</button>
+</div>
+
+<div class="viewport-wrap">
+  <div class="mock-viewport">
+
+    <div class="mock-nav">
+      <div class="mock-nav-logo">Baron<span>Guard</span></div>
+      <div class="mock-nav-right">
+        <span id="navUserName">Dan Whittaker</span>
+        <span class="nav-role-badge" id="navRoleBadge">Student Support</span>
+        <span class="nav-signout">Sign Out</span>
+      </div>
+    </div>
+
+    <div class="mock-page" id="mockPage">
+
+      <!-- Cursor -->
+      <div id="demo-cursor">
+        <svg width="20" height="22" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 2L16 10L10 11L7 17L4 2Z" fill="white" stroke="#333" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- Screen: Lookup -->
+      <div class="screen" id="screen-lookup">
+        <div class="screen-title" id="lookupScreenTitle">Student Lookup</div>
+        <div class="screen-sub" id="lookupScreenSub">Search by student ID or name to begin.</div>
+
+        <!-- Account type selector — OIT only -->
+        <div id="acctTypeSel" style="display:none;">
+          <div class="account-type-selector">
+            <div class="account-type-label">Who are you looking up?</div>
+            <div class="account-type-options">
+              <label class="account-type-option selected" id="acctTypeStudent">
+                <input type="radio" name="_acctType" value="Student" checked />
+                <span class="account-type-icon">🎓</span>
+                <span class="account-type-text">
+                  <strong>Student</strong>
+                  <small>@mymail.rcbc.edu</small>
+                </span>
+              </label>
+              <label class="account-type-option" id="acctTypeStaff">
+                <input type="radio" name="_acctType" value="Staff" />
+                <span class="account-type-icon">💼</span>
+                <span class="account-type-text">
+                  <strong>Staff / Faculty</strong>
+                  <small>@rcbc.edu</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="lookup-field">
+            <label id="lookupIdLabel">Student ID</label>
+            <div class="lookup-row">
+              <input class="mock-input" id="demoIdInput" readonly placeholder="Enter student ID...">
+              <button class="btn-red" id="demoSearchBtn">Search</button>
+            </div>
+          </div>
+          <div class="or-divider">or</div>
+          <div class="name-row">
+            <input class="mock-input" readonly placeholder="First Name">
+            <input class="mock-input" readonly placeholder="Last Name">
+          </div>
+        </div>
+        <div class="result-row" id="demoResultRow">
+          <div class="result-avatar">BO</div>
+          <div class="result-info">
+            <div class="result-name">Baron Oxley</div>
+            <div class="result-meta">ID: 3131313 · baron_oxley@mymail.rcbc.edu</div>
+          </div>
+          <span class="badge-blue">Student</span>
+        </div>
+        <div class="result-row" id="demoResultRowStaff" style="display:none;">
+          <div class="result-avatar">RC</div>
+          <div class="result-info">
+            <div class="result-name">Ron Cahall</div>
+            <div class="result-meta">ID: 7654321 · rcahall@rcbc.edu</div>
+          </div>
+          <span class="badge-staff">Staff</span>
+        </div>
+      </div>
+
+      <!-- Screen: Request -->
+      <div class="screen" id="screen-request">
+        <div class="screen-title">Request</div>
+        <div id="demoRecentAlert" class="recent-alert" style="display:none;">
+          🚨 <strong>Recent reset on record</strong> — this account was reset recently.<br>
+          • Dan Whittaker reset Password + MFA — 47 minutes ago (2:14 PM)
+        </div>
+        <div class="request-layout">
+          <div class="request-sidebar">
+            <div class="sidebar-avatar" id="reqSidebarAvatar">BO</div>
+            <div class="sidebar-name" id="reqSidebarName">Baron Oxley</div>
+            <div class="sidebar-id" id="reqSidebarId">ID: 3131313</div>
+            <span class="badge-blue" id="reqSidebarBadge" style="align-self:flex-start;margin-top:2px;">Student</span>
+            <div class="sidebar-status">
+              <div class="sidebar-status-label">Account Status</div>
+              <div id="reqSidebarStatusRows">
+                <div class="sidebar-status-row">MFA: ✓ App, Phone</div>
+                <div class="sidebar-status-row">Password: May 17 2026, 47m ago</div>
+              </div>
+            </div>
+            <button class="btn-ghost" id="reqWrongBtn">→ Wrong Student</button>
+          </div>
+          <div class="request-main" id="requestMain">
+            <div class="section-label">What does the student need?</div>
+
+            <div class="mock-checkbox-row" id="row-pw">
+              <div class="mock-checkbox" id="chk-pw-box"></div>
+              <span class="chk-label" id="chk-pw">🔑 Password Reset</span>
+            </div>
+            <div class="mock-checkbox-row" id="row-mfa">
+              <div class="mock-checkbox" id="chk-mfa-box"></div>
+              <span class="chk-label" id="chk-mfa">📱 MFA Clear</span>
+            </div>
+            <div class="mock-checkbox-row" id="row-tap" style="display:none;">
+              <div class="mock-checkbox" id="chk-tap-box"></div>
+              <span class="chk-label" id="chk-tap">🔐 Temporary Access Pass (TAP)</span>
+            </div>
+
+            <div class="radio-group" style="margin-top:12px;">
+              <div class="section-label">Verification method</div>
+              <div class="mock-radio-row" id="radio-helpdesk" style="display:none;">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-helpdesk"></div></div>
+                <span class="radio-label">✅ Student Help Desk Verified</span>
+              </div>
+              <div class="mock-radio-row" id="radio-inperson">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-inperson"></div></div>
+                <span class="radio-label">In-Person</span>
+              </div>
+              <div class="mock-radio-row">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-video"></div></div>
+                <span class="radio-label">Video Call</span>
+              </div>
+              <div class="mock-radio-row">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-phone"></div></div>
+                <span class="radio-label">Phone Call</span>
+              </div>
+            </div>
+
+            <div class="radio-group">
+              <div class="section-label">Reason</div>
+              <div class="mock-radio-row" id="radio-forgot">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-forgot"></div></div>
+                <span class="radio-label">Forgot Password</span>
+              </div>
+              <div class="mock-radio-row" id="radio-newphone" style="display:none;">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-newphone"></div></div>
+                <span class="radio-label">New or Lost Phone</span>
+              </div>
+              <div class="mock-radio-row" id="radio-mfabroke">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-mfabroke"></div></div>
+                <span class="radio-label">MFA Not Working</span>
+              </div>
+              <div class="mock-radio-row" id="radio-tapexam" style="display:none;">
+                <div class="mock-radio"><div class="mock-radio-dot" id="dot-tapexam"></div></div>
+                <span class="radio-label">Proctored Exam Access</span>
+              </div>
+            </div>
+
+            <button class="action-btn" id="demoContinueBtn" style="opacity:0.4;">Continue →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen: Verify -->
+      <div class="screen" id="screen-verify">
+        <div class="screen-title">Verify Identity</div>
+        <div class="verify-layout">
+          <div class="verify-sidebar" id="verifySidebar">
+            <div class="section-label" style="margin-bottom:10px;">Student Info</div>
+            <div class="verify-field">
+              <div class="verify-field-label">Student ID</div>
+              <div class="verify-field-value">3131313</div>
+            </div>
+            <div class="verify-field">
+              <div class="verify-field-label">Age</div>
+              <div class="verify-field-value">24</div>
+            </div>
+            <div class="verify-field">
+              <div class="verify-field-label">Home Address</div>
+              <div class="verify-field-value">900 College Cir, Mt Laurel Township NJ 08054</div>
+            </div>
+            <div class="verify-field">
+              <div class="verify-field-label">Phone Number</div>
+              <div class="verify-field-value">856 222 9311</div>
+            </div>
+            <div class="verify-field">
+              <div class="verify-field-label">Personal Email</div>
+              <div class="verify-field-value">baron.oxley@gmail.com</div>
+            </div>
+            <div class="verify-field">
+              <div class="verify-field-label">Last Term</div>
+              <div class="verify-field-value">Spring 2026</div>
+            </div>
+          </div>
+          <div class="verify-main">
+            <div id="helpdesk-notice" class="helpdesk-notice" style="display:none;">
+              <span class="helpdesk-notice-icon">✅</span>
+              <div class="helpdesk-notice-text">
+                <strong>Student Help Desk Verified</strong>
+                <span>Identity pre-confirmed by Student Help Desk staff. No additional verification fields required.</span>
+              </div>
+            </div>
+            <div class="threshold-indicator" id="verifyThreshold">Minimum 3 fields required — or present RCBC ID card.</div>
+            <div class="verify-item" id="vchk-physical">
+              <div class="verify-circle" id="vcirc-physical"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Physical RCBC ID Card</div>
+                <div class="verify-item-val">Student presented their physical RCBC ID card</div>
+              </div>
+            </div>
+            <div class="checklist-divider">or verify at least 3 of the following</div>
+            <div class="verify-item" id="vchk-id">
+              <div class="verify-circle" id="vcirc-id"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Student ID</div>
+                <div class="verify-item-val">3131313</div>
+              </div>
+            </div>
+            <div class="verify-item" id="vchk-age">
+              <div class="verify-circle" id="vcirc-age"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Age</div>
+                <div class="verify-item-val">24</div>
+              </div>
+            </div>
+            <div class="verify-item" id="vchk-addr">
+              <div class="verify-circle" id="vcirc-addr"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Home Address</div>
+                <div class="verify-item-val">900 College Cir, Mt Laurel Township NJ 08054</div>
+              </div>
+            </div>
+            <div class="verify-item" id="vchk-phone">
+              <div class="verify-circle" id="vcirc-phone"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Phone Number</div>
+                <div class="verify-item-val">856 222 9311</div>
+              </div>
+            </div>
+            <div class="verify-item" id="vchk-email">
+              <div class="verify-circle" id="vcirc-email"></div>
+              <div class="verify-item-text">
+                <div class="verify-item-name">Personal Email</div>
+                <div class="verify-item-val">baron.oxley@gmail.com</div>
+              </div>
+            </div>
+            <button class="action-btn" id="demoVerifyBtn" style="opacity:0.4;">Submit Verification →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen: Confirm -->
+      <div class="screen" id="screen-confirm">
+        <div class="screen-title">Confirm</div>
+        <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:10px;">
+          <div class="confirm-card">
+            <div class="confirm-heading">⚠ You are about to perform the following:</div>
+            <div class="confirm-grid">
+              <div class="confirm-row">
+                <span class="confirm-key" id="confirmUserKey">Student</span>
+                <span class="confirm-val" id="confirmUser">Baron Oxley — ID 3131313</span>
+              </div>
+              <div class="confirm-row">
+                <span class="confirm-key">Actions</span>
+                <span class="confirm-val" id="confirmActions">—</span>
+              </div>
+              <div class="confirm-row">
+                <span class="confirm-key">Verified via</span>
+                <span class="confirm-val" id="confirmMethod">—</span>
+              </div>
+              <div class="confirm-row">
+                <span class="confirm-key">Reason</span>
+                <span class="confirm-val" id="confirmReason">—</span>
+              </div>
+            </div>
+            <!-- TAP options — OIT only -->
+            <div id="tapOitOpts" style="display:none;">
+              <div class="tap-options">
+                <div class="tap-options-row">
+                  <div class="tap-options-label">Usage</div>
+                  <div class="tap-opts-pills">
+                    <span class="tap-opt-pill selected" id="tapOptOneTime">One-Time Use</span>
+                    <span class="tap-opt-pill" id="tapOptMultiUse">Multi-Use</span>
+                  </div>
+                </div>
+                <div class="tap-options-row" style="margin-top:6px;">
+                  <div class="tap-options-label">Duration</div>
+                  <div class="tap-opts-pills">
+                    <span class="tap-opt-pill selected" id="tapOpt1hr">1 Hour</span>
+                    <span class="tap-opt-pill" id="tapOpt2hr">2 Hours</span>
+                    <span class="tap-opt-pill" id="tapOpt4hr">4 Hours</span>
+                    <span class="tap-opt-pill" id="tapOpt8hr">8 Hours</span>
+                    <span class="tap-opt-pill" id="tapOpt24hr">24 Hours</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="warn-box">These actions cannot be undone. Confirm only if identity verification is complete.</div>
+            <div class="confirm-btns">
+              <button class="btn-back">← Go Back</button>
+              <button class="btn-confirm" id="demoConfirmBtn">✓ Confirm &amp; Execute</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen: TAP (Test Center direct path) -->
+      <div class="screen" id="screen-tap-tc">
+        <div class="screen-title">Generate Temporary Access Pass</div>
+        <div class="tap-tc-layout">
+          <div class="tap-tc-student-card">
+            <div class="sidebar-avatar" style="width:42px;height:42px;font-size:0.9rem;flex-shrink:0;">BO</div>
+            <div>
+              <div class="sidebar-name" style="font-size:0.95rem;margin-bottom:2px;">Baron Oxley</div>
+              <div class="sidebar-id">ID: 3131313 · baron_oxley@mymail.rcbc.edu</div>
+              <span class="badge-blue" style="display:inline-block;margin-top:5px;">Student</span>
+            </div>
+          </div>
+          <div class="tap-tc-id-check-row" id="tapIdCardRow">
+            <div class="tap-tc-checkbox" id="tapIdCardCheck"></div>
+            <span class="tap-tc-check-label">Student has presented their physical RCBC ID card and the name matches the record above.</span>
+          </div>
+          <button class="action-btn" id="tapGenerateBtn" style="opacity:0.4;">Generate TAP →</button>
+        </div>
+      </div>
+
+      <!-- Result: pw-ss -->
+      <div class="screen" id="screen-result-pw-ss">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-pw-ss-1">
+            <div class="success-item-title">✓ Password Reset</div>
+            <div class="success-item-detail">A temporary password has been set. Walk the student through the formula using their own information — do not read it aloud directly.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next Student</button>
+        </div>
+      </div>
+
+      <!-- Result: pw-oit -->
+      <div class="screen" id="screen-result-pw-oit">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-pw-oit-1">
+            <div class="success-item-title">✓ Password Reset</div>
+            <div class="success-item-detail">Temporary password set. Confirm with the student before ending the session.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next Student</button>
+        </div>
+      </div>
+
+      <!-- Result: mfa -->
+      <div class="screen" id="screen-result-mfa">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-mfa-1">
+            <div class="success-item-title">✓ MFA Methods Cleared</div>
+            <div class="success-item-detail">All registered authentication methods removed. Student can re-enroll at next sign-in.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next Student</button>
+        </div>
+      </div>
+
+      <!-- Result: mfa-oit -->
+      <div class="screen" id="screen-result-mfa-oit">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-mfa-oit-1">
+            <div class="success-item-title">✓ MFA Methods Cleared</div>
+            <div class="success-item-detail">Ron Cahall — Staff member can re-enroll MFA at next sign-in.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next User</button>
+        </div>
+      </div>
+
+      <!-- Result: both-ss -->
+      <div class="screen" id="screen-result-both-ss">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-both-ss-1">
+            <div class="success-item-title">✓ Password Reset</div>
+            <div class="success-item-detail">A temporary password has been set. Walk the student through the formula using their own information — do not read it aloud directly.</div>
+          </div>
+          <div class="success-item" id="ri-both-ss-2">
+            <div class="success-item-title">✓ MFA Methods Cleared</div>
+            <div class="success-item-detail">All registered authentication methods removed. Student can re-enroll at next sign-in.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next Student</button>
+        </div>
+      </div>
+
+      <!-- Result: both-oit -->
+      <div class="screen" id="screen-result-both-oit">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-both-oit-1">
+            <div class="success-item-title">✓ Password Reset</div>
+            <div class="success-item-detail">Temporary password set. Confirm with the student before ending the session.</div>
+          </div>
+          <div class="success-item" id="ri-both-oit-2">
+            <div class="success-item-title">✓ MFA Methods Cleared</div>
+            <div class="success-item-detail">All registered authentication methods removed. Student can re-enroll at next sign-in.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:01 PM ET</div>
+          <button class="btn-next-student">← Next Student</button>
+        </div>
+      </div>
+
+      <!-- Result: tap-tc -->
+      <div class="screen" id="screen-result-tap-tc">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="result-note">Student must be physically present with their RCBC ID card.</div>
+          <div class="success-item" id="ri-tap-tc-1">
+            <div class="success-item-title">✓ TAP Generated</div>
+            <div class="success-item-detail">Baron Oxley — confirmed via Physical RCBC ID Card.</div>
+            <div class="tap-code-box">
+              <span class="tap-code">QAf+MLKB</span>
+              <button class="tap-copy">📋 Copy TAP</button>
+            </div>
+            <div class="tap-expiry">One-time use — expires 4:45 PM ET. Valid for one sign-in only.</div>
+          </div>
+          <div class="audit-line">Logged by P. Proctor at 05/17/2026 3:45 PM ET</div>
+        </div>
+      </div>
+
+      <!-- Result: tap-oit -->
+      <div class="screen" id="screen-result-tap-oit">
+        <div class="screen-title">Actions Complete</div>
+        <div class="result-wrap">
+          <div class="success-item" id="ri-tap-oit-1">
+            <div class="success-item-title">✓ TAP Generated</div>
+            <div class="success-item-detail">Baron Oxley — confirmed via Physical RCBC ID Card. Multi-use, valid for 4 hours.</div>
+            <div class="tap-code-box">
+              <span class="tap-code">XkM7+Rvw</span>
+              <button class="tap-copy">📋 Copy TAP</button>
+            </div>
+            <div class="tap-expiry">Multi-use — expires 7:45 PM ET. Valid for multiple sign-ins within the 4-hour window.</div>
+          </div>
+          <div class="audit-line">Logged by Dan Whittaker at 05/17/2026 3:45 PM ET</div>
+        </div>
+      </div>
+
+    </div><!-- /mock-page -->
+  </div><!-- /mock-viewport -->
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<div class="caption-wrap">
+  <div class="caption-text" id="captionText">Select a workflow above and press Play to begin.</div>
+</div>
+
+<div class="controls-wrap">
+  <button class="ctrl-btn" id="restartBtn">↺ Restart</button>
+  <button class="ctrl-btn primary" id="playPauseBtn">▶ Play</button>
+  <span class="step-counter" id="stepCounter">— / —</span>
+</div>
+
+<script>
+(function () {
+  let activeWorkflow = 'pw';
+  let activeRole = 'ss';
+  let sequence = [];
+  let currentStep = 0;
+  let isPlaying = false;
+  let stepTimer = null;
+
+  const cursor = document.getElementById('demo-cursor');
+  const mockPage = document.getElementById('mockPage');
+  const captionEl = document.getElementById('captionText');
+  const progressFill = document.getElementById('progressFill');
+  const stepCounter = document.getElementById('stepCounter');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+
+  // ── Cursor helpers ────────────────────────────────────────────────────────
+  function getElCenter(el) {
+    const pageRect = mockPage.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    return {
+      x: elRect.left - pageRect.left + elRect.width / 2,
+      y: elRect.top - pageRect.top + elRect.height / 2
+    };
+  }
+
+  function moveCursor(x, y) {
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+  }
+
+  function spawnRipple(x, y) {
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
+    mockPage.appendChild(r);
+    setTimeout(() => r.remove(), 520);
+  }
+
+  // ── Caption ───────────────────────────────────────────────────────────────
+  function setCaption(text) {
+    captionEl.style.opacity = '0';
+    setTimeout(() => {
+      captionEl.textContent = text;
+      captionEl.style.opacity = '1';
+    }, 200);
+  }
+
+  // ── Screen management ─────────────────────────────────────────────────────
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('screen-' + name);
+    if (target) target.classList.add('active');
+  }
+
+  // ── Reset ─────────────────────────────────────────────────────────────────
+  function resetScreenState() {
+    document.getElementById('demoIdInput').value = '';
+    document.getElementById('demoIdInput').placeholder = 'Enter student ID...';
+    document.getElementById('demoResultRow').classList.remove('visible', 'highlighted');
+    const staffRow = document.getElementById('demoResultRowStaff');
+    if (staffRow) { staffRow.style.display = 'none'; staffRow.classList.remove('visible', 'highlighted'); }
+    document.getElementById('demoRecentAlert').style.display = 'none';
+
+    ['pw', 'mfa', 'tap'].forEach(k => {
+      const box = document.getElementById('chk-' + k + '-box');
+      const row = document.getElementById('row-' + k);
+      if (box) box.classList.remove('checked');
+      if (row) row.classList.remove('checked');
+    });
+
+    ['inperson', 'video', 'phone', 'forgot', 'newphone', 'mfabroke', 'tapexam'].forEach(k => {
+      const dot = document.getElementById('dot-' + k);
+      if (dot) dot.classList.remove('selected');
+    });
+
+    document.getElementById('demoContinueBtn').style.opacity = '0.4';
+
+    ['id', 'age', 'addr', 'phone', 'email'].forEach(k => {
+      document.getElementById('vchk-' + k)?.classList.remove('checked');
+      document.getElementById('vcirc-' + k)?.classList.remove('checked');
+    });
+
+    // Help Desk Verified notice
+    const helpdeskNotice = document.getElementById('helpdesk-notice');
+    if (helpdeskNotice) helpdeskNotice.style.display = 'none';
+    document.getElementById('dot-helpdesk')?.classList.remove('selected');
+
+    const thresh = document.getElementById('verifyThreshold');
+    thresh.classList.remove('met');
+    thresh.textContent = 'Minimum 3 fields required — or present RCBC ID card.';
+    document.getElementById('demoVerifyBtn').style.opacity = '0.4';
+
+    document.querySelectorAll('.success-item').forEach(el => el.classList.remove('revealed'));
+
+    const tapIdCardCheck = document.getElementById('tapIdCardCheck');
+    const tapIdCardRow = document.getElementById('tapIdCardRow');
+    const tapGenerateBtn = document.getElementById('tapGenerateBtn');
+    if (tapIdCardCheck) tapIdCardCheck.classList.remove('checked');
+    if (tapIdCardRow) tapIdCardRow.classList.remove('checked');
+    if (tapGenerateBtn) tapGenerateBtn.style.opacity = '0.4';
+
+    // Physical ID verify item
+    document.getElementById('vchk-physical')?.classList.remove('checked');
+    document.getElementById('vcirc-physical')?.classList.remove('checked');
+
+    // TAP options — reset to defaults
+    document.getElementById('tapOitOpts').style.display = 'none';
+    document.getElementById('tapOptOneTime').classList.add('selected');
+    document.getElementById('tapOptMultiUse').classList.remove('selected');
+    document.getElementById('tapOpt1hr').classList.add('selected');
+    ['tapOpt2hr','tapOpt4hr','tapOpt8hr','tapOpt24hr'].forEach(id => document.getElementById(id).classList.remove('selected'));
+
+    // Account type selector — reset to Student
+    document.getElementById('acctTypeStudent')?.classList.add('selected');
+    document.getElementById('acctTypeStaff')?.classList.remove('selected');
+
+    // Request sidebar — reset to Baron Oxley (student)
+    const reqAvatar = document.getElementById('reqSidebarAvatar');
+    if (reqAvatar) reqAvatar.textContent = 'BO';
+    const reqName = document.getElementById('reqSidebarName');
+    if (reqName) reqName.textContent = 'Baron Oxley';
+    const reqId = document.getElementById('reqSidebarId');
+    if (reqId) reqId.textContent = 'ID: 3131313';
+    const reqBadge = document.getElementById('reqSidebarBadge');
+    if (reqBadge) { reqBadge.className = 'badge-blue'; reqBadge.textContent = 'Student'; }
+    const reqStatusRows = document.getElementById('reqSidebarStatusRows');
+    if (reqStatusRows) reqStatusRows.innerHTML = '<div class="sidebar-status-row">MFA: ✓ App, Phone</div><div class="sidebar-status-row">Password: May 17 2026, 47m ago</div>';
+    const reqWrongBtn = document.getElementById('reqWrongBtn');
+    if (reqWrongBtn) reqWrongBtn.textContent = '→ Wrong Student';
+
+    // Verify sidebar — reset to student fields
+    const verifySidebar = document.getElementById('verifySidebar');
+    if (verifySidebar) verifySidebar.innerHTML = `
+      <div class="section-label" style="margin-bottom:10px;">Student Info</div>
+      <div class="verify-field"><div class="verify-field-label">Student ID</div><div class="verify-field-value">3131313</div></div>
+      <div class="verify-field"><div class="verify-field-label">Age</div><div class="verify-field-value">24</div></div>
+      <div class="verify-field"><div class="verify-field-label">Home Address</div><div class="verify-field-value">900 College Cir, Mt Laurel Township NJ 08054</div></div>
+      <div class="verify-field"><div class="verify-field-label">Phone Number</div><div class="verify-field-value">856 222 9311</div></div>
+      <div class="verify-field"><div class="verify-field-label">Personal Email</div><div class="verify-field-value">baron.oxley@gmail.com</div></div>
+      <div class="verify-field"><div class="verify-field-label">Last Term</div><div class="verify-field-value">Spring 2026</div></div>`;
+
+    // Verify checklist items — reset to student labels/values
+    const vchkId = document.getElementById('vchk-id');
+    if (vchkId) { vchkId.querySelector('.verify-item-name').textContent = 'Student ID'; vchkId.querySelector('.verify-item-val').textContent = '3131313'; }
+    const vchkAddr = document.getElementById('vchk-addr');
+    if (vchkAddr) { vchkAddr.querySelector('.verify-item-name').textContent = 'Home Address'; vchkAddr.querySelector('.verify-item-val').textContent = '900 College Cir, Mt Laurel Township NJ 08054'; }
+    const vchkPhone = document.getElementById('vchk-phone');
+    if (vchkPhone) vchkPhone.querySelector('.verify-item-val').textContent = '856 222 9311';
+
+    // Confirm screen — reset to student defaults
+    const confirmUserKey = document.getElementById('confirmUserKey');
+    if (confirmUserKey) confirmUserKey.textContent = 'Student';
+    const confirmUser = document.getElementById('confirmUser');
+    if (confirmUser) confirmUser.textContent = 'Baron Oxley — ID 3131313';
+
+    moveCursor(50, 50);
+  }
+
+  function fullReset() {
+    clearTimeout(stepTimer);
+    isPlaying = false;
+    sequence = [];
+    currentStep = 0;
+    playPauseBtn.textContent = '▶ Play';
+    progressFill.style.width = '0%';
+    stepCounter.textContent = '— / —';
+    resetScreenState();
+
+    // Reset reason/tap visibility
+    document.getElementById('row-tap').style.display = 'none';
+    document.getElementById('radio-tapexam').style.display = 'none';
+    document.getElementById('radio-newphone').style.display = 'none';
+    document.getElementById('radio-forgot').style.display = '';
+    document.getElementById('radio-mfabroke').style.display = '';
+
+    // Lookup screen title / subtitle / label — OIT sees generic "User" language
+    const isOit = activeRole === 'oit';
+    const lookupTitle = document.getElementById('lookupScreenTitle');
+    const lookupSub   = document.getElementById('lookupScreenSub');
+    const lookupLabel = document.getElementById('lookupIdLabel');
+    if (lookupTitle) lookupTitle.textContent = isOit ? 'User Lookup' : 'Student Lookup';
+    if (lookupSub)   lookupSub.textContent   = isOit ? 'Search by user ID or name to begin.' : 'Search by student ID or name to begin.';
+    if (lookupLabel) lookupLabel.textContent  = 'Student ID'; // always reset to Student (Staff gets set mid-animation)
+
+    // Show account type selector for OIT only
+    const acctTypeSel = document.getElementById('acctTypeSel');
+    if (acctTypeSel) acctTypeSel.style.display = isOit ? '' : 'none';
+
+    // Help Desk Verified radio — OIT only
+    const radioHelpdesk = document.getElementById('radio-helpdesk');
+    if (radioHelpdesk) radioHelpdesk.style.display = activeRole === 'oit' ? '' : 'none';
+
+    showScreen('lookup');
+    setCaption('Select a workflow above and press Play to begin.');
+  }
+
+  // ── Sequence builder ──────────────────────────────────────────────────────
+  function buildSequence() {
+    const wf = activeWorkflow;
+    const role = activeRole;
+    const steps = [];
+
+    function push(step) { steps.push(step); }
+
+    // ── MFA + OIT: staff example (Ron Cahall) ─────────────────────────────────
+    if (wf === 'mfa' && role === 'oit') {
+      push({ type: 'screen', name: 'lookup' });
+      push({ type: 'fn', action: () => setCaption('Step 1 — Lookup: OIT can clear MFA for staff members too...'), pause: 900 });
+      push({
+        type: 'click', target: 'acctTypeStaff', moveDuration: 500,
+        action: () => {
+          document.getElementById('acctTypeStudent').classList.remove('selected');
+          document.getElementById('acctTypeStaff').classList.add('selected');
+          document.getElementById('lookupIdLabel').textContent = 'Staff ID';
+          document.getElementById('demoIdInput').placeholder = 'Enter staff ID...';
+        },
+        caption: 'Switching to Staff / Faculty — clearing MFA for a staff member...',
+        pause: 1100
+      });
+      push({ type: 'type', target: 'demoIdInput', text: '7654321', speed: 100, caption: 'Entering staff ID...' });
+      push({ type: 'wait', duration: 400 });
+      push({
+        type: 'click', target: 'demoSearchBtn', moveDuration: 400,
+        action: () => {
+          setTimeout(() => {
+            document.getElementById('demoResultRowStaff').style.display = '';
+            document.getElementById('demoResultRowStaff').classList.add('visible');
+          }, 350);
+        },
+        caption: 'Searching...',
+        pause: 700
+      });
+      push({
+        type: 'click', target: 'demoResultRowStaff', moveDuration: 400,
+        action: () => { document.getElementById('demoResultRowStaff').classList.add('highlighted'); },
+        caption: 'Record found — selecting Ron Cahall...',
+        pause: 600
+      });
+
+      // Step 2 — Request
+      push({
+        type: 'fn',
+        action: () => {
+          document.getElementById('navUserName').textContent = 'Dan Whittaker';
+          document.getElementById('navRoleBadge').textContent = 'OIT';
+          document.getElementById('row-tap').style.display = 'none';
+          document.getElementById('radio-tapexam').style.display = 'none';
+          document.getElementById('radio-forgot').style.display = '';
+          document.getElementById('radio-mfabroke').style.display = '';
+          document.getElementById('reqSidebarAvatar').textContent = 'RC';
+          document.getElementById('reqSidebarName').textContent = 'Ron Cahall';
+          document.getElementById('reqSidebarId').textContent = 'ID: 7654321';
+          const badge = document.getElementById('reqSidebarBadge');
+          badge.className = 'badge-staff';
+          badge.textContent = 'Staff';
+          document.getElementById('reqSidebarStatusRows').innerHTML =
+            '<div class="sidebar-status-row">MFA: ✓ Authenticator App</div><div class="sidebar-status-row">Entra ID: Active</div>';
+          document.getElementById('reqWrongBtn').textContent = '→ Wrong User';
+        },
+        pause: 0
+      });
+      push({ type: 'screen', name: 'request' });
+      push({ type: 'fn', action: () => setCaption('Step 2 — Request: staff member needs MFA cleared...'), pause: 700 });
+      push({
+        type: 'click', target: 'row-mfa', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-mfa-box').classList.add('checked');
+          document.getElementById('row-mfa').classList.add('checked');
+        },
+        caption: 'Selecting MFA Clear...',
+        pause: 500
+      });
+      push({
+        type: 'click', target: 'radio-inperson', moveDuration: 400,
+        action: () => { document.getElementById('dot-inperson').classList.add('selected'); },
+        caption: 'Selecting In-Person verification...',
+        pause: 500
+      });
+      push({
+        type: 'click', target: 'radio-mfabroke', moveDuration: 400,
+        action: () => {
+          document.getElementById('dot-mfabroke').classList.add('selected');
+          document.getElementById('demoContinueBtn').style.opacity = '1';
+        },
+        caption: 'Selecting MFA Not Working...',
+        pause: 500
+      });
+      push({
+        type: 'click', target: 'demoContinueBtn', moveDuration: 400,
+        action: () => {},
+        caption: 'Proceeding to identity verification...',
+        pause: 500
+      });
+
+      // Step 3 — Verify (staff: verbal 3-field)
+      push({
+        type: 'fn',
+        action: () => {
+          document.getElementById('verifySidebar').innerHTML = `
+            <div class="section-label" style="margin-bottom:10px;">Staff Info</div>
+            <div class="verify-field"><div class="verify-field-label">Staff ID</div><div class="verify-field-value">7654321</div></div>
+            <div class="verify-field"><div class="verify-field-label">Position</div><div class="verify-field-value">CS Instructor</div></div>
+            <div class="verify-field"><div class="verify-field-label">Department</div><div class="verify-field-value">STEM</div></div>
+            <div class="verify-field"><div class="verify-field-label">Phone Number</div><div class="verify-field-value">856 222 9312</div></div>
+            <div class="verify-field"><div class="verify-field-label">College Email</div><div class="verify-field-value">rcahall@rcbc.edu</div></div>`;
+          document.getElementById('vchk-id').querySelector('.verify-item-name').textContent = 'Staff ID';
+          document.getElementById('vchk-id').querySelector('.verify-item-val').textContent = '7654321';
+          document.getElementById('vchk-addr').querySelector('.verify-item-name').textContent = 'Position';
+          document.getElementById('vchk-addr').querySelector('.verify-item-val').textContent = 'CS Instructor';
+          document.getElementById('vchk-phone').querySelector('.verify-item-val').textContent = '856 222 9312';
+          document.getElementById('verifyThreshold').textContent = 'Verify at least 3 fields to confirm identity.';
+          setCaption('Step 3 — Verify: asking Ron Cahall to confirm their identity...');
+        },
+        pause: 800
+      });
+      push({ type: 'screen', name: 'verify' });
+
+      let staffVerifyCount = 0;
+      function staffVerifyCheck(fieldKey, cap) {
+        push({
+          type: 'click', target: 'vchk-' + fieldKey, moveDuration: 400,
+          action: () => {
+            document.getElementById('vchk-' + fieldKey).classList.add('checked');
+            document.getElementById('vcirc-' + fieldKey).classList.add('checked');
+            staffVerifyCount++;
+            if (staffVerifyCount >= 3) {
+              const thresh = document.getElementById('verifyThreshold');
+              thresh.classList.add('met');
+              thresh.textContent = 'Threshold met — 3 fields confirmed ✓';
+              document.getElementById('demoVerifyBtn').style.opacity = '1';
+            }
+          },
+          caption: cap,
+          pause: 600
+        });
+      }
+      staffVerifyCheck('id',    'Confirmed staff ID: 7654321...');
+      staffVerifyCheck('addr',  'Confirmed position: CS Instructor...');
+      staffVerifyCheck('phone', 'Confirmed phone number: 856 222 9312...');
+
+      push({
+        type: 'click', target: 'demoVerifyBtn', moveDuration: 400,
+        action: () => {},
+        caption: 'Submitting verification...',
+        pause: 600
+      });
+
+      // Step 4 — Confirm
+      push({
+        type: 'fn',
+        action: () => {
+          document.getElementById('confirmUserKey').textContent = 'Staff Member';
+          document.getElementById('confirmUser').textContent = 'Ron Cahall — ID 7654321';
+          document.getElementById('confirmActions').textContent = 'MFA Clear';
+          document.getElementById('confirmMethod').textContent = 'In-Person';
+          document.getElementById('confirmReason').textContent = 'MFA Not Working';
+        },
+        pause: 0
+      });
+      push({ type: 'screen', name: 'confirm' });
+      push({ type: 'fn', action: () => setCaption('Step 4 — Confirm: review before executing...'), pause: 900 });
+      push({
+        type: 'click', target: 'demoConfirmBtn', moveDuration: 400,
+        action: () => {},
+        caption: 'Confirming — executing account actions...',
+        pause: 700
+      });
+
+      // Step 5 — Result
+      push({ type: 'screen', name: 'result-mfa-oit' });
+      push({ type: 'fn', action: () => setCaption('Done — actions executed and logged.'), pause: 0 });
+      push({ type: 'reveal', target: 'ri-mfa-oit-1', pause: 400 });
+      return steps;
+    }
+
+    // Step 1 — Lookup
+    push({ type: 'screen', name: 'lookup' });
+    if (role === 'oit') {
+      push({ type: 'fn', action: () => setCaption('Step 1 — Lookup: OIT can search for either students or staff/faculty...'), pause: 900 });
+      push({
+        type: 'click', target: 'acctTypeStaff', moveDuration: 500,
+        action: () => {
+          document.getElementById('acctTypeStudent').classList.remove('selected');
+          document.getElementById('acctTypeStaff').classList.add('selected');
+          document.getElementById('lookupIdLabel').textContent = 'Staff ID';
+          document.getElementById('demoIdInput').placeholder = 'Enter staff ID...';
+        },
+        caption: 'OIT switches to Staff / Faculty when helping a staff member...',
+        pause: 1300
+      });
+      push({
+        type: 'click', target: 'acctTypeStudent', moveDuration: 500,
+        action: () => {
+          document.getElementById('acctTypeStaff').classList.remove('selected');
+          document.getElementById('acctTypeStudent').classList.add('selected');
+          document.getElementById('lookupIdLabel').textContent = 'Student ID';
+          document.getElementById('demoIdInput').placeholder = 'Enter student ID...';
+        },
+        caption: 'Baron Oxley is a student — switching back...',
+        pause: 700
+      });
+    } else {
+      push({ type: 'fn', action: () => setCaption('Step 1 — Lookup: searching for student Baron Oxley...'), pause: 800 });
+    }
+    push({ type: 'type', target: 'demoIdInput', text: '3131313', speed: 100, caption: 'Entering student ID...' });
+    push({ type: 'wait', duration: 400 });
+    push({
+      type: 'click', target: 'demoSearchBtn',
+      moveDuration: 400,
+      action: () => {
+        setTimeout(() => {
+          document.getElementById('demoResultRow').classList.add('visible');
+        }, 350);
+      },
+      caption: 'Searching...',
+      pause: 700
+    });
+    push({
+      type: 'click', target: 'demoResultRow',
+      moveDuration: 400,
+      action: () => {
+        document.getElementById('demoResultRow').classList.add('highlighted');
+      },
+      caption: 'Record found — selecting Baron Oxley...',
+      pause: 600
+    });
+
+    // Step 2 — Request
+    push({
+      type: 'fn',
+      action: () => {
+        // Set nav
+        if (wf === 'tap' && role === 'ss') {
+          document.getElementById('navUserName').textContent = 'P. Proctor';
+          document.getElementById('navRoleBadge').textContent = 'Test Center';
+        } else if (role === 'oit') {
+          document.getElementById('navUserName').textContent = 'Dan Whittaker';
+          document.getElementById('navRoleBadge').textContent = 'OIT';
+        } else {
+          document.getElementById('navUserName').textContent = 'Dan Whittaker';
+          document.getElementById('navRoleBadge').textContent = 'Student Support';
+        }
+        // Show/hide TAP
+        const tapRow = document.getElementById('row-tap');
+        const tapReason = document.getElementById('radio-tapexam');
+        const forgotReason = document.getElementById('radio-forgot');
+        const mfaReason = document.getElementById('radio-mfabroke');
+        if (wf === 'tap') {
+          tapRow.style.display = '';
+          tapReason.style.display = '';
+          forgotReason.style.display = 'none';
+          mfaReason.style.display = 'none';
+        } else {
+          tapRow.style.display = 'none';
+          tapReason.style.display = 'none';
+          forgotReason.style.display = '';
+          mfaReason.style.display = '';
+        }
+        if (wf === 'both') {
+          document.getElementById('demoRecentAlert').style.display = '';
+        }
+      },
+      pause: 0
+    });
+    push({ type: 'screen', name: 'request' });
+    push({ type: 'fn', action: () => setCaption('Step 2 — Request: selecting what the student needs...'), pause: 700 });
+
+    if (wf === 'pw') {
+      push({
+        type: 'click', target: 'row-pw', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-pw-box').classList.add('checked');
+          document.getElementById('row-pw').classList.add('checked');
+        },
+        caption: 'Selecting Password Reset...',
+        pause: 500
+      });
+    } else if (wf === 'mfa') {
+      push({
+        type: 'click', target: 'row-mfa', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-mfa-box').classList.add('checked');
+          document.getElementById('row-mfa').classList.add('checked');
+        },
+        caption: 'Selecting MFA Clear...',
+        pause: 500
+      });
+    } else if (wf === 'both') {
+      push({
+        type: 'click', target: 'row-pw', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-pw-box').classList.add('checked');
+          document.getElementById('row-pw').classList.add('checked');
+        },
+        caption: 'Selecting Password Reset...',
+        pause: 500
+      });
+      push({
+        type: 'click', target: 'row-mfa', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-mfa-box').classList.add('checked');
+          document.getElementById('row-mfa').classList.add('checked');
+        },
+        caption: 'Selecting MFA Clear...',
+        pause: 500
+      });
+    } else if (wf === 'tap') {
+      push({
+        type: 'click', target: 'row-tap', moveDuration: 400,
+        action: () => {
+          document.getElementById('chk-tap-box').classList.add('checked');
+          document.getElementById('row-tap').classList.add('checked');
+        },
+        caption: 'Selecting Temporary Access Pass...',
+        pause: 500
+      });
+    }
+
+    if (wf === 'both' && role === 'oit') {
+      // OIT + Both: use Student Help Desk Verified — no reason selection needed
+      push({
+        type: 'click', target: 'radio-helpdesk', moveDuration: 400,
+        action: () => {
+          document.getElementById('dot-helpdesk').classList.add('selected');
+          document.getElementById('dot-inperson').classList.remove('selected');
+          // Reason section not required — enable Continue immediately
+          document.getElementById('demoContinueBtn').style.opacity = '1';
+        },
+        caption: 'Student Help Desk Verified — reason section not required...',
+        pause: 700
+      });
+    } else {
+      push({
+        type: 'click', target: 'radio-inperson', moveDuration: 400,
+        action: () => {
+          document.getElementById('dot-inperson').classList.add('selected');
+        },
+        caption: 'Selecting In-Person verification...',
+        pause: 500
+      });
+
+      const reasonTarget = wf === 'pw' || wf === 'both' ? 'radio-forgot' : wf === 'mfa' ? 'radio-mfabroke' : 'radio-tapexam';
+      const reasonDot    = wf === 'pw' || wf === 'both' ? 'dot-forgot'   : wf === 'mfa' ? 'dot-mfabroke'   : 'dot-tapexam';
+      push({
+        type: 'click', target: reasonTarget, moveDuration: 400,
+        action: () => {
+          document.getElementById(reasonDot).classList.add('selected');
+          document.getElementById('demoContinueBtn').style.opacity = '1';
+        },
+        caption: wf === 'tap' ? 'Selecting Proctored Exam Access...' : wf === 'mfa' ? 'Selecting MFA Not Working...' : 'Selecting Forgot Password...',
+        pause: 500
+      });
+    }
+
+    push({
+      type: 'click', target: 'demoContinueBtn', moveDuration: 400,
+      action: () => {},
+      caption: 'Proceeding to identity verification...',
+      pause: 500
+    });
+
+    // Step 3 — Verify
+    push({ type: 'screen', name: 'verify' });
+    push({ type: 'fn', action: () => setCaption('Step 3 — Verify: confirming identity...'), pause: 700 });
+
+    let verifyCount = 0;
+    function verifyCheck(fieldKey) {
+      push({
+        type: 'click', target: 'vchk-' + fieldKey, moveDuration: 400,
+        action: () => {
+          document.getElementById('vchk-' + fieldKey).classList.add('checked');
+          document.getElementById('vcirc-' + fieldKey).classList.add('checked');
+          verifyCount++;
+          if (wf === 'tap') {
+            const thresh = document.getElementById('verifyThreshold');
+            thresh.classList.add('met');
+            thresh.textContent = 'Physical RCBC ID card presented ✓';
+            document.getElementById('demoVerifyBtn').style.opacity = '1';
+          } else if (verifyCount >= 3) {
+            const thresh = document.getElementById('verifyThreshold');
+            thresh.classList.add('met');
+            thresh.textContent = 'Threshold met — 3 fields confirmed ✓';
+            document.getElementById('demoVerifyBtn').style.opacity = '1';
+          }
+        },
+        caption: 'Confirming field...',
+        pause: 500
+      });
+    }
+
+    if (wf === 'both' && role === 'oit') {
+      // OIT + Both: Help Desk pre-verified — no checklist needed
+      push({
+        type: 'fn',
+        action: () => {
+          document.getElementById('helpdesk-notice').style.display = 'flex';
+          const thresh = document.getElementById('verifyThreshold');
+          thresh.classList.add('met');
+          thresh.textContent = 'Verified by Student Help Desk ✓';
+          document.getElementById('demoVerifyBtn').style.opacity = '1';
+          setCaption('Identity pre-confirmed by Help Desk — no checklist required...');
+        },
+        pause: 1000
+      });
+    } else if (role === 'oit') {
+      // OIT (pw / tap): Physical RCBC ID card — one check satisfies threshold
+      push({
+        type: 'click', target: 'vchk-physical', moveDuration: 400,
+        action: () => {
+          document.getElementById('vchk-physical').classList.add('checked');
+          document.getElementById('vcirc-physical').classList.add('checked');
+          const thresh = document.getElementById('verifyThreshold');
+          thresh.classList.add('met');
+          thresh.textContent = 'Physical RCBC ID card confirmed ✓';
+          document.getElementById('demoVerifyBtn').style.opacity = '1';
+        },
+        caption: 'Physical RCBC ID card — identity confirmed in one step...',
+        pause: 800
+      });
+    } else {
+      // Student Support: verbal 3-field checklist
+      verifyCheck('id');
+      verifyCheck('addr');
+      verifyCheck('phone');
+    }
+
+    push({
+      type: 'click', target: 'demoVerifyBtn', moveDuration: 400,
+      action: () => {},
+      caption: 'Submitting verification...',
+      pause: 600
+    });
+
+    // Step 4 — Confirm
+    push({
+      type: 'fn',
+      action: () => {
+        const actionsMap = { pw: 'Password Reset', mfa: 'MFA Clear', both: 'Password Reset + MFA Clear', tap: 'Temporary Access Pass (TAP)' };
+        const methodMap  = { pw: 'In-Person', mfa: 'In-Person', both: (role === 'oit' ? 'Student Help Desk Verified' : 'In-Person'), tap: 'Physical RCBC ID Card' };
+        const reasonMap  = { pw: 'Forgot Password', mfa: 'MFA Not Working', both: (role === 'oit' ? '—' : 'Forgot Password'), tap: 'Proctored Exam Access' };
+        document.getElementById('confirmActions').textContent = actionsMap[wf];
+        document.getElementById('confirmMethod').textContent = methodMap[wf];
+        document.getElementById('confirmReason').textContent = reasonMap[wf];
+      },
+      pause: 0
+    });
+    push({ type: 'screen', name: 'confirm' });
+    push({ type: 'fn', action: () => setCaption('Step 4 — Confirm: reviewing before executing...'), pause: 1000 });
+
+    // TAP options — OIT only
+    if (wf === 'tap' && role === 'oit') {
+      push({ type: 'fn', action: () => {
+        document.getElementById('tapOitOpts').style.display = '';
+        setCaption('OIT can configure TAP usage and duration before executing...');
+      }, pause: 900 });
+      push({
+        type: 'click', target: 'tapOptMultiUse', moveDuration: 450,
+        action: () => {
+          document.getElementById('tapOptOneTime').classList.remove('selected');
+          document.getElementById('tapOptMultiUse').classList.add('selected');
+        },
+        caption: 'Switching to Multi-Use — student may need to sign in more than once...',
+        pause: 800
+      });
+      push({
+        type: 'click', target: 'tapOpt4hr', moveDuration: 400,
+        action: () => {
+          document.getElementById('tapOpt1hr').classList.remove('selected');
+          document.getElementById('tapOpt4hr').classList.add('selected');
+        },
+        caption: 'Setting duration to 4 hours for a longer exam session...',
+        pause: 800
+      });
+    }
+
+    push({
+      type: 'click', target: 'demoConfirmBtn', moveDuration: 500,
+      action: () => {},
+      caption: 'Confirming — executing account actions...',
+      pause: 700
+    });
+
+    // Result
+    let resultScreen;
+    let resultItems;
+    if (wf === 'pw') {
+      resultScreen = role === 'oit' ? 'result-pw-oit' : 'result-pw-ss';
+      resultItems = role === 'oit' ? ['ri-pw-oit-1'] : ['ri-pw-ss-1'];
+    } else if (wf === 'mfa') {
+      resultScreen = 'result-mfa';
+      resultItems = ['ri-mfa-1'];
+    } else if (wf === 'both') {
+      resultScreen = role === 'oit' ? 'result-both-oit' : 'result-both-ss';
+      resultItems = role === 'oit' ? ['ri-both-oit-1', 'ri-both-oit-2'] : ['ri-both-ss-1', 'ri-both-ss-2'];
+    } else if (wf === 'tap') {
+      resultScreen = role === 'oit' ? 'result-tap-oit' : 'result-tap-tc';
+      resultItems = role === 'oit' ? ['ri-tap-oit-1'] : ['ri-tap-tc-1'];
+    }
+
+    push({ type: 'screen', name: resultScreen });
+    push({ type: 'fn', action: () => setCaption('Done — actions executed and logged.'), pause: 0 });
+
+    resultItems.forEach((itemId, i) => {
+      push({ type: 'wait', duration: i === 0 ? 200 : 0 });
+      push({ type: 'reveal', target: itemId });
+      push({ type: 'wait', duration: 400 });
+    });
+
+    push({ type: 'wait', duration: 1200 });
+    push({
+      type: 'fn',
+      action: () => {
+        setCaption('Workflow complete. Try a different scenario above.');
+        isPlaying = false;
+        playPauseBtn.textContent = '▶ Play';
+      },
+      pause: 0
+    });
+
+    return steps;
+  }
+
+  // ── Runner ────────────────────────────────────────────────────────────────
+  function updateProgress() {
+    if (sequence.length === 0) return;
+    const pct = Math.min(100, (currentStep / sequence.length) * 100);
+    progressFill.style.width = pct + '%';
+    stepCounter.textContent = currentStep + ' / ' + sequence.length;
+  }
+
+  function runStep(index) {
+    if (!isPlaying) return;
+    if (index >= sequence.length) {
+      isPlaying = false;
+      playPauseBtn.textContent = '▶ Play';
+      progressFill.style.width = '100%';
+      stepCounter.textContent = sequence.length + ' / ' + sequence.length;
+      return;
+    }
+
+    currentStep = index;
+    updateProgress();
+    const step = sequence[index];
+    const next = () => {
+      if (isPlaying) runStep(index + 1);
+    };
+
+    if (step.type === 'screen') {
+      showScreen(step.name);
+      stepTimer = setTimeout(next, 100);
+
+    } else if (step.type === 'wait') {
+      stepTimer = setTimeout(next, step.duration);
+
+    } else if (step.type === 'fn') {
+      step.action();
+      stepTimer = setTimeout(next, step.pause || 0);
+
+    } else if (step.type === 'move') {
+      const el = document.getElementById(step.target);
+      if (el) {
+        const c = getElCenter(el);
+        moveCursor(c.x, c.y);
+      }
+      stepTimer = setTimeout(next, step.duration || 500);
+
+    } else if (step.type === 'click') {
+      const el = document.getElementById(step.target);
+      if (el) {
+        const c = getElCenter(el);
+        moveCursor(c.x, c.y);
+        stepTimer = setTimeout(() => {
+          spawnRipple(c.x, c.y);
+          if (step.caption) setCaption(step.caption);
+          step.action();
+          stepTimer = setTimeout(next, step.pause || 400);
+        }, step.moveDuration || 500);
+      } else {
+        stepTimer = setTimeout(next, 50);
+      }
+
+    } else if (step.type === 'type') {
+      const el = document.getElementById(step.target);
+      if (el) {
+        const c = getElCenter(el);
+        moveCursor(c.x, c.y);
+        stepTimer = setTimeout(() => {
+          spawnRipple(c.x, c.y);
+          if (step.caption) setCaption(step.caption);
+          let i = 0;
+          function typeChar() {
+            if (!isPlaying) return;
+            if (i < step.text.length) {
+              el.value += step.text[i];
+              i++;
+              stepTimer = setTimeout(typeChar, step.speed || 100);
+            } else {
+              stepTimer = setTimeout(next, 300);
+            }
+          }
+          typeChar();
+        }, 400);
+      } else {
+        stepTimer = setTimeout(next, 50);
+      }
+
+    } else if (step.type === 'reveal') {
+      const el = document.getElementById(step.target);
+      if (el) el.classList.add('revealed');
+      stepTimer = setTimeout(next, 50);
+
+    } else if (step.type === 'addClass') {
+      const el = document.getElementById(step.target);
+      if (el) el.classList.add(step.cls);
+      stepTimer = setTimeout(next, 50);
+
+    } else {
+      stepTimer = setTimeout(next, 50);
+    }
+  }
+
+  function startDemo() {
+    resetScreenState();
+    sequence = buildSequence();
+    currentStep = 0;
+    isPlaying = true;
+    playPauseBtn.textContent = '⏸ Pause';
+    runStep(0);
+  }
+
+  // ── Tab wiring ────────────────────────────────────────────────────────────
+  function updateRoleSelector() {
+    const roleWrap = document.getElementById('roleWrap');
+    const btn1 = document.getElementById('roleBtn1');
+    const btn2 = document.getElementById('roleBtn2');
+
+    if (activeWorkflow === 'tap') {
+      roleWrap.style.visibility = 'hidden';
+      activeRole = 'oit';
+    } else {
+      roleWrap.style.visibility = 'visible';
+      btn1.textContent = 'Student Support';
+      btn1.dataset.role = 'ss';
+      btn2.textContent = 'OIT';
+      btn2.dataset.role = 'oit';
+      btn1.classList.add('active');
+      btn2.classList.remove('active');
+      activeRole = 'ss';
+    }
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeWorkflow = btn.dataset.workflow;
+      updateRoleSelector();
+      fullReset();
+    });
+  });
+
+  document.querySelectorAll('.role-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeRole = btn.dataset.role;
+      // Sync nav badge immediately so it reflects the chosen role before Play
+      if (btn.dataset.role === 'oit') {
+        document.getElementById('navUserName').textContent = 'Dan Whittaker';
+        document.getElementById('navRoleBadge').textContent = 'OIT';
+      } else if (activeWorkflow === 'tap') {
+        document.getElementById('navUserName').textContent = 'P. Proctor';
+        document.getElementById('navRoleBadge').textContent = 'Test Center';
+      } else {
+        document.getElementById('navUserName').textContent = 'Dan Whittaker';
+        document.getElementById('navRoleBadge').textContent = 'Student Support';
+      }
+      fullReset();
+    });
+  });
+
+  // ── Controls ──────────────────────────────────────────────────────────────
+  document.getElementById('playPauseBtn').addEventListener('click', () => {
+    if (sequence.length === 0 || currentStep >= sequence.length) {
+      startDemo();
+    } else if (isPlaying) {
+      isPlaying = false;
+      clearTimeout(stepTimer);
+      playPauseBtn.textContent = '▶ Play';
+    } else {
+      isPlaying = true;
+      playPauseBtn.textContent = '⏸ Pause';
+      runStep(currentStep);
+    }
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    fullReset();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && e.target === document.body) {
+      e.preventDefault();
+      document.getElementById('playPauseBtn').click();
+    }
+  });
+
+  // Init
+  fullReset();
+})();
+</script>
+</body>
+</html>
