@@ -1199,11 +1199,11 @@
         <p>
             For years, RCBC had a similar but much simpler tool, provided and maintained by an
             outside MSP, that gave the Student Help Desk the ability to reset student passwords
-            and clear MFA on their own. It worked &mdash; until <strong>January 2026</strong>, when
+            and clear MFA on their own. It worked well, until <strong>January 2026</strong>, when
             the college migrated its identity platform from OneLogin to Microsoft Entra. The migration
             broke the tool. The MSP committed to a fix, hit a snag, and the work stalled out.
             OIT had already absorbed the helpdesk workload through a shared Google Chat space, which
-            reduced the urgency to resolve it &mdash; and the old tool effectively became dead in the
+            reduced the urgency to resolve it, and the old tool effectively became dead in the
             water, leaving the college without a proper solution.
         </p>
         <p>
@@ -1217,7 +1217,7 @@
     <div class="card card-accent">
         <div class="card-title">The Problem</div>
         <p>
-            The real damage of losing the old tool wasn't technical &mdash; it was operational. With
+            The real damage of losing the old tool wasn't technical, it was operational. With
             no self-service interface, the Student Help Desk could no longer help students who couldn't
             log in. Every password reset, every MFA clear, every locked-out account had to be relayed
             from Student Support to OIT through a shared Google Chat space.
@@ -1231,7 +1231,7 @@
 
         <div class="pullquote">
             By the time we measured it, <strong>roughly 43% of the average technician's week</strong> was
-            being spent monitoring, triaging, and executing requests out of that single chat &mdash;
+            being spent monitoring, triaging, and executing requests out of that single chat,
             pulling skilled OIT staff away from every other responsibility they had.
         </div>
 
@@ -1244,7 +1244,7 @@
         </p>
         <p>
             Scoping access with Administrative Units could limit which accounts staff could see, but
-            Entra's interface wasn't designed for non-technical users &mdash; and putting frontline
+            Entra's interface wasn't designed for non-technical users, and putting frontline
             staff directly in the portal introduced a different risk: account actions could be taken
             without any structured identity verification. There was also no automation for temporary
             passwords; staff would have had to set them manually and communicate them out-of-band,
@@ -1257,8 +1257,8 @@
         <p>
             BaronGuard wraps the entire identity-recovery flow in a four-step, role-gated web
             workflow: <strong>Lookup &rarr; Request &rarr; Verify &rarr; Result</strong>. Student Support staff
-            can now resolve the routine cases themselves &mdash; safely, with full audit trails,
-            with guiderails that prevent the actions they shouldn't take &mdash; and <strong>without
+            can now resolve the routine cases themselves safely, with full audit trails,
+            with guiderails that prevent the actions they shouldn't take and <strong>without
             ever needing direct access to Entra</strong>.
         </p>
         <p>
@@ -1283,7 +1283,7 @@
     <p class="section-lead">
         BaronGuard's most important design decision is who can do what. Three operational roles
         cover the people who actually use the tool, and one developer role covers me. Each role
-        gets exactly the privileges its work requires &mdash; nothing more, nothing less &mdash;
+        gets exactly the privileges its work requires nothing more, nothing less
         and every page in the application enforces this at the framework level, not as an afterthought.
     </p>
 
@@ -1382,7 +1382,7 @@
             <strong>Why these limits?</strong> A TAP is essentially a temporary credential. If misused
             or socially engineered, it grants direct sign-in access for up to 24 hours. That's an OIT
             decision, not a frontline one. Likewise, staff/faculty accounts often have elevated
-            permissions in other college systems &mdash; a compromised faculty reset is a much larger
+            permissions in other college systems, a compromised faculty reset is a much larger
             blast radius than a student reset. Keeping those flows behind the OIT gate eliminates an
             entire class of social-engineering attack against the Student Help Desk.
         </p>
