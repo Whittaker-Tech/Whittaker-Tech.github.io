@@ -225,37 +225,6 @@
     }
     .pullquote strong { color: var(--ch-purple-deep); font-style: normal; }
 
-    /* ── Stats ─────────────────────────────────────────────────── */
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 1rem;
-        margin: 1.5rem 0;
-    }
-    .stat {
-        background: var(--bg-panel);
-        border-radius: var(--radius);
-        padding: 1.25rem;
-        text-align: center;
-        border-top: 4px solid var(--ch-gold);
-        box-shadow: var(--shadow);
-    }
-    .stat-num {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--ch-purple-deep);
-        display: block;
-        line-height: 1.1;
-    }
-    .stat-label {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
-        margin-top: 0.3rem;
-    }
-
     /* ── Tech Grid ─────────────────────────────────────────────── */
     .tech-grid {
         display: grid;
@@ -331,7 +300,6 @@
         padding: 0.9rem 1rem;
     }
     .arch-box.core { border-color: var(--ch-purple); }
-    .arch-box.planned { border-style: dashed; opacity: 0.75; }
     .arch-name { font-weight: 700; font-size: 0.95rem; }
     .arch-path { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ch-purple); }
     .arch-desc { font-size: 0.8rem; color: var(--ch-plum-muted); margin-top: 0.35rem; line-height: 1.5; }
@@ -343,19 +311,6 @@
         text-transform: uppercase;
         margin: 0.7rem 0;
     }
-    .arch-tag {
-        display: inline-block;
-        font-size: 0.6rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        padding: 0.05rem 0.45rem;
-        border-radius: 999px;
-        margin-left: 0.35rem;
-        vertical-align: middle;
-    }
-    .arch-tag.live { background: rgba(79,206,122,0.15); color: var(--ch-live); }
-    .arch-tag.plan { background: rgba(162,148,189,0.15); color: var(--ch-plum-muted); }
 
     /* ══════════════════════════════════════════════════════════════
        APP MOCKUPS — rendered in CardHerder's own dark-first UI
@@ -607,13 +562,6 @@
             price and gets out of the way so you can keep talking to the customer.
         </p>
     </div>
-
-    <div class="stats">
-        <div class="stat"><span class="stat-num">317</span><div class="stat-label">Unit Tests</div></div>
-        <div class="stat"><span class="stat-num">150</span><div class="stat-label">Commits in 4 Weeks</div></div>
-        <div class="stat"><span class="stat-num">15</span><div class="stat-label">Schema Migrations</div></div>
-        <div class="stat"><span class="stat-num">0</span><div class="stat-label">Floats in Money Math</div></div>
-    </div>
 </section>
 
 <!-- ─── STACK ───────────────────────────────────────────────────── -->
@@ -665,28 +613,18 @@
     <p class="section-lead">
         The rule that shapes the codebase: <strong>the arithmetic that decides what a card earned has exactly
         one implementation, and it's the tested one.</strong> The domain layer has no DOM, no Node, and no
-        React, so the same logic can ship inside future desktop and mobile wrappers unchanged.
+        React, so the money math is tested in isolation, without a browser or a database.
     </p>
 
-    <div class="arch" role="img" aria-label="Architecture: platform shells on top of the web app, which uses the core domain layer, which talks to Supabase Postgres and a Cloudflare Worker.">
+    <div class="arch" role="img" aria-label="Architecture: the web app uses the core domain layer, which talks to Supabase Postgres and a Cloudflare Worker.">
         <div class="arch-row">
             <div class="arch-box">
-                <div class="arch-name">Web App <span class="arch-tag live">Running</span></div>
+                <div class="arch-name">Web App</div>
                 <div class="arch-path">apps/web</div>
                 <div class="arch-desc">Vite + React. ChromeOS, any desktop browser, phones.</div>
             </div>
-            <div class="arch-box planned">
-                <div class="arch-name">Desktop <span class="arch-tag plan">Planned</span></div>
-                <div class="arch-path">apps/desktop</div>
-                <div class="arch-desc">Tauri v2 wrapper for Windows and macOS.</div>
-            </div>
-            <div class="arch-box planned">
-                <div class="arch-name">Mobile <span class="arch-tag plan">Planned</span></div>
-                <div class="arch-path">apps/mobile</div>
-                <div class="arch-desc">Capacitor wrapper for iOS and Android.</div>
-            </div>
         </div>
-        <div class="arch-arrow">&darr; all share &darr;</div>
+        <div class="arch-arrow">&darr; built on &darr;</div>
         <div class="arch-row">
             <div class="arch-box core">
                 <div class="arch-name">Core Domain Layer</div>
@@ -708,7 +646,7 @@
             </div>
         </div>
     </div>
-    <p class="mock-caption">The monorepo layout. Platform shells are thin; the logic that matters lives once, in core.</p>
+    <p class="mock-caption">The monorepo layout. The UI stays thin; the logic that matters lives once, in core.</p>
 
     <h3>Two Decisions That Shape Everything</h3>
     <div class="two-col">
@@ -1108,11 +1046,6 @@
             <div class="feature-card-icon">&#x1F3F7;&#xFE0F;</div>
             <h4>QR Price Labels</h4>
             <p>Printable tags that open the card's record when scanned at the table.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-card-icon">&#x1F4BB;</div>
-            <h4>Native Wrappers</h4>
-            <p>Tauri v2 for Windows and macOS and Capacitor for iOS and Android, both reusing the platform-free core unchanged.</p>
         </div>
         <div class="feature-card">
             <div class="feature-card-icon">&#x1F4E1;</div>
