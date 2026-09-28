@@ -82,30 +82,13 @@
                     <p>
                         My approach is to turn manual IT work into safe, audited self-service. I build custom .NET tools like
                         <strong>BaronGuard</strong>, which moved 2,000+ manual password and MFA escalations off OIT technicians and onto
-                        trained front-line staff, and <strong>BaronOps</strong>, which lets a technician wake and verify an entire lab in one click.
+                        trained front-line staff, and <strong>BaronOps</strong>, a single pane of glass that ties the technicians' lab tools together
+                        so most lab management can be done remotely.
                         I also rebuild the foundations I inherit: one standardized Windows image in place of per-lab images, 97 legacy GPOs
                         consolidated into about 30, and a nightly-synced inventory of 3,600+ assets.
                     </p>
                 </section>
 
-                <div class="impact-grid">
-                    <div class="impact-card">
-                        <span class="impact-number">2,000+</span>
-                        <span class="impact-label">manual technician escalations eliminated by BaronGuard</span>
-                    </div>
-                    <div class="impact-card">
-                        <span class="impact-number">3,600+</span>
-                        <span class="impact-label">assets tracked by a nightly automated sync</span>
-                    </div>
-                    <div class="impact-card">
-                        <span class="impact-number">97 &rarr; 30</span>
-                        <span class="impact-label">legacy GPOs consolidated</span>
-                    </div>
-                    <div class="impact-card">
-                        <span class="impact-number">468</span>
-                        <span class="impact-label">students on the esports platform, and growing</span>
-                    </div>
-                </div>
 
                 <div class="service-grid">
                         
@@ -194,7 +177,7 @@
                                     <li style="margin-bottom: 12px;"><strong>Imaging Overhaul (MECM OSD):</strong> Replaced per-lab "fat" images, each built and generalized separately in VMware, with <strong>one standardized Windows image</strong> for every lab, instructor, and staff system. Task sequences name devices by standard, place them in the correct OU, configure Windows through answer files, and install role-specific software and drivers during deployment, so keeping images current means updating a single .wim.</li>
                                     <li style="margin-bottom: 12px;"><strong>Active Directory Overhaul:</strong> Restructured the inherited OU hierarchy and security groups and modernized Group Policy, consolidating <strong>97 legacy GPOs into about 30</strong> standardized policies (a 70% reduction).</li>
                                     <li style="margin-bottom: 12px;"><strong>Asset Management Automation:</strong> Rebuilt the college's inventory tracking in HappyFox Assets, now covering <strong>3,600+ assets</strong>: 1,835 computers, 1,620 monitors, 122 printers, and 50 mobile devices. A nightly, delta-only sync pulls equipment and asset tags from the Ellucian Colleague ERP, confirms each device is managed in MECM, Intune, or Jamf, pairs it with its assigned staff member's HappyFox contact, adds Dell, Lenovo, and Apple warranty dates via API, and removes retired equipment. Every ticket now arrives with the requester's device and warranty status attached.</li>
-                                    <li style="margin-bottom: 12px;"><strong>Lab Automation (BaronOps):</strong> Built a .NET 8/WPF console that unifies SCCM, Active Directory, Deep Freeze, 25Live, and Sassafras, running real-time "Thaw-Deploy-Freeze" deployments through embedded PowerShell 7.4 with RBAC and zero-trust credential storage. Technicians now wake and verify an entire lab in <strong>one click</strong> instead of walking every building to check each PC, and weekly automated reports flag machines that missed their scheduled wake times so they can go straight to the problem.</li>
+                                    <li style="margin-bottom: 12px;"><strong>Lab Management (BaronOps):</strong> Built a .NET 8/WPF &ldquo;single pane of glass&rdquo; that ties SCCM, Active Directory, Deep Freeze, 25Live, and Sassafras together so technicians can manage labs remotely in most cases: power and session control, Deep Freeze, remote control, software deployment and auditing, printer checks, and room scheduling. Real-time &ldquo;Thaw-Deploy-Freeze&rdquo; deployments run through embedded PowerShell 7.4 with RBAC and zero-trust credential storage. Lab checks that once meant walking every building now take <strong>one click</strong> to wake and verify a lab, and weekly automated reports flag machines that missed their scheduled wake times.</li>
                                     <li style="margin-bottom: 12px;"><strong>Esports Security:</strong> Designed a "Nuclear Lockdown" model (shell replacement, NTFS locking, BeyondTrust) that eliminated system-breakout attempts, and rolled out ggLeap, now serving <strong>468 students</strong> and growing each term, with 1,500+ hours logged in its first term.</li>
                                     <li style="margin-bottom: 12px;"><strong>IT Leadership &amp; Support:</strong> Selected to serve on the departmental leadership team alongside the Director and Assistant Director, guiding strategy through the move from a multi-decade MSP to a new vendor. Resolve escalations in HappyFox, coordinate vendors, mentor peers, and write the master SOPs for lab infrastructure.</li>
                                 </ul>
@@ -264,7 +247,7 @@
                                     <img src="assets/img/BaronOps/Welcome.png" alt="BaronOps Dashboard">
                                 </figure>
                                 <h3 class="project-title">BaronOps</h3>
-                                <p class="project-category">A .NET 8 &ldquo;Single-Pane-of-Glass&rdquo; for campus labs. Technicians wake and verify an entire lab in one click, and weekly automated reports flag machines that missed their scheduled wake.</p>
+                                <p class="project-category">A .NET 8 &ldquo;Single-Pane-of-Glass&rdquo; that ties SCCM, Active Directory, Deep Freeze, 25Live, and Sassafras together, making lab management fast and remote in most cases.</p>
                             </a>
                         </li>
 
