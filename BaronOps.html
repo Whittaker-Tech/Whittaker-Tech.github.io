@@ -241,7 +241,7 @@
     </p>
 
     <div class="highlight-box">
-        <strong>Impact:</strong> What used to take hours of manual checking is now a rapid, targeted workflow. Technicians move with purpose, addressing only the systems that are flagged as problematic.
+        <strong>Impact:</strong> Lab checks used to mean walking to every lab in every building and physically looking at each computer. Now a technician wakes an entire lab in <strong>one click</strong>, sees immediately which systems didn't respond, and goes straight to them. Weekly automated reports flag machines that missed their scheduled wake times, which usually means something lost power or network, so most problems are found before anyone reports them.
     </div>
 
     <h2>3. Technical Architecture</h2>
@@ -501,7 +501,7 @@
         <div class="feature-card">
             <strong>Self-Updating Engine</strong>
             <p>
-                BaronOps eliminates "Version Drift." On every launch, it silently queries the central deployment share (`\\mtladfs2019\...`) for updates. If a newer version is detected, the UI logic intercepts the terminal event flag to gracefully display an "Update Available" button. Users are presented with the changelog and can initiate a seamless self-update process, ensuring all technicians are always on the same stable build.
+                BaronOps eliminates "Version Drift." On every launch, it silently queries a central deployment share on an internal IT file server for updates. If a newer version is detected, the UI logic intercepts the terminal event flag to gracefully display an "Update Available" button. Users are presented with the changelog and can initiate a seamless self-update process, ensuring all technicians are always on the same stable build.
             </p>
         </div>
 
@@ -539,7 +539,7 @@
             </p>
             <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
                 <li><strong>Air-Gapped Source:</strong> Credentials are never stored in the application binary or source code.</li>
-                <li><strong>Secure Fetch:</strong> Keys are loaded at runtime from a secured, network share (`\\mtladfs2019\...`) restricted via NTFS permissions to IT Staff only.</li>
+                <li><strong>Secure Fetch:</strong> Keys are loaded at runtime from a secured internal network share restricted via NTFS permissions to IT Staff only.</li>
                 <li><strong>Encryption at Rest:</strong> The configuration file on the server is Base64 encoded and obfuscated, preventing casual reading even by authorized staff.</li>
             </ul>
         </div>

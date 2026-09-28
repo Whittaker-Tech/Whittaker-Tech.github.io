@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Infrastructure Modernization</title>
+    <meta name="description" content="Microsoft Intune co-management, a single standardized Windows image with MECM task sequences, and an Active Directory cleanup that consolidated 97 legacy GPOs into about 30.">
+    <style>
+        :root {
+            --primary: #2E5984;          /* Resume navy */
+            --secondary-bg: #eef3f9;     /* Light navy background */
+            --dark-slate: #1a1a1a;
+            --text-grey: #444444;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-grey);
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover { opacity: 0.7; }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .project-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        h1 { color: var(--dark-slate); font-size: 36px; margin: 0 0 10px 0; letter-spacing: -0.5px; line-height: 1.15; }
+        .tagline { font-size: 18px; color: #666; font-weight: 300; }
+        .project-meta { color: #777; font-size: 14px; font-style: italic; margin-top: 4px; }
+
+        .tech-stack { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .tech-badge {
+            background: #f4f4f4;
+            color: var(--dark-slate);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            color: var(--dark-slate);
+            font-size: 24px;
+            margin-top: 50px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+        }
+        h3 { color: var(--primary); font-size: 18px; margin-top: 30px; font-weight: 600; }
+        p, ul, li, ol { font-size: 16px; }
+        li { margin-bottom: 6px; }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 10px 0 0;
+        }
+        .stat {
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .stat-number {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-slate);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+        .stat-label { display: block; font-size: 14px; color: #666; margin-top: 4px; }
+
+        .highlight-box {
+            background-color: var(--secondary-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .pipeline { counter-reset: step; list-style: none; padding: 0; margin: 20px 0; }
+        .pipeline li {
+            counter-increment: step;
+            position: relative;
+            padding: 14px 16px 14px 60px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .pipeline li::before {
+            content: counter(step);
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pipeline strong { color: var(--dark-slate); }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+        .feature-card h4 { margin: 0 0 8px; color: var(--dark-slate); font-size: 17px; }
+        .feature-card p { margin: 0; }
+
+        footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 13px; color: #888; }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 16px; }
+            h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Portfolio</a>
+
+    <header>
+        <span class="project-tag">Project Showcase</span>
+        <h1>Infrastructure Modernization</h1>
+        <div class="tagline">Rebuilding the college's endpoint, imaging, and directory foundations for a lean team</div>
+        <div class="project-meta">Dan Whittaker | Rowan College at Burlington County | Updated: September 28, 2026</div>
+
+        <div class="tech-stack">
+            <span class="tech-badge">Microsoft Intune</span>
+            <span class="tech-badge">Windows Autopilot</span>
+            <span class="tech-badge">MECM / SCCM Co-Management</span>
+            <span class="tech-badge">OSD Task Sequences</span>
+            <span class="tech-badge">Answer Files</span>
+            <span class="tech-badge">Active Directory</span>
+            <span class="tech-badge">Group Policy</span>
+            <span class="tech-badge">BeyondTrust PAM</span>
+        </div>
+    </header>
+
+    <div class="stat-row">
+        <div class="stat"><span class="stat-number">1st</span><span class="stat-label">greenfield Intune environment at the college</span></div>
+        <div class="stat"><span class="stat-number">1</span><span class="stat-label">standardized Windows image for every lab, instructor, and staff system</span></div>
+        <div class="stat"><span class="stat-number">97 &rarr; ~30</span><span class="stat-label">legacy GPOs consolidated</span></div>
+        <div class="stat"><span class="stat-number">70%</span><span class="stat-label">fewer Group Policy Objects to maintain</span></div>
+    </div>
+
+    <p style="margin-top: 30px;">
+        Not every improvement is a new tool. Much of my work at RCBC has been rebuilding the systems I inherited so they are
+        simpler to run, easier to keep current, and safer by default. These three projects share that goal.
+    </p>
+
+    <h2>1. Modern Endpoint Management with Microsoft Intune</h2>
+    <p>
+        I architected the college's first <strong>greenfield Microsoft Intune environment</strong> and set it up alongside the
+        existing MECM (SCCM) infrastructure in <strong>hybrid co-management</strong>, bringing cloud-based management to the
+        college's endpoints alongside the on-premises tooling.
+    </p>
+    <p>
+        On top of that foundation I implemented <strong>Windows Autopilot</strong> provisioning workflows, modernizing how new
+        devices are enrolled and set up.
+    </p>
+
+    <h3>Privileged access</h3>
+    <p>
+        I also led the organization-wide implementation of <strong>BeyondTrust Privilege Management</strong>, enforcing least
+        privilege and Zero-Trust standards across staff systems. The same platform is part of the security model for the
+        <a href="Esports.html" style="color: var(--primary);">Esports Lab</a>.
+    </p>
+
+    <h2>2. Imaging Overhaul: One Standardized Windows Image</h2>
+
+    <h3>Before</h3>
+    <p>
+        Every lab or computer use had its own "fat" image. Each one had to be built in VMware, fully configured, generalized,
+        and exported to a .wim file. Keeping images current meant repeating that entire process for every single variation.
+    </p>
+
+    <h3>After</h3>
+    <p>
+        I replaced them with <strong>one clean, up-to-date Windows image</strong> used for every lab, instructor, and staff
+        system, and moved the per-system differences into MECM operating system deployment (OSD) task sequences:
+    </p>
+    <ul>
+        <li><strong>Naming and placement:</strong> devices get standardized names, which the task sequence uses to sort them into the correct Active Directory OU automatically.</li>
+        <li><strong>Configuration:</strong> answer files configure Windows during deployment instead of baking settings into each image.</li>
+        <li><strong>Software:</strong> the software each system needs is installed during imaging, based on its role.</li>
+    </ul>
+
+    <div class="highlight-box">
+        <strong>Result:</strong> keeping imaging up to date now means replacing a single .wim file, instead of rebuilding a
+        separate image in VMware for every lab and computer type.
+    </div>
+
+    <h2>3. Active Directory &amp; Group Policy Overhaul</h2>
+    <p>
+        The Active Directory environment I inherited was messy: its OU structure and security groups needed a full rework, and it
+        carried <strong>97 legacy Group Policy Objects</strong>.
+    </p>
+    <p>
+        I restructured the OU hierarchy and security groups, then worked through the GPOs: cleaning up what was obsolete,
+        modernizing what was still needed, and consolidating related settings into fewer, standardized policies. The result is
+        about <strong>30 GPOs</strong>, a 70% reduction, which is far easier to understand, troubleshoot, and keep secure.
+    </p>
+
+    <div class="highlight-box">
+        <strong>Why it matters:</strong> the new OU structure is also what makes the imaging overhaul work, since task sequences
+        place each device into the right OU, where the right policies apply automatically.
+    </div>
+
+    <footer>
+        &copy; 2026 Dan Whittaker &bull; Systems Administrator<br>
+        Rowan College at Burlington County (RCBC) OIT &bull; Portfolio Demonstration &amp; Technical Reference
+    </footer>
+</div>
+
+<script data-goatcounter="https://danwhittaker.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

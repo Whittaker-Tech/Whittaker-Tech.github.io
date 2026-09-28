@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 360" role="img" aria-label="Infrastructure Modernization">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a38"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+  </defs>
+  <rect width="440" height="360" fill="url(#bg)"/>
+  <!-- Three stacked layers: identity, imaging, endpoint -->
+  <g font-family="Poppins, Segoe UI, sans-serif">
+    <path d="M220 58 L380 118 L220 178 L60 118 Z" fill="#38bdf8" fill-opacity="0.9"/>
+    <text x="220" y="124" text-anchor="middle" font-size="16" font-weight="600" fill="#0b1a24">Microsoft Intune</text>
+
+    <path d="M60 158 L220 218 L380 158 L380 172 L220 232 L60 172 Z" fill="#38bdf8" fill-opacity="0.55"/>
+    <text x="220" y="204" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">One standardized image</text>
+
+    <path d="M60 212 L220 272 L380 212 L380 226 L220 286 L60 226 Z" fill="#38bdf8" fill-opacity="0.3"/>
+    <text x="220" y="258" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">97 &#8594; 30 GPOs</text>
+  </g>
+  <text x="220" y="322" text-anchor="middle" font-family="Poppins, Segoe UI, sans-serif" font-size="11" fill="#aaaaaa">Endpoint &#183; Imaging &#183; Active Directory</text>
+</svg>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Asset Management Automation</title>
+    <meta name="description" content="A nightly, delta-only automation that keeps 3,600+ college assets current in HappyFox, linked to their owners, management status, and warranty dates.">
+    <style>
+        :root {
+            --primary: #2E5984;          /* Resume navy */
+            --secondary-bg: #eef3f9;     /* Light navy background */
+            --dark-slate: #1a1a1a;
+            --text-grey: #444444;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-grey);
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover { opacity: 0.7; }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .project-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        h1 { color: var(--dark-slate); font-size: 36px; margin: 0 0 10px 0; letter-spacing: -0.5px; line-height: 1.15; }
+        .tagline { font-size: 18px; color: #666; font-weight: 300; }
+        .project-meta { color: #777; font-size: 14px; font-style: italic; margin-top: 4px; }
+
+        .tech-stack { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .tech-badge {
+            background: #f4f4f4;
+            color: var(--dark-slate);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            color: var(--dark-slate);
+            font-size: 24px;
+            margin-top: 50px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+        }
+        h3 { color: var(--primary); font-size: 18px; margin-top: 30px; font-weight: 600; }
+        p, ul, li, ol { font-size: 16px; }
+        li { margin-bottom: 6px; }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 10px 0 0;
+        }
+        .stat {
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .stat-number {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-slate);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+        .stat-label { display: block; font-size: 14px; color: #666; margin-top: 4px; }
+
+        .highlight-box {
+            background-color: var(--secondary-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .pipeline { counter-reset: step; list-style: none; padding: 0; margin: 20px 0; }
+        .pipeline li {
+            counter-increment: step;
+            position: relative;
+            padding: 14px 16px 14px 60px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .pipeline li::before {
+            content: counter(step);
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pipeline strong { color: var(--dark-slate); }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+        .feature-card h4 { margin: 0 0 8px; color: var(--dark-slate); font-size: 17px; }
+        .feature-card p { margin: 0; }
+
+        footer { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 13px; color: #888; }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 16px; }
+            h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Portfolio</a>
+
+    <header>
+        <span class="project-tag">Project Showcase</span>
+        <h1>Asset Management Automation</h1>
+        <div class="tagline">A nightly inventory sync that ties every device to its owner, its management status, and its warranty</div>
+        <div class="project-meta">Developed by Dan Whittaker | Updated: September 28, 2026</div>
+
+        <div class="tech-stack">
+            <span class="tech-badge">HappyFox Assets</span>
+            <span class="tech-badge">Ellucian Colleague ERP</span>
+            <span class="tech-badge">Entrinsik Informer API</span>
+            <span class="tech-badge">MECM / SCCM</span>
+            <span class="tech-badge">Microsoft Intune</span>
+            <span class="tech-badge">Jamf</span>
+            <span class="tech-badge">Dell, Lenovo &amp; Apple Warranty APIs</span>
+        </div>
+    </header>
+
+    <div class="stat-row" aria-label="Assets currently tracked">
+        <div class="stat"><span class="stat-number">3,600+</span><span class="stat-label">assets tracked in total</span></div>
+        <div class="stat"><span class="stat-number">1,835</span><span class="stat-label">computer systems</span></div>
+        <div class="stat"><span class="stat-number">1,620</span><span class="stat-label">monitors</span></div>
+        <div class="stat"><span class="stat-number">122</span><span class="stat-label">printers</span></div>
+        <div class="stat"><span class="stat-number">50</span><span class="stat-label">mobile devices &amp; tablets</span></div>
+    </div>
+
+    <h2>1. The Challenge</h2>
+    <p>
+        When a staff member submits a help desk ticket, the first question a technician has to answer is
+        <em>which computer are we talking about?</em> Without inventory data tied to the ticketing system, that meant
+        guessing, asking the user, or searching other systems for the right machine before any real troubleshooting could start.
+    </p>
+    <p>
+        Warranty status had the same problem. Whether a device was still covered lived with the manufacturer, not with the
+        ticket, so every hardware issue started with a separate lookup.
+    </p>
+
+    <h2>2. The Solution</h2>
+    <p>
+        I rebuilt the college's inventory tracking around <strong>HappyFox Assets</strong>, the same system the help desk already
+        works in, and wrote an automation that keeps it current every night. It uses the college's own asset tags from
+        <strong>Ellucian Colleague</strong> as the system of record and enriches each record from every other system that knows
+        something about the device.
+    </p>
+
+    <h3>What the nightly sync does</h3>
+    <ol class="pipeline">
+        <li><strong>Pulls equipment from Colleague.</strong> Every equipment asset and its RCBC asset tag comes from the Ellucian Colleague ERP through the Informer API.</li>
+        <li><strong>Checks management status.</strong> Each device is looked up in MECM, Intune, and Jamf to confirm it is managed and has been given its standardized, imaged PC name, so technicians can search for the PC name directly in HappyFox.</li>
+        <li><strong>Pairs the asset with its owner.</strong> The asset's assigned steward is matched to the right staff contact in HappyFox, so the device appears on that person's contact record.</li>
+        <li><strong>Adds warranty dates.</strong> Dell, Lenovo, and Apple warranty APIs supply each device's coverage dates, which are written into HappyFox alongside the asset.</li>
+        <li><strong>Cleans up retired equipment.</strong> Systems that have been retired are removed automatically, so the inventory never drifts out of date.</li>
+    </ol>
+
+    <div class="highlight-box">
+        <strong>Result:</strong> every ticket now arrives with the requester's assigned systems and their warranty status already
+        on the contact. There's no more guessing which employee has which system.
+    </div>
+
+    <h2>3. Design Decisions</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h4>Delta-only processing</h4>
+            <p>The sync only processes records that changed since the last run instead of pulling the full inventory every night, which keeps the job fast and light on every connected system.</p>
+        </div>
+        <div class="feature-card">
+            <h4>One source of truth</h4>
+            <p>RCBC's own asset tags in Colleague anchor every record. MECM, Intune, Jamf, and the warranty APIs add detail to that record rather than competing with it.</p>
+        </div>
+        <div class="feature-card">
+            <h4>Data where the work happens</h4>
+            <p>Technicians already live in HappyFox. Putting ownership, PC names, and warranty dates there means the answer is on screen before they start the ticket.</p>
+        </div>
+        <div class="feature-card">
+            <h4>Windows and Mac together</h4>
+            <p>Checking MECM, Intune, and Jamf in the same pass means Windows PCs and Macs are verified by the same process instead of separate, manual audits.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Dan Whittaker &bull; Systems Administrator<br>
+        Developed for Rowan College at Burlington County (RCBC) OIT &bull; Portfolio Demonstration &amp; Technical Reference
+    </footer>
+</div>
+
+<script data-goatcounter="https://danwhittaker.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

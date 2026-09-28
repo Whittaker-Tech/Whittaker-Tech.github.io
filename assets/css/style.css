@@ -313,6 +313,44 @@ body {
     line-height: 1.5;
 }
 
+/* --- IMPACT NUMBERS (About Page) --- */
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2x2 so no tile is left alone on a row */
+    gap: 15px;
+    margin-top: 25px;
+}
+
+@media (min-width: 1200px) {
+    .impact-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.impact-card {
+    background-color: var(--bg-inner);
+    border-radius: 12px;
+    padding: 18px 16px;
+    border-top: 3px solid var(--accent);
+}
+
+.impact-number {
+    display: block;
+    color: var(--text-white);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+
+.impact-label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-top: 6px;
+}
+
 /* --- TIMELINE (Resume Page) --- */
 .timeline {
     margin-bottom: 30px;

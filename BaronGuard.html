@@ -1269,6 +1269,14 @@
         </p>
     </div>
 
+    <div class="card-title" style="margin-top: 28px;">Results Since Launch (May 2026)</div>
+    <div class="stats">
+        <div class="stat"><span class="stat-num">2,200+</span><div class="stat-label">Resets Completed</div></div>
+        <div class="stat"><span class="stat-num">2,000+</span><div class="stat-label">Manual Technician Escalations Eliminated</div></div>
+        <div class="stat"><span class="stat-num">1,686</span><div class="stat-label">Accounts Served</div></div>
+        <div class="stat"><span class="stat-num">42</span><div class="stat-label">Staff Using It</div></div>
+    </div>
+
     <div class="stats">
         <div class="stat"><span class="stat-num">4</span><div class="stat-label">Step Workflow</div></div>
         <div class="stat"><span class="stat-num">4</span><div class="stat-label">User Roles</div></div>
@@ -1892,6 +1900,11 @@
             <h4>Help Desk Pre-Verified Path</h4>
             <p>When Student Support has already verified a student via the Google Chat space, OIT can skip the verification checklist with a single radio. The audit entry records this, helping OIT track and manage Chat-originated requests while Student Support is being phased into handling resets on their own.</p>
         </div>
+        <div class="feature-card">
+            <div class="feature-card-icon">&#x1F4E8;</div>
+            <h4>Escalation Center</h4>
+            <p>When an issue still needs OIT, staff escalate it from inside BaronGuard and a HappyFox ticket is opened automatically. Updates flow both ways between OIT and any BaronGuard user, so if the student worker who escalated has gone off shift, whoever is on duty sees OIT's response and can follow through.</p>
+        </div>
     </div>
 </section>
 
@@ -2401,8 +2414,8 @@
         <div class="card-title">A single-instance app doesn't need distributed-system complexity.</div>
         <p>
             BaronGuard uses in-memory ring buffers, in-memory caches, and in-process SignalR. There's
-            no Redis, no message queue, no second app server. For the scale (about 30 staff, thousands
-            of actions per year), this is the right answer. The simplicity makes the operational story
+            no Redis, no message queue, no second app server. For the scale (42 staff and 2,200+ resets
+            in its first four months), this is the right answer. The simplicity makes the operational story
             trivial &mdash; "if it breaks, recycle the app pool" &mdash; which matters more than
             "scales to a million users" when the user base is the OIT department.
         </p>
