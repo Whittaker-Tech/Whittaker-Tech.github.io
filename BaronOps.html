@@ -210,7 +210,7 @@
             <span class="tech-badge">Sassafras LabSight</span>
             <span class="tech-badge">25Live API</span>
             <span class="tech-badge">Deep Freeze CLI</span>
-            <span class="tech-badge">SCCM / AD / WMI</span>
+            <span class="tech-badge">MECM (SCCM) / AD / WMI</span>
         </div>
     </header>
 
@@ -234,7 +234,7 @@
 
     <h2>2. The Solution: BaronOps</h2>
     <p>
-        <strong>BaronOps</strong> is a unified "Command & Control" application that aggregates disparate systems, SCCM, Active Directory, Deep Freeze, Sassafras LabSight, and 25Live, into a single, modern interface.
+        <strong>BaronOps</strong> is a unified "Command & Control" application that aggregates disparate systems, MECM, Active Directory, Deep Freeze, Sassafras LabSight, and 25Live, into a single, modern interface.
     </p>
     <p>
         Designed for portability, the application may also be installed on <strong>Technician Tablets</strong>. This transforms the device into a mobile "Lab Check" tool. A technician can walk into a room, tap "Wake," verify all 30+ computers are connected and properly logging in, test the printer, and move to the next room in seconds.
@@ -303,7 +303,7 @@
             <span class="feature-icon">🛠️</span>
             <strong>Health & Maintenance</strong>
             <p>
-                Validates lab readiness via remote <strong>Printer Test Pages</strong>. Includes <strong>System Purge</strong> for one-click AD/SCCM removal and <strong>Time Set Manager</strong> for Sassafras schedule syncing.
+                Validates lab readiness via remote <strong>Printer Test Pages</strong>. Includes <strong>System Purge</strong> for one-click AD/MECM removal and <strong>Time Set Manager</strong> for Sassafras schedule syncing.
             </p>
         </div>
     </div>
@@ -354,7 +354,7 @@
         <div class="feature-card">
             <strong>Remote Control Gateway</strong>
             <p>
-                A streamlined UI for the SCCM Remote Control Viewer. It bypasses the bulky SCCM console and its complex context menus, allowing technicians to instantly identify a target (student or instructor) and launch a session, saving significant time during support calls and maintenance.
+                A streamlined UI for the MECM Remote Control Viewer. It bypasses the bulky MECM console and its complex context menus, allowing technicians to instantly identify a target (student or instructor) and launch a session, saving significant time during support calls and maintenance.
             </p>
             <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
                 <em>v1.0.1 Update:</em> To streamline the user experience and reduce menu clutter, the standalone <strong>Remote Control</strong> tab has been removed. All <strong>Remote Control</strong> functionality has been integrated into the <strong>Power & Session</strong> tab.
@@ -390,7 +390,7 @@
         <div class="feature-card">
             <strong>Real-Time Deployment</strong>
             <p>
-                Eliminates the "Wait & Hope" anxiety of overnight SCCM maintenance windows. Relying on scheduled tasks often leads to silent failures, systems that fail to wake or hang during installation, forcing staff to scramble the next morning to manually patch machines before deadlines. <br><br> BaronOps replaces this with a deterministic <strong>Thaw -> Deploy -> Verify -> Freeze</strong> workflow that executes in minutes, allowing admins to confirm 100% success immediately between classes.
+                Eliminates the "Wait & Hope" anxiety of overnight MECM maintenance windows. Relying on scheduled tasks often leads to silent failures, systems that fail to wake or hang during installation, forcing staff to scramble the next morning to manually patch machines before deadlines. <br><br> BaronOps replaces this with a deterministic <strong>Thaw -> Deploy -> Verify -> Freeze</strong> workflow that executes in minutes, allowing admins to confirm 100% success immediately between classes.
             </p>
         </div>
 
@@ -468,7 +468,7 @@
         <div class="feature-card">
             <strong>System Purge</strong>
             <p>
-                A unification tool that removes a decommissioned system from both <strong>Active Directory</strong> and <strong>SCCM</strong> in a single action, ensuring clean records before reimaging.
+                A unification tool that removes a decommissioned system from both <strong>Active Directory</strong> and <strong>MECM</strong> in a single action, ensuring clean records before reimaging.
             </p>
         </div>
 
@@ -535,7 +535,7 @@
         <div class="feature-card">
             <strong>2. Zero-Trust Credential Storage</strong>
             <p>
-                <strong>Hard-coded passwords are strictly prohibited.</strong> BaronOps utilizes a "Just-in-Time" loading mechanism for sensitive API keys (Sassafras, Deep Freeze, SCCM).
+                <strong>Hard-coded passwords are strictly prohibited.</strong> BaronOps utilizes a "Just-in-Time" loading mechanism for sensitive API keys (Sassafras, Deep Freeze, MECM).
             </p>
             <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem; color: #555;">
                 <li><strong>Air-Gapped Source:</strong> Credentials are never stored in the application binary or source code.</li>
@@ -595,7 +595,7 @@
     </div>
 
     <p>
-        Currently, when a professor in a standard lecture hall encounters an issue, technicians must manually cross-reference inventory to find the specific PC hostname before launching SCCM and initiating a remote session. The upcoming v1.x update will abstract this process by extending the existing Sassafras, 25LIVE, and SCCM API integrations to all classrooms:
+        Currently, when a professor in a standard lecture hall encounters an issue, technicians must manually cross-reference inventory to find the specific PC hostname before launching MECM and initiating a remote session. The upcoming v1.x update will abstract this process by extending the existing Sassafras, 25LIVE, and MECM API integrations to all classrooms:
     </p>
 
     <div class="feature-grid" style="grid-template-columns: 1fr 1fr;">

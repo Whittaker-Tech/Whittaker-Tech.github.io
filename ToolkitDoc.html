@@ -70,7 +70,7 @@
 
 <h2>1. EXECUTIVE SUMMARY</h2>
 <p>
-    The OIT Technician Toolkit is an integrated administrative platform designed to bridge <strong>SCCM, Active Directory, 25Live, Sassafras KeyServer, and HappyFox</strong>. By orchestrating these systems, the toolkit provides field technicians with a unified interface for system diagnostics and reporting, ensuring high-fidelity visualizations of day-to-day problem areas. 
+    The OIT Technician Toolkit is an integrated administrative platform designed to bridge <strong>MECM (SCCM), Active Directory, 25Live, Sassafras KeyServer, and HappyFox</strong>. By orchestrating these systems, the toolkit provides field technicians with a unified interface for system diagnostics and reporting, ensuring high-fidelity visualizations of day-to-day problem areas. 
     The toolkit is optimized for both desktop and mobile environments, enabling field mobility for technicians utilizing tablets during campus-wide lab checks.
 </p>
 
@@ -78,8 +78,8 @@
 
 <div class="tool-grid">
     <div class="tool-card">
-        <strong>1. Lab Wake-Up (SCCM Integrated)</strong>
-        <p>Leverages <strong>SCCM's internal Wake-on-LAN protocols</strong> to broadcast magic packets across subnets, facilitating remote power-on for lab maintenance or class preparation.</p>
+        <strong>1. Lab Wake-Up (MECM Integrated)</strong>
+        <p>Leverages <strong>MECM's internal Wake-on-LAN protocols</strong> to broadcast magic packets across subnets, facilitating remote power-on for lab maintenance or class preparation.</p>
     </div>
     <div class="tool-card">
         <strong>2. Ghost Hunter (Sassafras API)</strong>
@@ -90,8 +90,8 @@
         <p>Combines <strong>Ghost Hunter</strong> data with <strong>25Live</strong> schedules to identify maintenance windows. Results are documented weekly via the <strong>HappyFox API</strong> to provide a proactive "jump start" for technicians.</p>
     </div>
     <div class="tool-card">
-        <strong>4. AD & SCCM Purge</strong>
-        <p>A "Clean Start" tool that wipes computer metadata from both Active Directory OUs and SCCM Site Databases in a single administrative action.</p>
+        <strong>4. AD & MECM Purge</strong>
+        <p>A "Clean Start" tool that wipes computer metadata from both Active Directory OUs and MECM Site Databases in a single administrative action.</p>
     </div>
     <div class="tool-card">
         <strong>5. Sassafras Manager (Reporting)</strong>
@@ -112,7 +112,7 @@
 </p>
 
 <div class="alert alert-warning">
-    <strong>SAFEGUARD PROTOCOLS:</strong> All high-impact administrative actions (such as the AD/SCCM Purge) are gated by functional failsafe prompts. Technicians must manually confirm these actions, ensuring that critical infrastructure is protected from accidental harm.
+    <strong>SAFEGUARD PROTOCOLS:</strong> All high-impact administrative actions (such as the AD/MECM Purge) are gated by functional failsafe prompts. Technicians must manually confirm these actions, ensuring that critical infrastructure is protected from accidental harm.
 </div>
 
 <table>
@@ -122,7 +122,7 @@
         <th>Purpose</th>
     </tr>
     <tr>
-        <td><strong>SCCM</strong></td>
+        <td><strong>MECM</strong></td>
         <td>PowerShell Bridge</td>
         <td>Drives Wake-on-LAN and asset decommissioning (Purge Tool).</td>
     </tr>
